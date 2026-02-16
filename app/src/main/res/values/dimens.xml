@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- GRID DIMENSIONS -->
+    <dimen name="grid_padding">16dp</dimen>
+    <dimen name="grid_line_thin">1dp</dimen>
+    <dimen name="grid_line_thick">3dp</dimen>
+    <dimen name="cell_text_size">24sp</dimen>
+    <dimen name="cell_pencil_text_size">10sp</dimen>
+    
+    <!-- SPACING -->
+    <dimen name="spacing_tiny">4dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_medium">16dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_xlarge">32dp</dimen>
+    
+    <!-- NUMBER PAD -->
+    <dimen name="number_pad_button_size">48dp</dimen>
+    <dimen name="number_pad_button_text">20sp</dimen>
+    <dimen name="number_pad_button_corner">8dp</dimen>
+    <dimen name="number_pad_elevation">2dp</dimen>
+    
+    <!-- TOP BAR -->
+    <dimen name="top_bar_height">56dp</dimen>
+    <dimen name="top_bar_icon_size">24dp</dimen>
+    <dimen name="top_bar_text_size">16sp</dimen>
+    
+    <!-- BOTTOM CONTROLS -->
+    <dimen name="bottom_controls_height">72dp</dimen>
+    <dimen name="control_button_size">48dp</dimen>
+    <dimen name="control_icon_size">24dp</dimen>
+    
+    <!-- CORNER RADIUS -->
+    <dimen name="corner_radius_small">4dp</dimen>
+    <dimen name="corner_radius_medium">8dp</dimen>
+    <dimen name="corner_radius_large">12dp</dimen>
+    
+    <!-- TEXT SIZES -->
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_medium">14sp</dimen>
+    <dimen name="text_size_large">16sp</dimen>
+    <dimen name="text_size_xlarge">20sp</dimen>
+    <dimen name="text_size_title">24sp</dimen>
+    <dimen name="text_size_display">32sp</dimen>
+</resources>

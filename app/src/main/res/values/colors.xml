@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- DEFAULT THEME (Blue/Teal - Like Dustland's Default) -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <!-- Background Colors -->
+    <color name="background_primary">#F5F7FA</color>        <!-- Light blue-gray -->
+    <color name="background_secondary">#FFFFFF</color>       <!-- Pure white -->
+    
+    <!-- Grid Colors -->
+    <color name="grid_background">#FFFFFF</color>
+    <color name="grid_line_thin">#E8ECF0</color>            <!-- Very light gray -->
+    <color name="grid_line_thick">#4A90E2</color>           <!-- Primary blue -->
+    
+    <!-- Cell States -->
+    <color name="cell_default">#FFFFFF</color>              <!-- Empty cell -->
+    <color name="cell_selected">#4A90E2</color>             <!-- Selected cell -->
+    <color name="cell_selected_light">#E3F2FF</color>       <!-- Selected row/col -->
+    <color name="cell_locked">#F5F7FA</color>               <!-- Given clue -->
+    <color name="cell_same_number">#FFF9E6</color>          <!-- Same number highlight -->
+    <color name="cell_conflict">#FFE5E5</color>             <!-- Error state -->
+    
+    <!-- Text Colors -->
+    <color name="text_primary">#1A1A1A</color>              <!-- Main text -->
+    <color name="text_secondary">#757575</color>            <!-- Secondary text -->
+    <color name="text_locked">#424242</color>               <!-- Given clues -->
+    <color name="text_player">#4A90E2</color>               <!-- Player input -->
+    <color name="text_pencil">#9E9E9E</color>               <!-- Pencil marks -->
+    <color name="text_error">#E53935</color>                <!-- Errors -->
+    
+    <!-- Accent Colors -->
+    <color name="accent_primary">#4A90E2</color>            <!-- Primary blue -->
+    <color name="accent_secondary">#42A5F5</color>          <!-- Light blue -->
+    <color name="accent_success">#4CAF50</color>            <!-- Green for success -->
+    <color name="accent_warning">#FFA726</color>            <!-- Orange for hints -->
+    
+    <!-- Number Pad -->
+    <color name="number_pad_background">#FFFFFF</color>
+    <color name="number_pad_button">#F5F7FA</color>
+    <color name="number_pad_button_pressed">#E3F2FF</color>
+    <color name="number_pad_button_disabled">#E0E0E0</color>
+    
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- ALTERNATIVE THEMES -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <!-- Dark/AMOLED Theme -->
+    <color name="dark_background">#000000</color>
+    <color name="dark_grid_line">#1A1A1A</color>
+    <color name="dark_accent">#64B5F6</color>
+    <color name="dark_text">#FFFFFF</color>
+    
+    <!-- Pink Theme -->
+    <color name="pink_accent">#EC407A</color>
+    <color name="pink_light">#FCE4EC</color>
+    
+    <!-- Green Theme -->
+    <color name="green_accent">#66BB6A</color>
+    <color name="green_light">#E8F5E9</color>
+    
+    <!-- Purple Theme -->
+    <color name="purple_accent">#AB47BC</color>
+    <color name="purple_light">#F3E5F5</color>
+    
+    <!-- Orange Theme -->
+    <color name="orange_accent">#FF7043</color>
+    <color name="orange_light">#FBE9E7</color>
+    
+    <!-- Legacy/Required colors (mapping to new ones) -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="purple_500">@color/accent_primary</color>
+    <color name="purple_700">@color/accent_primary</color>
+    <color name="teal_200">@color/accent_secondary</color>
+    <color name="primary">@color/background_primary</color>
+    <color name="primary_dark">@color/background_primary</color>
+    <color name="accent">@color/accent_primary</color>
+</resources>
