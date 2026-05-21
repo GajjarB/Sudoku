@@ -51,24 +51,26 @@ public class LevelGridAdapter extends RecyclerView.Adapter<LevelGridAdapter.Leve
 
     static class LevelViewHolder extends RecyclerView.ViewHolder {
         TextView tvLevel;
-        // ImageView ivLock;
-        // RatingBar ratingBar;
+        TextView tvMeta;
+        TextView tvStatus;
 
         LevelViewHolder(@NonNull View itemView) {
             super(itemView);
             tvLevel = itemView.findViewById(R.id.tv_level_number);
+            tvMeta = itemView.findViewById(R.id.tv_level_meta);
+            tvStatus = itemView.findViewById(R.id.tv_level_status);
         }
 
         void bind(LevelProgress level, OnLevelClickListener listener) {
-            tvLevel.setText(String.valueOf(level.levelNumber));
+            tvLevel.setText(String.format("#%03d", level.levelNumber));
+            tvMeta.setText(difficultyLabel(level.levelNumber));
+            tvStatus.setText(level.isCompleted ? "Completed" : level.isUnlocked ? "Not started" : "Locked");
             
             // Visual state based on level.isUnlocked
             if (level.isUnlocked) {
                 itemView.setAlpha(1.0f);
-                itemView.setBackgroundColor(0xFFE0E0E0); // Light Gray
             } else {
                 itemView.setAlpha(0.5f);
-                itemView.setBackgroundColor(0xFFBDBDBD); // Darker Gray
             }
             
             itemView.setOnClickListener(v -> {
@@ -76,6 +78,13 @@ public class LevelGridAdapter extends RecyclerView.Adapter<LevelGridAdapter.Leve
                     listener.onLevelClick(level.levelNumber);
                 }
             });
+        }
+
+        private String difficultyLabel(int level) {
+            if (level <= 24) return "Easy";
+            if (level <= 49) return "Medium";
+            if (level <= 74) return "Hard";
+            return "Expert";
         }
     }
     

@@ -12,6 +12,8 @@ public class Cell {
     private int value; // 0 for empty
     private boolean isLocked; // True if part of initial puzzle
     private boolean isCorrect; // True if value matches solution
+    private boolean isConflict;
+    private boolean isHintHighlighted;
     private List<Integer> notes; // Pencil marks
 
     public Cell(int row, int col, int value, boolean isLocked) {
@@ -20,6 +22,8 @@ public class Cell {
         this.value = value;
         this.isLocked = isLocked;
         this.isCorrect = true; // Default assumption until validated
+        this.isConflict = false;
+        this.isHintHighlighted = false;
         this.notes = new ArrayList<>();
     }
 
@@ -28,6 +32,8 @@ public class Cell {
     public int getValue() { return value; }
     public boolean isLocked() { return isLocked; }
     public boolean isCorrect() { return isCorrect; }
+    public boolean isConflict() { return isConflict; }
+    public boolean isHintHighlighted() { return isHintHighlighted; }
     public List<Integer> getNotes() { return notes; }
 
     public void setValue(int value) {
@@ -36,6 +42,14 @@ public class Cell {
 
     public void setCorrect(boolean correct) {
         isCorrect = correct;
+    }
+
+    public void setConflict(boolean conflict) {
+        isConflict = conflict;
+    }
+
+    public void setHintHighlighted(boolean hintHighlighted) {
+        isHintHighlighted = hintHighlighted;
     }
     
     public void addNote(int number) {
@@ -48,5 +62,10 @@ public class Cell {
     
     public void clearNotes() {
         notes.clear();
+    }
+
+    public void setNotes(List<Integer> newNotes) {
+        notes.clear();
+        notes.addAll(newNotes);
     }
 }

@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.util.AttributeSet;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
+import java.util.Locale;
 
 /**
  * Custom TextView acting as a game timer.
@@ -14,7 +15,7 @@ public class TimerView extends AppCompatTextView {
     
     private long startTime;
     private boolean isRunning;
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler = new Handler(Looper.getMainLooper());
     
     private Runnable updateRunnable = new Runnable() {
         @Override
@@ -25,7 +26,7 @@ public class TimerView extends AppCompatTextView {
                 int minutes = seconds / 60;
                 seconds = seconds % 60;
                 
-                setText(String.format("%02d:%02d", minutes, seconds));
+                setText(String.format(Locale.US, "%02d:%02d", minutes, seconds));
                 handler.postDelayed(this, 1000);
             }
         }
@@ -54,5 +55,11 @@ public class TimerView extends AppCompatTextView {
     
     public void setTime(long elapsedMillis) {
         startTime = System.currentTimeMillis() - elapsedMillis;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        stop();
+        super.onDetachedFromWindow();
     }
 }

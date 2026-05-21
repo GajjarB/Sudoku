@@ -1,6 +1,7 @@
 package com.example.sudoku.domain.ai;
 
 import android.util.Log;
+import com.example.sudoku.core.AppExecutors;
 import com.example.sudoku.data.local.dao.GameDao;
 import com.example.sudoku.data.local.entities.*;
 import com.example.sudoku.domain.engine.GameValidator;
@@ -8,6 +9,7 @@ import com.example.sudoku.utils.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
 /**
@@ -21,13 +23,19 @@ public class BehavioralAnalyzer {
     
     private static final String TAG = "BehavioralAnalyzer";
     
-    private GameDao dao;
-    
+    private final GameDao dao;
+    private final ExecutorService executor;
+
     // Track cell interactions in current session (in-memory cache)
-    private Map<String, CellInteraction> currentSessionTracking;
-    
+    private final Map<String, CellInteraction> currentSessionTracking;
+
     public BehavioralAnalyzer(GameDao dao) {
+        this(dao, AppExecutors.getInstance().io());
+    }
+
+    public BehavioralAnalyzer(GameDao dao, ExecutorService executor) {
         this.dao = dao;
+        this.executor = executor;
         this.currentSessionTracking = new HashMap<>();
     }
     
@@ -69,8 +77,14 @@ public class BehavioralAnalyzer {
         behavior.emptyCellsRemaining = countEmptyCells(game.currentGrid);
         behavior.gridComplexity = calculateGridComplexity(game.currentGrid);
         
-        // Save to database (async recommended)
-        new Thread(() -> dao.insertPlayerBehavior(behavior)).start();
+        // Save to database asynchronously
+        executor.execute(() -> {
+            try {
+                dao.insertPlayerBehavior(behavior);
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to save player behavior", e);
+            }
+        });
         
         // Update pattern learning
         updatePatternKnowledge(strategy, correct, thinkingTime);
@@ -159,8 +173,34 @@ public class BehavioralAnalyzer {
     }
     
     private boolean isBoxLineReduction(int[][] grid, int row, int col, int num) {
-        // Advanced technique - not implemented in this version
-        return false;
+        // Box-line reduction: if a number can only appear in one row (or col)
+        // within a box, it's a box-line reduction.
+        int boxRow = (row / 3) * 3;
+        int boxCol = (col / 3) * 3;
+
+        // Check if num is confined to one row within its box
+        Set<Integer> rowsWithNum = new HashSet<>();
+        for (int r = boxRow; r < boxRow + 3; r++) {
+            for (int c = boxCol; c < boxCol + 3; c++) {
+                if (grid[r][c] == 0 && GameValidator.getCandidates(grid, r, c).contains(num)) {
+                    rowsWithNum.add(r);
+                }
+            }
+        }
+        if (rowsWithNum.size() == 1 && rowsWithNum.contains(row)) {
+            return true;
+        }
+
+        // Check if num is confined to one column within its box
+        Set<Integer> colsWithNum = new HashSet<>();
+        for (int r = boxRow; r < boxRow + 3; r++) {
+            for (int c = boxCol; c < boxCol + 3; c++) {
+                if (grid[r][c] == 0 && GameValidator.getCandidates(grid, r, c).contains(num)) {
+                    colsWithNum.add(c);
+                }
+            }
+        }
+        return colsWithNum.size() == 1 && colsWithNum.contains(col);
     }
     
     /**
@@ -169,46 +209,50 @@ public class BehavioralAnalyzer {
      * Updates the player's proficiency with each strategy.
      */
     private void updatePatternKnowledge(String strategy, boolean success, long timeMs) {
-        new Thread(() -> {
-            SolvingPattern pattern = dao.getSolvingPattern(strategy);
-            
-            if (pattern == null) {
-                pattern = new SolvingPattern(strategy);
+        executor.execute(() -> {
+            try {
+                SolvingPattern pattern = dao.getSolvingPattern(strategy);
+
+                if (pattern == null) {
+                    pattern = new SolvingPattern(strategy);
+                }
+
+                if (success) {
+                    pattern.successCount++;
+                    pattern.consecutiveSuccess++;
+                    pattern.consecutiveFailure = 0;
+                } else {
+                    pattern.failureCount++;
+                    pattern.consecutiveFailure++;
+                    pattern.consecutiveSuccess = 0;
+                }
+
+                double newTime = timeMs / 1000.0;
+                if (pattern.avgTimeSeconds == 0) {
+                    pattern.avgTimeSeconds = newTime;
+                } else {
+                    pattern.avgTimeSeconds = pattern.avgTimeSeconds * 0.8 + newTime * 0.2;
+                }
+
+                int total = pattern.successCount + pattern.failureCount;
+                double rawConfidence = total > 0 ?
+                    (double) pattern.successCount / total : 0.5;
+
+                double speedFactor = Math.max(0.5, 1.0 - (pattern.avgTimeSeconds / 60.0));
+                pattern.confidenceScore = rawConfidence * 0.7 + speedFactor * 0.3;
+
+                pattern.learningRate = calculateLearningRate(strategy);
+
+                pattern.lastUsed = System.currentTimeMillis();
+
+                dao.upsertSolvingPattern(pattern);
+
+                Log.d(TAG, String.format("Strategy %s: Confidence=%.2f, AvgTime=%.1fs, LearningRate=%.2f",
+                        strategy, pattern.confidenceScore, pattern.avgTimeSeconds, pattern.learningRate));
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to update pattern knowledge for " + strategy, e);
             }
-            
-            if (success) {
-                pattern.successCount++;
-                pattern.consecutiveSuccess++;
-                pattern.consecutiveFailure = 0;
-            } else {
-                pattern.failureCount++;
-                pattern.consecutiveFailure++;
-                pattern.consecutiveSuccess = 0;
-            }
-            
-            double newTime = timeMs / 1000.0;
-            if (pattern.avgTimeSeconds == 0) {
-                pattern.avgTimeSeconds = newTime;
-            } else {
-                pattern.avgTimeSeconds = pattern.avgTimeSeconds * 0.8 + newTime * 0.2;
-            }
-            
-            int total = pattern.successCount + pattern.failureCount;
-            double rawConfidence = total > 0 ? 
-                (double) pattern.successCount / total : 0.5;
-            
-            double speedFactor = Math.max(0.5, 1.0 - (pattern.avgTimeSeconds / 60.0));
-            pattern.confidenceScore = rawConfidence * 0.7 + speedFactor * 0.3;
-            
-            pattern.learningRate = calculateLearningRate(strategy);
-            
-            pattern.lastUsed = System.currentTimeMillis();
-            
-            dao.upsertSolvingPattern(pattern);
-            
-            Log.d(TAG, String.format("Strategy %s: Confidence=%.2f, AvgTime=%.1fs, LearningRate=%.2f",
-                    strategy, pattern.confidenceScore, pattern.avgTimeSeconds, pattern.learningRate));
-        }).start();
+        });
     }
     
     private double calculateLearningRate(String strategy) {
@@ -270,7 +314,13 @@ public class BehavioralAnalyzer {
         metrics.plateauScore = detectPlateau(weekData);
         metrics.challengeReadiness = calculateChallengeReadiness(metrics);
         
-        new Thread(() -> dao.insertCognitiveMetrics(metrics)).start();
+        executor.execute(() -> {
+            try {
+                dao.insertCognitiveMetrics(metrics);
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to save cognitive metrics", e);
+            }
+        });
         
         Log.d(TAG, String.format("Cognitive Analysis: ReadyScore=%d, PlateauScore=%.2f, ErrorRate=%.2f",
                 metrics.challengeReadiness, metrics.plateauScore, metrics.errorRate));
@@ -443,6 +493,17 @@ public class BehavioralAnalyzer {
     
     public void clearSession() {
         currentSessionTracking.clear();
+    }
+
+    /**
+     * Release per-session state. Shared executor lifecycle is owned by AppExecutors.
+     */
+    public void shutdown() {
+        clearSession();
+    }
+
+    public void close() {
+        shutdown();
     }
     
     private static class CellInteraction {

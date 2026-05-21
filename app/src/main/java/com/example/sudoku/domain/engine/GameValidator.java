@@ -21,6 +21,10 @@ public class GameValidator {
      * @return true if move is valid
      */
     public static boolean isValidMove(int[][] grid, int row, int col, int num) {
+        if (!isValidGrid(grid) || !isValidPosition(row, col) || !isValidNumber(num)) {
+            return false;
+        }
+
         // Check if cell is already filled
         if (grid[row][col] != 0) {
             return false;
@@ -62,6 +66,9 @@ public class GameValidator {
      */
     public static List<int[]> getConflictingCells(int[][] grid, int row, int col, int num) {
         List<int[]> conflicts = new ArrayList<>();
+        if (!isValidGrid(grid) || !isValidPosition(row, col) || !isValidNumber(num)) {
+            return conflicts;
+        }
         
         // Row conflicts
         for (int c = 0; c < 9; c++) {
@@ -99,6 +106,9 @@ public class GameValidator {
      * @return true if puzzle matches solution exactly
      */
     public static boolean isCompleteSolution(int[][] grid, int[][] solution) {
+        if (!isValidGrid(grid) || !isValidGrid(solution)) {
+            return false;
+        }
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
                 if (grid[r][c] != solution[r][c]) {
@@ -113,9 +123,12 @@ public class GameValidator {
      * Check if grid is completely filled (may not be correct).
      */
     public static boolean isGridComplete(int[][] grid) {
+        if (!isValidGrid(grid)) {
+            return false;
+        }
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
-                if (grid[r][c] == 0) {
+                if (!isValidNumber(grid[r][c])) {
                     return false;
                 }
             }
@@ -128,6 +141,9 @@ public class GameValidator {
      * Used for hints and AI strategy detection.
      */
     public static List<Integer> getCandidates(int[][] grid, int row, int col) {
+        if (!isValidGrid(grid) || !isValidPosition(row, col)) {
+            return new ArrayList<>();
+        }
         if (grid[row][col] != 0) {
             return new ArrayList<>(); // Cell already filled
         }
@@ -136,12 +152,12 @@ public class GameValidator {
         
         // Mark used in row
         for (int c = 0; c < 9; c++) {
-            used[grid[row][c]] = true;
+            markUsed(used, grid[row][c]);
         }
         
         // Mark used in column
         for (int r = 0; r < 9; r++) {
-            used[grid[r][col]] = true;
+            markUsed(used, grid[r][col]);
         }
         
         // Mark used in box
@@ -149,7 +165,7 @@ public class GameValidator {
         int boxCol = (col / 3) * 3;
         for (int r = boxRow; r < boxRow + 3; r++) {
             for (int c = boxCol; c < boxCol + 3; c++) {
-                used[grid[r][c]] = true;
+                markUsed(used, grid[r][c]);
             }
         }
         
@@ -168,8 +184,18 @@ public class GameValidator {
      */
     public static int[][] stringToGrid(String s) {
         int[][] grid = new int[9][9];
+        if (s == null || s.length() != 81) {
+            return grid;
+        }
         for (int i = 0; i < 81; i++) {
-            grid[i / 9][i % 9] = s.charAt(i) - '0';
+            char c = s.charAt(i);
+            if (c >= '0' && c <= '9') {
+                grid[i / 9][i % 9] = c - '0';
+            } else if (c == '.') {
+                grid[i / 9][i % 9] = 0;
+            } else {
+                return new int[9][9];
+            }
         }
         return grid;
     }
@@ -179,11 +205,41 @@ public class GameValidator {
      */
     public static String gridToString(int[][] grid) {
         StringBuilder sb = new StringBuilder();
+        if (!isValidGrid(grid)) {
+            return "0".repeat(81);
+        }
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
-                sb.append(grid[r][c]);
+                int value = grid[r][c];
+                sb.append(value >= 0 && value <= 9 ? value : 0);
             }
         }
         return sb.toString();
+    }
+
+    private static void markUsed(boolean[] used, int value) {
+        if (isValidNumber(value)) {
+            used[value] = true;
+        }
+    }
+
+    private static boolean isValidGrid(int[][] grid) {
+        if (grid == null || grid.length != 9) {
+            return false;
+        }
+        for (int r = 0; r < 9; r++) {
+            if (grid[r] == null || grid[r].length != 9) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isValidPosition(int row, int col) {
+        return row >= 0 && row < 9 && col >= 0 && col < 9;
+    }
+
+    private static boolean isValidNumber(int num) {
+        return num >= 1 && num <= 9;
     }
 }

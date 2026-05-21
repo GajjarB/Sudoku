@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"D:\\\\BBcakup\\\\Sudoku\\\\app\\\\src\\\\test\\\\java\\\\com\\\\example\\\\sudoku\\\\domain\\\\engine\")",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"D:\\\\BBcakup\\\\Sudoku\\\\app\\\\src\\\\test\\\\java\\\\com\\\\example\\\\sudoku\\\\domain\\\\managers\")",
+      "Bash(./gradlew test *)",
+      "Bash(./gradlew testDebugUnitTest --no-daemon)",
+      "Bash(java -version)",
+      "Bash(./gradlew --version)",
+      "Bash(./gradlew.bat test *)",
+      "Bash(./gradlew.bat compileDebugJavaWithJavac --console=plain)",
+      "Bash(./gradlew.bat testDebugUnitTest --console=plain)",
+      "mcp__ca75d6bc-d466-4a8d-9c8f-b84ee5956859__get_design_context",
+      "PowerShell(Get-ChildItem -Path \"D:\\\\BBcakup\\\\Sudoku\\\\app\\\\src\\\\main\\\\res\" -Recurse | Where-Object { -not $_.PSIsContainer } | Select-Object FullName | Sort-Object FullName | Select-Object -First 100)"
+    ]
+  }
+}

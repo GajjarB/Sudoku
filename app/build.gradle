@@ -3,17 +3,17 @@ plugins {
 }
 
 android {
-    namespace 'com.example.sudoku'
-    compileSdk 36
+    namespace = 'com.example.sudoku'
+    compileSdk = 36
 
     defaultConfig {
-        applicationId "com.example.sudoku"
-        minSdk 23
-        targetSdk 36
-        versionCode 1
-        versionName "1.0"
+        applicationId = "com.example.sudoku"
+        minSdk = 24
+        targetSdk = 36
+        versionCode = 1
+        versionName = "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         
         // Room schema export location
         javaCompileOptions {
@@ -25,13 +25,13 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled = true
+            shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            applicationIdSuffix ".debug"
-            debuggable true
+            applicationIdSuffix = ".debug"
+            debuggable = true
         }
     }
     
@@ -41,7 +41,7 @@ android {
     }
     
     buildFeatures {
-        viewBinding true
+        viewBinding = true
     }
 }
 
@@ -59,6 +59,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata:2.7.0'
     implementation 'androidx.lifecycle:lifecycle-runtime:2.7.0'
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-process:2.7.0'
     
     // Room Database
     implementation 'androidx.room:room-runtime:2.6.1'

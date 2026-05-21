@@ -19,6 +19,15 @@ public interface LevelProgressDao {
     
     @Query("SELECT * FROM level_progress WHERE levelNumber = :level")
     LevelProgress getLevelProgress(int level);
+
+    @Query("SELECT COUNT(*) FROM level_progress")
+    int getLevelCount();
+
+    @Query("SELECT EXISTS(SELECT 1 FROM level_progress WHERE levelNumber = :level AND isUnlocked = 1)")
+    boolean isLevelUnlocked(int level);
+
+    @Query("SELECT COALESCE(MAX(levelNumber), 1) FROM level_progress WHERE isUnlocked = 1")
+    int getHighestUnlockedLevel();
     
     @Query("SELECT * FROM level_progress WHERE levelNumber = :level")
     LiveData<LevelProgress> getLevelProgressLive(int level);

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5a347bf7c1fff86c91454c834b257020",
+    "identityHash": "efa4a789d3d920df6a5790403822dad4",
     "entities": [
       {
         "tableName": "user_profile",
@@ -343,7 +343,7 @@
       },
       {
         "tableName": "game_history",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `gameId` TEXT NOT NULL, `levelNumber` INTEGER NOT NULL, `playedAt` INTEGER NOT NULL, `totalTimeMs` INTEGER NOT NULL, `finalScore` INTEGER NOT NULL, `xpEarned` INTEGER NOT NULL, `starsEarned` INTEGER NOT NULL, `hintsUsed` INTEGER NOT NULL, `mistakesMade` INTEGER NOT NULL, `avgDecisionTimeMs` REAL NOT NULL, `accuracyRate` REAL NOT NULL, `isDailyChallenge` INTEGER NOT NULL, `isPerfectGame` INTEGER NOT NULL, FOREIGN KEY(`gameId`) REFERENCES `saved_games`(`gameId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `gameId` TEXT NOT NULL, `levelNumber` INTEGER NOT NULL, `playedAt` INTEGER NOT NULL, `totalTimeMs` INTEGER NOT NULL, `finalScore` INTEGER NOT NULL, `xpEarned` INTEGER NOT NULL, `starsEarned` INTEGER NOT NULL, `hintsUsed` INTEGER NOT NULL, `mistakesMade` INTEGER NOT NULL, `avgDecisionTimeMs` INTEGER NOT NULL, `accuracyRate` REAL NOT NULL, `isDailyChallenge` INTEGER NOT NULL, `isPerfectGame` INTEGER NOT NULL, FOREIGN KEY(`gameId`) REFERENCES `saved_games`(`gameId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -408,7 +408,7 @@
           {
             "fieldPath": "avgDecisionTimeMs",
             "columnName": "avgDecisionTimeMs",
-            "affinity": "REAL",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -826,12 +826,100 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "puzzle_pool",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `clueCount` INTEGER NOT NULL, `difficulty` TEXT NOT NULL, `variant` TEXT NOT NULL, `puzzle` TEXT NOT NULL, `solution` TEXT NOT NULL, `canonicalHash` INTEGER NOT NULL, `generatedAt` INTEGER NOT NULL, `consumed` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clueCount",
+            "columnName": "clueCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "difficulty",
+            "columnName": "difficulty",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "variant",
+            "columnName": "variant",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "puzzle",
+            "columnName": "puzzle",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "solution",
+            "columnName": "solution",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "canonicalHash",
+            "columnName": "canonicalHash",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "generatedAt",
+            "columnName": "generatedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "consumed",
+            "columnName": "consumed",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_puzzle_pool_difficulty_consumed",
+            "unique": false,
+            "columnNames": [
+              "difficulty",
+              "consumed"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_puzzle_pool_difficulty_consumed` ON `${TABLE_NAME}` (`difficulty`, `consumed`)"
+          },
+          {
+            "name": "index_puzzle_pool_canonicalHash",
+            "unique": true,
+            "columnNames": [
+              "canonicalHash"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_puzzle_pool_canonicalHash` ON `${TABLE_NAME}` (`canonicalHash`)"
+          }
+        ],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5a347bf7c1fff86c91454c834b257020')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'efa4a789d3d920df6a5790403822dad4')"
     ]
   }
 }

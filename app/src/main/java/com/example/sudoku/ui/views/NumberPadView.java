@@ -2,10 +2,8 @@ package com.example.sudoku.ui.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.widget.GridLayout;
 import android.widget.Button;
-import android.graphics.Color;
 import androidx.annotation.Nullable;
 
 /**
@@ -26,25 +24,33 @@ public class NumberPadView extends GridLayout {
     }
 
     private void init(Context context) {
-        setColumnCount(3);
-        setRowCount(3);
+        setColumnCount(5);
+        setRowCount(2);
         
-        for (int i = 1; i <= 9; i++) {
+        for (int i = 1; i <= 10; i++) {
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
             params.width = 0;
             params.height = getResources().getDimensionPixelSize(com.example.sudoku.R.dimen.number_pad_button_size);
             params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
             params.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
-            params.setMargins(8, 8, 8, 8);
+            int margin = dpToPx(4);
+            params.setMargins(margin, margin, margin, margin);
             
             Button button = new Button(context);
-            button.setText(String.valueOf(i));
-            button.setTextSize(24);
+            final int value = i == 10 ? 0 : i;
+            button.setText(i == 10 ? "Del" : String.valueOf(i));
+            button.setTextSize(22);
+            button.setTextColor(getResources().getColor(com.example.sudoku.R.color.text_primary));
+            button.setTypeface(android.graphics.Typeface.DEFAULT_BOLD);
             button.setLayoutParams(params);
-            button.setBackgroundColor(Color.LTGRAY); // Default
+            button.setBackgroundResource(com.example.sudoku.R.drawable.neo_number_button);
+            button.setMinHeight(getResources().getDimensionPixelSize(com.example.sudoku.R.dimen.number_pad_button_size));
+            button.setAllCaps(false);
+            button.setContentDescription(i == 10 ? "Delete selected cell" : "Enter " + i);
             button.setOnClickListener(v -> {
+                selectButton((Button) v);
                 if (listener != null) {
-                    listener.onNumberClick(Integer.parseInt(((Button)v).getText().toString()));
+                    listener.onNumberClick(value);
                 }
             });
             addView(button);
@@ -55,14 +61,30 @@ public class NumberPadView extends GridLayout {
         for (int i = 0; i < getChildCount(); i++) {
             android.view.View child = getChildAt(i);
             if (child instanceof Button) {
-                ((Button) child).setTextColor(accentColor);
-                ((Button) child).setBackgroundColor(buttonBackgroundColor);
+                ((Button) child).setTextColor(getResources().getColor(com.example.sudoku.R.color.text_primary));
+                child.setBackgroundResource(com.example.sudoku.R.drawable.neo_number_button);
             }
         }
+    }
+
+    private void selectButton(Button selected) {
+        for (int i = 0; i < getChildCount(); i++) {
+            getChildAt(i).setSelected(getChildAt(i) == selected);
+        }
+    }
+
+    private int dpToPx(int dp) {
+        return Math.round(dp * getResources().getDisplayMetrics().density);
     }
     
     public void setListener(OnNumberClickListener listener) {
         this.listener = listener;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        listener = null;
+        super.onDetachedFromWindow();
     }
     
     public interface OnNumberClickListener {

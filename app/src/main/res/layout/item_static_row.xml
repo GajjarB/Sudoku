@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_8"
+    android:background="@drawable/neo_card"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_16">
+
+    <TextView
+        android:id="@+id/tv_row_icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/chip_accent"
+        android:gravity="center"
+        android:text="S"
+        android:textColor="@color/accent_primary"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_row_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_row_subtitle"
+            style="@style/TextAppearance.Neo.Muted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Subtitle" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_row_value"
+        style="@style/TextAppearance.Neo.Muted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="" />
+</LinearLayout>

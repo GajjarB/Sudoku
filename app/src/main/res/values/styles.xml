@@ -1,68 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- TEXT STYLES -->
-    
-    <style name="TextAppearance.Title" parent="TextAppearance.AppCompat.Title">
-        <item name="android:textSize">@dimen/text_size_title</item>
+    <style name="TextAppearance" />
+    <style name="TextAppearance.Neo" />
+    <style name="Button" />
+
+    <style name="TextAppearance.Neo.Label">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text_muted</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="TextAppearance.Neo.Title">
+        <item name="android:textSize">22sp</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0</item>
     </style>
-    
-    <style name="TextAppearance.Body" parent="TextAppearance.AppCompat.Body1">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+
+    <style name="TextAppearance.Neo.Heading">
+        <item name="android:textSize">17sp</item>
         <item name="android:textColor">@color/text_primary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0</item>
     </style>
-    
-    <style name="TextAppearance.Secondary" parent="TextAppearance.AppCompat.Body2">
-        <item name="android:textSize">@dimen/text_size_small</item>
+
+    <style name="TextAppearance.Neo.Body">
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:lineSpacingExtra">3dp</item>
     </style>
-    
-    <!-- BUTTON STYLES -->
-    
+
+    <style name="TextAppearance.Neo.Muted">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/text_muted</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
     <style name="Button.Primary" parent="Widget.AppCompat.Button">
-        <!-- <item name="android:background">@drawable/button_primary</item> -->
-        <item name="android:backgroundTint">@color/accent_primary</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:layout_height">@dimen/neo_button_height</item>
+        <item name="android:background">@drawable/neo_button_primary</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:textColor">@color/text_on_accent</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:paddingStart">@dimen/spacing_large</item>
-        <item name="android:paddingEnd">@dimen/spacing_large</item>
-        <item name="android:paddingTop">@dimen/spacing_medium</item>
-        <item name="android:paddingBottom">@dimen/spacing_medium</item>
-        <item name="android:elevation">@dimen/number_pad_elevation</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">@dimen/space_16</item>
+        <item name="android:paddingEnd">@dimen/space_16</item>
+        <item name="android:letterSpacing">0</item>
     </style>
-    
+
     <style name="Button.Secondary" parent="Widget.AppCompat.Button">
-        <!-- <item name="android:background">@drawable/button_secondary</item> -->
-        <item name="android:backgroundTint">@color/background_secondary</item>
-        <item name="android:textColor">@color/accent_primary</item>
-        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:layout_height">@dimen/neo_button_height</item>
+        <item name="android:background">@drawable/neo_button_secondary</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:paddingStart">@dimen/spacing_large</item>
-        <item name="android:paddingEnd">@dimen/spacing_large</item>
-        <item name="android:paddingTop">@dimen/spacing_medium</item>
-        <item name="android:paddingBottom">@dimen/spacing_medium</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">@dimen/space_16</item>
+        <item name="android:paddingEnd">@dimen/space_16</item>
     </style>
-    
-    <style name="Button.Icon" parent="Widget.AppCompat.Button.Borderless">
-        <!-- <item name="android:background">@drawable/button_icon</item> -->
-        <item name="android:tint">@color/text_secondary</item>
-        <item name="android:padding">@dimen/spacing_small</item>
+
+    <style name="Button.Icon" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/neo_icon_button</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:textColor">@color/text_muted</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:padding">@dimen/space_8</item>
     </style>
-    
-    <!-- NUMBER PAD BUTTON -->
-    
-    <style name="NumberPadButton">
+
+    <style name="NumberPadButton" parent="Widget.AppCompat.Button">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">@dimen/number_pad_button_size</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_margin">@dimen/spacing_tiny</item>
-        <!-- <item name="android:background">@drawable/number_pad_button</item> -->
-        <item name="android:backgroundTint">@color/number_pad_button</item>
+        <item name="android:background">@drawable/neo_number_button</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="backgroundTint">@null</item>
         <item name="android:textSize">@dimen/number_pad_button_text</item>
         <item name="android:textColor">@color/text_primary</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 </resources>

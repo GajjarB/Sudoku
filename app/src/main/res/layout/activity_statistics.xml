@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/window_gradient_bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/space_20">
+
+        <TextView
+            style="@style/TextAppearance.Neo.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stats_dashboard_label" />
+
+        <TextView
+            style="@style/TextAppearance.Neo.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stats_title" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_20"
+            android:columnCount="2">
+
+            <TextView
+                android:id="@+id/tv_stat_completed"
+                android:layout_width="0dp"
+                android:layout_height="104dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="@dimen/space_8"
+                android:layout_marginBottom="@dimen/space_8"
+                android:background="@drawable/stat_tile"
+                android:contentDescription="@string/stats_completed_content_description"
+                android:gravity="center_vertical|start"
+                android:padding="@dimen/space_16"
+                android:text="@string/stats_solved_default"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_stat_win_rate"
+                android:layout_width="0dp"
+                android:layout_height="104dp"
+                android:layout_columnWeight="1"
+                android:layout_marginBottom="@dimen/space_8"
+                android:background="@drawable/stat_tile"
+                android:contentDescription="@string/stats_win_rate_content_description"
+                android:gravity="center_vertical|start"
+                android:padding="@dimen/space_16"
+                android:text="@string/stats_win_rate_default"
+                android:textColor="@color/accent_success"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_stat_current_streak"
+                android:layout_width="0dp"
+                android:layout_height="104dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="@dimen/space_8"
+                android:layout_marginBottom="@dimen/space_8"
+                android:background="@drawable/stat_tile"
+                android:contentDescription="@string/stats_current_streak_content_description"
+                android:gravity="center_vertical|start"
+                android:padding="@dimen/space_16"
+                android:text="@string/stats_current_streak_default"
+                android:textColor="@color/accent_warning"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_stat_longest_streak"
+                android:layout_width="0dp"
+                android:layout_height="104dp"
+                android:layout_columnWeight="1"
+                android:layout_marginBottom="@dimen/space_8"
+                android:background="@drawable/stat_tile"
+                android:contentDescription="@string/stats_best_streak_content_description"
+                android:gravity="center_vertical|start"
+                android:padding="@dimen/space_16"
+                android:text="@string/stats_best_streak_default"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold" />
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:background="@drawable/neo_card"
+            android:orientation="vertical"
+            android:padding="@dimen/space_16">
+
+            <TextView
+                style="@style/TextAppearance.Neo.Heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/stats_play_summary" />
+
+            <TextView
+                android:id="@+id/tv_stat_best_times"
+                style="@style/TextAppearance.Neo.Body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12"
+                android:text="@string/stats_no_play_time" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:background="@drawable/neo_card"
+            android:orientation="vertical"
+            android:padding="@dimen/space_16">
+
+            <TextView
+                style="@style/TextAppearance.Neo.Heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/stats_loss_pressure" />
+
+            <ProgressBar
+                android:id="@+id/progress_mistakes"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="@dimen/space_12"
+                android:contentDescription="@string/stats_loss_pressure_content_description"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/neo_progress"
+                android:progressBackgroundTint="@color/divider" />
+
+            <TextView
+                android:id="@+id/tv_stat_mistakes"
+                style="@style/TextAppearance.Neo.Muted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:text="@string/stats_no_completed_games" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

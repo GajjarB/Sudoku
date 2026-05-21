@@ -41,7 +41,7 @@ public class GameHistory {
     public int mistakesMade;
     
     // AI Analysis Data
-    public double avgDecisionTimeMs;
+    public long avgDecisionTimeMs;
     public double accuracyRate;     // % of correct first attempts
     
     public boolean isDailyChallenge;

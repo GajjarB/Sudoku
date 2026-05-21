@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/window_gradient_bg"
+    android:orientation="vertical"
+    android:padding="@dimen/space_20">
+
+    <TextView
+        android:id="@+id/tv_static_label"
+        style="@style/TextAppearance.Neo.Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sudoku" />
+
+    <TextView
+        android:id="@+id/tv_static_title"
+        style="@style/TextAppearance.Neo.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Screen" />
+
+    <TextView
+        android:id="@+id/tv_static_subtitle"
+        style="@style/TextAppearance.Neo.Muted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4"
+        android:text="Subtitle" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_static"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_20"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/space_16" />
+</LinearLayout>

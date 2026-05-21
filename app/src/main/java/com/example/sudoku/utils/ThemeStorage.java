@@ -14,11 +14,11 @@ public class ThemeStorage {
 
     public static ThemeUtils.Theme loadTheme(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        String themeName = prefs.getString(KEY_THEME, ThemeUtils.Theme.BLUE.name());
+        String name = prefs.getString(KEY_THEME, ThemeUtils.Theme.LIGHT.name());
         try {
-            return ThemeUtils.Theme.valueOf(themeName);
-        } catch (IllegalArgumentException e) {
-            return ThemeUtils.Theme.BLUE;
+            return ThemeUtils.Theme.valueOf(name);
+        } catch (IllegalArgumentException ignored) {
+            return ThemeUtils.Theme.LIGHT;
         }
     }
 }

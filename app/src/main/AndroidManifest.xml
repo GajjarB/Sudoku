@@ -39,6 +39,30 @@
         <activity
             android:name=".ui.activities.SettingsActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.activities.StatisticsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activities.CompletedActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activities.ChallengesActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activities.ProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activities.ThemesActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activities.PremiumActivity"
+            android:exported="false" />
             
     </application>
 

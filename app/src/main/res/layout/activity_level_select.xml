@@ -2,20 +2,114 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/window_gradient_bg"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="@dimen/space_20">
 
     <TextView
+        android:id="@+id/tv_level_label"
+        style="@style/TextAppearance.Neo.Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Level"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
+        android:text="Select Difficulty" />
+
+    <TextView
+        android:id="@+id/tv_level_title"
+        style="@style/TextAppearance.Neo.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Game" />
+
+    <TextView
+        android:id="@+id/tv_level_subtitle"
+        style="@style/TextAppearance.Neo.Muted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4"
+        android:text="Choose a comfortable challenge." />
+
+    <LinearLayout
+        android:id="@+id/difficulty_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_20"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_easy"
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:gravity="center_vertical|start"
+            android:text="Easy    Great for beginners" />
+
+        <Button
+            android:id="@+id/btn_medium"
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:gravity="center_vertical|start"
+            android:text="Medium    A balanced challenge" />
+
+        <Button
+            android:id="@+id/btn_hard"
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:gravity="center_vertical|start"
+            android:text="Hard    For experienced players" />
+
+        <Button
+            android:id="@+id/btn_expert"
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:gravity="center_vertical|start"
+            android:text="Expert    For Sudoku masters" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/puzzle_filters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_16"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            style="@style/Button.Secondary"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:text="All" />
+
+        <Button
+            style="@style/Button.Secondary"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="@dimen/space_8"
+            android:layout_weight="1"
+            android:text="In Progress" />
+
+        <Button
+            style="@style/Button.Secondary"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="@dimen/space_8"
+            android:layout_weight="1"
+            android:text="Completed" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_levels"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_16"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/space_16"
+        android:visibility="gone" />
 </LinearLayout>

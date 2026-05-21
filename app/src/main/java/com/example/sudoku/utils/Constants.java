@@ -11,7 +11,7 @@ public class Constants {
     // DATABASE
     // ═══════════════════════════════════════════════════════════════
     public static final String DATABASE_NAME = "sudoku_nexus.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 3;
     
     // ═══════════════════════════════════════════════════════════════
     // GAME CONFIGURATION
@@ -90,6 +90,10 @@ public class Constants {
     // ═══════════════════════════════════════════════════════════════
     public static final String EXTRA_GAME_ID = "game_id";
     public static final String EXTRA_LEVEL_NUMBER = "level_number";
+    public static final String EXTRA_DIFFICULTY = "difficulty";
+    public static final String EXTRA_COMPLETION_TIME = "completion_time";
+    public static final String EXTRA_COMPLETION_MISTAKES = "completion_mistakes";
+    public static final String EXTRA_COMPLETION_LEVEL = "completion_level";
     public static final String EXTRA_IS_DAILY_CHALLENGE = "is_daily_challenge";
     public static final String EXTRA_RESUME_GAME = "resume_game";
     
@@ -118,6 +122,17 @@ public class Constants {
     public static final String STRATEGY_POINTING_PAIR = "POINTING_PAIR";
     public static final String STRATEGY_BOX_LINE_REDUCTION = "BOX_LINE_REDUCTION";
     public static final String STRATEGY_LOGICAL_DEDUCTION = "LOGICAL_DEDUCTION";
+    public static final String STRATEGY_X_WING = "X_WING";
+    public static final String STRATEGY_HIDDEN_TRIPLE = "HIDDEN_TRIPLE";
+    public static final String STRATEGY_NAKED_QUAD = "NAKED_QUAD";
+    public static final String STRATEGY_HIDDEN_QUAD = "HIDDEN_QUAD";
+    public static final String STRATEGY_SWORDFISH = "SWORDFISH";
+    public static final String STRATEGY_JELLYFISH = "JELLYFISH";
+    public static final String STRATEGY_XY_WING = "XY_WING";
+    public static final String STRATEGY_XYZ_WING = "XYZ_WING";
+    public static final String STRATEGY_UNIQUE_RECTANGLE = "UNIQUE_RECTANGLE";
+    public static final String STRATEGY_SIMPLE_COLORING = "SIMPLE_COLORING";
+    public static final String STRATEGY_FORCING_CHAIN = "FORCING_CHAIN";
     public static final String STRATEGY_GUESSING = "GUESSING";
     
     // ═══════════════════════════════════════════════════════════════

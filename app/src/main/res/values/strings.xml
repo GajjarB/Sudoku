@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Sudoku Nexus</string>
+    <string name="app_name">Sudoku</string>
     
     <!-- MAIN MENU -->
     <string name="menu_play">Play</string>
@@ -22,12 +22,23 @@
     <string name="game_paused">Paused</string>
     <string name="game_mistakes">Mistakes: %1$d/3</string>
     <string name="game_hints">Hints: %1$d</string>
+    <string name="game_hints_status">Hints: %1$d used, %2$d left</string>
+    <string name="game_hints_status_default">Hints: 0 used, 3 left</string>
+    <string name="game_mistakes_status">Mistakes: %1$d of 3</string>
+    <string name="game_mistakes_status_default">Mistakes: 0 of 3</string>
+    <string name="game_mistakes_content_description">Mistakes made: %1$d of 3</string>
+    <string name="game_hints_content_description">Hints used: %1$d. Hints remaining: %2$d.</string>
+    <string name="game_timer_content_description">Elapsed game time</string>
+    <string name="game_board_content_description">Sudoku puzzle board</string>
+    <string name="game_loading">Preparing puzzle...</string>
     <string name="game_time">%1$02d:%2$02d</string>
     <string name="game_completed">Completed!</string>
     <string name="game_score">Score: %1$d</string>
     
     <!-- CONTROLS -->
+    <string name="control_back">Go back</string>
     <string name="control_undo">Undo</string>
+    <string name="control_redo">Redo</string>
     <string name="control_erase">Erase</string>
     <string name="control_pencil">Notes</string>
     <string name="control_hint">Hint</string>
@@ -67,8 +78,17 @@
     <string name="streak_broken">Streak broken</string>
     
     <!-- SETTINGS -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_heading_game_preferences">Game preferences</string>
+    <string name="settings_summary">Tune gameplay feedback and read app details.</string>
+    <string name="settings_gameplay">Gameplay</string>
     <string name="settings_sound">Sound Effects</string>
+    <string name="settings_sound_unavailable">Sound effects: Not available</string>
+    <string name="settings_sound_unavailable_message">This release does not include gameplay sound effects yet.</string>
     <string name="settings_vibration">Vibration</string>
+    <string name="settings_vibration_state">Vibration: %1$s</string>
+    <string name="settings_state_on">On</string>
+    <string name="settings_state_off">Off</string>
     <string name="settings_highlight_conflicts">Highlight Conflicts</string>
     <string name="settings_highlight_same">Highlight Same Number</string>
     <string name="settings_auto_remove_notes">Auto-Remove Notes</string>
@@ -76,6 +96,24 @@
     <string name="settings_input_cell_first">Cell First</string>
     <string name="settings_input_digit_first">Digit First</string>
     <string name="settings_theme">Theme</string>
+    <string name="settings_theme_state">Theme: %1$s</string>
+    <string name="settings_mistake_popups_state">Mistake popups: %1$s</string>
+    <string name="settings_mistake_popups_default">Mistake popups: On</string>
+    <string name="settings_notes_state">Start games in notes: %1$s</string>
+    <string name="settings_notes_default">Start games in notes: Off</string>
+    <string name="settings_privacy">Privacy and backup</string>
+    <string name="settings_privacy_title">Privacy and backup</string>
+    <string name="settings_privacy_message">Sudoku stores progress, settings, and play statistics on this device. Cloud backup excludes this gameplay data; Android device transfer can move it to a new phone.</string>
+    <string name="settings_support">Support</string>
+    <string name="settings_about">About</string>
+    <string name="settings_about_message">Sudoku v1.0</string>
+    <string name="settings_audio_unavailable_content_description">Sound effects are not available in this release.</string>
+    <string name="settings_vibration_content_description">Toggle vibration feedback</string>
+    <string name="settings_theme_content_description">Change app theme</string>
+    <string name="settings_mistake_popups_content_description">Toggle mistake warning popups</string>
+    <string name="settings_notes_content_description">Toggle starting new games in notes mode</string>
+    <string name="settings_privacy_content_description">Show privacy and backup information</string>
+    <string name="settings_about_content_description">Show app version</string>
     
     <!-- THEMES -->
     <string name="theme_blue">Blue</string>
@@ -93,4 +131,19 @@
     <string name="stats_avg_time">Average Time</string>
     <string name="stats_current_streak">Current Streak</string>
     <string name="stats_longest_streak">Longest Streak</string>
+    <string name="stats_no_play_time">No play time recorded yet</string>
+    <string name="stats_no_completed_games">No completed games yet</string>
+    <string name="stats_dashboard_label">Performance dashboard</string>
+    <string name="stats_title">Statistics</string>
+    <string name="stats_solved_default">0\nSolved</string>
+    <string name="stats_win_rate_default" formatted="false">0%\nWin Rate</string>
+    <string name="stats_current_streak_default">0\nCurrent Streak</string>
+    <string name="stats_best_streak_default">0\nBest Streak</string>
+    <string name="stats_play_summary">Play Summary</string>
+    <string name="stats_loss_pressure">Loss Pressure</string>
+    <string name="stats_completed_content_description">Solved games</string>
+    <string name="stats_win_rate_content_description">Win rate</string>
+    <string name="stats_current_streak_content_description">Current streak</string>
+    <string name="stats_best_streak_content_description">Best streak</string>
+    <string name="stats_loss_pressure_content_description">Loss pressure progress</string>
 </resources>

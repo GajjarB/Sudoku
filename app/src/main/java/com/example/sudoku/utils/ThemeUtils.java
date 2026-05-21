@@ -1,17 +1,21 @@
 package com.example.sudoku.utils;
 
+import android.content.Context;
 import android.graphics.Color;
-import com.example.sudoku.R;
 
 public class ThemeUtils {
-    
+
+    public static Theme getDefaultTheme(Context context) {
+        return Theme.LIGHT;
+    }
+
     public enum Theme {
-        BLUE("Blue", "#4A90E2", "#FFFFFF", "#F5F7FA", "#1A1A1A", "#E8ECF0"),
-        DARK("Dark", "#64B5F6", "#000000", "#1A1A1A", "#FFFFFF", "#333333"),
-        PINK("Pink", "#EC407A", "#FFFFFF", "#FCE4EC", "#1A1A1A", "#E8ECF0"),
-        GREEN("Green", "#66BB6A", "#FFFFFF", "#E8F5E9", "#1A1A1A", "#E8ECF0"),
-        PURPLE("Purple", "#AB47BC", "#FFFFFF", "#F3E5F5", "#1A1A1A", "#E8ECF0"),
-        ORANGE("Orange", "#FF7043", "#FFFFFF", "#FBE9E7", "#1A1A1A", "#E8ECF0");
+        LIGHT("Light", "#2F7BFF", "#F8F7F4", "#FFFFFF", "#111111", "#E7E5E0"),
+        DARK("Dark", "#2F7BFF", "#111111", "#1B1B1B", "#FFFFFF", "#333333"),
+        NOTION("Notion", "#2F7BFF", "#F8F7F4", "#FFFFFF", "#111111", "#E7E5E0"),
+        FOREST("Forest", "#3D7C59", "#F5F8F4", "#FFFFFF", "#111111", "#DDE7DE"),
+        OCEAN("Ocean", "#2F7BFF", "#F4F8FB", "#FFFFFF", "#111111", "#DCE8F2"),
+        MIDNIGHT("Midnight", "#8AB4FF", "#101214", "#191C20", "#F7F7F7", "#30343A");
 
         public final String name;
         public final int accentColor;

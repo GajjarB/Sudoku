@@ -47,9 +47,30 @@ public class SavedGame {
     
     // Timestamps
     public long startedAt;
-    public long lastPlayedAt;       // Renamed from lastSavedAt to match usage if preferred, OR keep lastSavedAt
+    public long lastPlayedAt;
     public long completedAt;
-    
+
+    // ── Extended state (added in schema v3) ──────────────────────────────
+    /** Encoded notes plus lightweight domain metadata for resume. */
+    @NonNull
+    public String notes = "";
+    /** Encoded undo stack; semicolon-separated MoveRecord entries. */
+    @NonNull
+    public String undoStack = "";
+    /** Encoded redo stack; same format as undo. */
+    @NonNull
+    public String redoStack = "";
+    public int selectedRow = -1;
+    public int selectedCol = -1;
+    public boolean notesMode = false;
+    /** Variant identifier (CLASSIC_9X9, KILLER, ...). */
+    @NonNull
+    public String variant = "CLASSIC_9X9";
+    /** Difficulty enum name; empty if not classified yet. */
+    @NonNull
+    public String difficulty = "";
+    public int schemaVersion = 3;
+
     public SavedGame(@NonNull String gameId, int levelNumber,
                      @NonNull String puzzleGrid, @NonNull String solutionGrid,
                      @NonNull String lockedCells) {
@@ -57,7 +78,7 @@ public class SavedGame {
         this.levelNumber = levelNumber;
         this.puzzleGrid = puzzleGrid;
         this.solutionGrid = solutionGrid;
-        this.currentGrid = puzzleGrid; // Start with puzzle state
+        this.currentGrid = puzzleGrid;
         this.lockedCells = lockedCells;
         this.elapsedTimeMs = 0;
         this.hintsRemaining = 3;

@@ -1,22 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@drawable/window_gradient_bg"
+    android:fillViewport="true">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Settings"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:paddingBottom="16dp"
-        android:textColor="?android:attr/textColorPrimary"/>
+        android:orientation="vertical"
+        android:padding="@dimen/space_20">
 
-    <ListView
-        android:id="@+id/settings_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <TextView
+            style="@style/TextAppearance.Neo.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_heading_game_preferences" />
 
-</LinearLayout>
+        <TextView
+            style="@style/TextAppearance.Neo.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_title" />
+
+        <TextView
+            style="@style/TextAppearance.Neo.Muted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_4"
+            android:text="@string/settings_summary" />
+
+        <TextView
+            style="@style/TextAppearance.Neo.Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_24"
+            android:text="@string/settings_gameplay" />
+
+        <Button
+            android:id="@+id/btn_sound"
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:contentDescription="@string/settings_audio_unavailable_content_description"
+            android:text="@string/settings_sound_unavailable" />
+
+        <Button
+            android:id="@+id/btn_vibration"
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:contentDescription="@string/settings_vibration_content_description"
+            android:text="@string/settings_vibration" />
+
+        <Button
+            android:id="@+id/btn_theme"
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:contentDescription="@string/settings_theme_content_description"
+            android:text="@string/settings_theme" />
+
+        <Button
+            android:id="@+id/btn_mistake_limit"
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:contentDescription="@string/settings_mistake_popups_content_description"
+            android:text="@string/settings_mistake_popups_default" />
+
+        <Button
+            android:id="@+id/btn_notes_help"
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:contentDescription="@string/settings_notes_content_description"
+            android:text="@string/settings_notes_default" />
+
+        <Button
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="Show mistakes: On" />
+
+        <Button
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="Auto check: On" />
+
+        <Button
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="Highlight duplicates: On" />
+
+        <Button
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="Show timer: On" />
+
+        <Button
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="Language: English" />
+
+        <Button
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="Backup and sync" />
+
+        <Button
+            android:id="@+id/btn_privacy"
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:contentDescription="@string/settings_privacy_content_description"
+            android:text="@string/settings_privacy" />
+
+        <Button
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="Terms" />
+
+        <Button
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:text="Reset progress" />
+
+        <TextView
+            style="@style/TextAppearance.Neo.Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_24"
+            android:text="@string/settings_support" />
+
+        <Button
+            android:id="@+id/btn_about"
+            style="@style/Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/neo_button_height"
+            android:layout_marginTop="@dimen/space_8"
+            android:contentDescription="@string/settings_about_content_description"
+            android:text="@string/settings_about" />
+    </LinearLayout>
+</ScrollView>

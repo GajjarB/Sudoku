@@ -33,4 +33,23 @@ public interface UserProfileDao {
     
     @Query("UPDATE user_profile SET theme = :theme WHERE userId = :userId")
     void updateTheme(String userId, String theme);
+
+    @Query("UPDATE user_profile SET graceUsesThisMonth = :uses, graceResetMonth = :month WHERE userId = :userId")
+    void updateGraceFields(String userId, int uses, String month);
+
+    @Query("UPDATE user_profile SET "
+            + "totalGamesPlayed = totalGamesPlayed + 1, "
+            + "totalGamesWon = totalGamesWon + :wins, "
+            + "totalGamesLost = totalGamesLost + :losses, "
+            + "totalStarsEarned = totalStarsEarned + :stars, "
+            + "totalHintsUsed = totalHintsUsed + :hintsUsed, "
+            + "totalPlayTimeMs = totalPlayTimeMs + :timeMs, "
+            + "currentXP = currentXP + :xp, "
+            + "totalXP = totalXP + :xp, "
+            + "currentLevel = CASE WHEN currentLevel < :level THEN :level ELSE currentLevel END, "
+            + "lastPlayedDate = :playedAt, "
+            + "updatedAt = :playedAt "
+            + "WHERE userId = :userId")
+    void recordGameResult(String userId, int wins, int losses, int stars,
+                          int hintsUsed, long timeMs, int xp, int level, long playedAt);
 }

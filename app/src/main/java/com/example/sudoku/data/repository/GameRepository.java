@@ -1,11 +1,11 @@
 package com.example.sudoku.data.repository;
 
 import androidx.lifecycle.LiveData;
+import com.example.sudoku.core.AppExecutors;
 import com.example.sudoku.data.local.dao.GameDao;
 import com.example.sudoku.data.local.entities.*;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Repository for managing game data (Saved Games, History, AI data).
@@ -17,8 +17,12 @@ public class GameRepository {
     private final ExecutorService executorService;
 
     public GameRepository(GameDao gameDao) {
+        this(gameDao, AppExecutors.getInstance().io());
+    }
+
+    public GameRepository(GameDao gameDao, ExecutorService executorService) {
         this.gameDao = gameDao;
-        this.executorService = Executors.newSingleThreadExecutor();
+        this.executorService = executorService;
     }
 
     // ═══════════════════════════════════════════════════════════════
@@ -29,20 +33,68 @@ public class GameRepository {
         return gameDao.getSavedGameLive(gameId);
     }
 
+    public SavedGame getSavedGame(String gameId) {
+        return gameDao.getSavedGame(gameId);
+    }
+
     public void saveGame(SavedGame game) {
-        executorService.execute(() -> gameDao.insertSavedGame(game));
+        executorService.execute(() -> {
+            try {
+                gameDao.insertSavedGame(game);
+            } catch (Exception e) {
+                android.util.Log.e("GameRepository", "saveGame failed", e);
+            }
+        });
+    }
+
+    public void saveGameSync(SavedGame game) {
+        gameDao.insertSavedGame(game);
     }
 
     public void updateSavedGame(SavedGame game) {
-        executorService.execute(() -> gameDao.updateSavedGame(game));
+        executorService.execute(() -> {
+            try {
+                gameDao.updateSavedGame(game);
+            } catch (Exception e) {
+                android.util.Log.e("GameRepository", "updateSavedGame failed", e);
+            }
+        });
+    }
+
+    public void updateSavedGameSync(SavedGame game) {
+        gameDao.updateSavedGame(game);
     }
 
     public void deleteSavedGame(SavedGame game) {
-        executorService.execute(() -> gameDao.deleteSavedGame(game));
+        executorService.execute(() -> {
+            try {
+                gameDao.deleteSavedGame(game);
+            } catch (Exception e) {
+                android.util.Log.e("GameRepository", "deleteSavedGame failed", e);
+            }
+        });
     }
 
     public LiveData<SavedGame> getIncompleteGame() {
         return gameDao.getIncompleteGameLive();
+    }
+
+    /** Synchronous lookup — must be called from a background thread. */
+    public SavedGame getIncompleteGameSync() {
+        return gameDao.getIncompleteGame();
+    }
+
+    public SavedGame getDailyGameForDaySync(long startOfDay, long endOfDay) {
+        return gameDao.getDailyGameForDay(startOfDay, endOfDay);
+    }
+
+    public void deleteIncompleteDailyGamesForDayExceptSync(long startOfDay, long endOfDay,
+                                                           String keepGameId) {
+        gameDao.deleteIncompleteDailyGamesForDayExcept(startOfDay, endOfDay, keepGameId);
+    }
+
+    public void deleteIncompleteGamesForLevelExceptSync(int levelNumber, String keepGameId) {
+        gameDao.deleteIncompleteGamesForLevelExcept(levelNumber, keepGameId);
     }
 
     // ═══════════════════════════════════════════════════════════════
@@ -50,7 +102,17 @@ public class GameRepository {
     // ═══════════════════════════════════════════════════════════════
 
     public void recordGameHistory(GameHistory history) {
-        executorService.execute(() -> gameDao.insertGameHistory(history));
+        executorService.execute(() -> {
+            try {
+                gameDao.insertGameHistory(history);
+            } catch (Exception e) {
+                android.util.Log.e("GameRepository", "recordGameHistory failed", e);
+            }
+        });
+    }
+
+    public void recordGameHistorySync(GameHistory history) {
+        gameDao.insertGameHistory(history);
     }
 
     public List<GameHistory> getRecentGames(int limit) {
@@ -68,23 +130,51 @@ public class GameRepository {
     // ═══════════════════════════════════════════════════════════════
 
     public void recordPlayerBehavior(PlayerBehavior behavior) {
-        executorService.execute(() -> gameDao.insertPlayerBehavior(behavior));
+        executorService.execute(() -> {
+            try {
+                gameDao.insertPlayerBehavior(behavior);
+            } catch (Exception e) {
+                android.util.Log.e("GameRepository", "recordPlayerBehavior failed", e);
+            }
+        });
     }
 
     public void saveCognitiveMetrics(CognitiveMetrics metrics) {
-        executorService.execute(() -> gameDao.insertCognitiveMetrics(metrics));
+        executorService.execute(() -> {
+            try {
+                gameDao.insertCognitiveMetrics(metrics);
+            } catch (Exception e) {
+                android.util.Log.e("GameRepository", "saveCognitiveMetrics failed", e);
+            }
+        });
     }
 
     public void updateSolvingPattern(SolvingPattern pattern) {
-        executorService.execute(() -> gameDao.upsertSolvingPattern(pattern));
+        executorService.execute(() -> {
+            try {
+                gameDao.upsertSolvingPattern(pattern);
+            } catch (Exception e) {
+                android.util.Log.e("GameRepository", "updateSolvingPattern failed", e);
+            }
+        });
     }
     
     // Cleanup
     public void cleanupOldData() {
-        long monthAgo = System.currentTimeMillis() - (30L * 24 * 60 * 60 * 1000);
+        long ninetyDaysAgo = System.currentTimeMillis() - (90L * 24 * 60 * 60 * 1000);
         executorService.execute(() -> {
-            gameDao.deleteOldCompletedGames(monthAgo);
-            gameDao.deleteOldBehaviorData(monthAgo);
+            try {
+                gameDao.deleteOldCompletedGames(ninetyDaysAgo);
+                gameDao.deleteOldBehaviorData(ninetyDaysAgo);
+            } catch (Exception e) {
+                android.util.Log.e("GameRepository", "Cleanup failed", e);
+            }
         });
+    }
+
+    /**
+     * Repositories share AppExecutors. App lifecycle owns shutdown.
+     */
+    public void shutdown() {
     }
 }

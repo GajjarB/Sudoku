@@ -2,54 +2,352 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="32dp"
-    android:background="#FAFAFA">
+    android:background="@drawable/window_gradient_bg"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SUDOKU NEXUS"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
-
-    <TextView
-        android:id="@+id/tv_player_level"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Level 1"
-        android:textSize="24sp"
-        android:layout_marginBottom="48dp" />
-
-    <Button
-        android:id="@+id/btn_resume"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:text="RESUME GAME"
-        android:layout_marginBottom="16dp"
-        android:visibility="gone" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
-    <Button
-        android:id="@+id/btn_play"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:text="NEW GAME"
-        android:layout_marginBottom="16dp" />
-        
-    <Button
-        android:id="@+id/btn_daily"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:text="DAILY CHALLENGE"
-        android:layout_marginBottom="16dp" />
-        
-    <Button
-        android:id="@+id/btn_settings"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:text="SETTINGS" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/space_20">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/neo_card"
+                    android:gravity="center"
+                    android:text="S"
+                    android:textColor="@color/text_primary"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/TextAppearance.Neo.Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:layout_weight="1"
+                    android:text="Sudoku" />
+
+                <ImageButton
+                    android:id="@+id/btn_settings"
+                    android:layout_width="@dimen/neo_icon_box"
+                    android:layout_height="@dimen/neo_icon_box"
+                    android:background="@drawable/neo_icon_button"
+                    android:contentDescription="Open settings"
+                    android:padding="@dimen/space_12"
+                    android:src="@drawable/ic_settings_24" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_20"
+                android:background="@drawable/card_hero"
+                android:orientation="vertical"
+                android:padding="@dimen/space_16">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextAppearance.Neo.Heading"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Daily Challenge" />
+
+                    <TextView
+                        android:id="@+id/tv_daily_date"
+                        style="@style/TextAppearance.Neo.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Today" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_daily_status"
+                    style="@style/TextAppearance.Neo.Muted"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:text="A calm board, refreshed every day." />
+
+                <ProgressBar
+                    android:id="@+id/progress_daily"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="@dimen/space_12"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/neo_progress" />
+
+                <Button
+                    android:id="@+id/btn_daily"
+                    style="@style/Button.Primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/neo_button_height"
+                    android:layout_marginTop="@dimen/space_12"
+                    android:text="Play" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12"
+                android:background="@drawable/neo_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_16">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_continue_title"
+                        style="@style/TextAppearance.Neo.Heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Continue Game" />
+
+                    <TextView
+                        android:id="@+id/tv_player_level"
+                        style="@style/TextAppearance.Neo.Muted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_4"
+                        android:text="Ready for a fresh puzzle" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_resume"
+                    style="@style/Button.Secondary"
+                    android:layout_width="104dp"
+                    android:layout_height="@dimen/neo_button_height"
+                    android:text="Play" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/TextAppearance.Neo.Heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_24"
+                android:text="Quick Access" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:columnCount="2">
+
+                <Button
+                    android:id="@+id/btn_challenges"
+                    style="@style/Button.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/neo_button_height"
+                    android:layout_columnWeight="1"
+                    android:layout_marginEnd="@dimen/space_8"
+                    android:layout_marginBottom="@dimen/space_8"
+                    android:text="Challenges" />
+
+                <Button
+                    android:id="@+id/btn_themes"
+                    style="@style/Button.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/neo_button_height"
+                    android:layout_columnWeight="1"
+                    android:layout_marginBottom="@dimen/space_8"
+                    android:text="Themes" />
+
+                <Button
+                    android:id="@+id/btn_premium"
+                    style="@style/Button.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/neo_button_height"
+                    android:layout_columnWeight="1"
+                    android:layout_marginEnd="@dimen/space_8"
+                    android:text="Premium" />
+
+                <Button
+                    android:id="@+id/btn_play"
+                    style="@style/Button.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/neo_button_height"
+                    android:layout_columnWeight="1"
+                    android:text="Puzzles" />
+            </GridLayout>
+
+            <TextView
+                style="@style/TextAppearance.Neo.Heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_24"
+                android:text="Difficulty" />
+
+            <Button
+                android:id="@+id/btn_easy"
+                style="@style/Button.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/neo_button_height"
+                android:layout_marginTop="@dimen/space_8"
+                android:gravity="center_vertical|start"
+                android:text="Easy    Great for beginners" />
+
+            <Button
+                android:id="@+id/btn_medium"
+                style="@style/Button.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/neo_button_height"
+                android:layout_marginTop="@dimen/space_8"
+                android:gravity="center_vertical|start"
+                android:text="Medium    A balanced challenge" />
+
+            <Button
+                android:id="@+id/btn_hard"
+                style="@style/Button.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/neo_button_height"
+                android:layout_marginTop="@dimen/space_8"
+                android:gravity="center_vertical|start"
+                android:text="Hard    For experienced players" />
+
+            <Button
+                android:id="@+id/btn_expert"
+                style="@style/Button.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/neo_button_height"
+                android:layout_marginTop="@dimen/space_8"
+                android:gravity="center_vertical|start"
+                android:text="Expert    For Sudoku masters" />
+
+            <TextView
+                style="@style/TextAppearance.Neo.Heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_24"
+                android:text="Progress" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:columnCount="2">
+
+                <TextView
+                    android:id="@+id/tv_games_played"
+                    android:layout_width="0dp"
+                    android:layout_height="82dp"
+                    android:layout_columnWeight="1"
+                    android:layout_marginEnd="@dimen/space_8"
+                    android:layout_marginBottom="@dimen/space_8"
+                    android:background="@drawable/stat_tile"
+                    android:gravity="center_vertical|start"
+                    android:padding="@dimen/space_16"
+                    android:text="0\nGames"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_win_rate"
+                    android:layout_width="0dp"
+                    android:layout_height="82dp"
+                    android:layout_columnWeight="1"
+                    android:layout_marginBottom="@dimen/space_8"
+                    android:background="@drawable/stat_tile"
+                    android:gravity="center_vertical|start"
+                    android:padding="@dimen/space_16"
+                    android:text="0%\nWins"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_best_time"
+                    android:layout_width="0dp"
+                    android:layout_height="82dp"
+                    android:layout_columnWeight="1"
+                    android:layout_marginEnd="@dimen/space_8"
+                    android:background="@drawable/stat_tile"
+                    android:gravity="center_vertical|start"
+                    android:padding="@dimen/space_16"
+                    android:text="--\nPlayed"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_streak"
+                    android:layout_width="0dp"
+                    android:layout_height="82dp"
+                    android:layout_columnWeight="1"
+                    android:background="@drawable/stat_tile"
+                    android:gravity="center_vertical|start"
+                    android:padding="@dimen/space_16"
+                    android:text="0\nStreak"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+            </GridLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="@color/bg_elevated"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_8"
+        android:paddingEnd="@dimen/space_8">
+
+        <Button
+            style="@style/Button.Secondary"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Home" />
+
+        <Button
+            android:id="@+id/btn_nav_challenges"
+            style="@style/Button.Secondary"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/space_4"
+            android:layout_weight="1"
+            android:text="Challenges" />
+
+        <Button
+            android:id="@+id/btn_stats"
+            style="@style/Button.Secondary"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/space_4"
+            android:layout_weight="1"
+            android:text="Stats" />
+
+        <Button
+            android:id="@+id/btn_profile"
+            style="@style/Button.Secondary"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/space_4"
+            android:layout_weight="1"
+            android:text="Profile" />
+    </LinearLayout>
 </LinearLayout>

@@ -1,79 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- ═══════════════════════════════════════════════════════════════ -->
-    <!-- DEFAULT THEME (Blue/Teal - Like Dustland's Default) -->
-    <!-- ═══════════════════════════════════════════════════════════════ -->
-    
-    <!-- Background Colors -->
-    <color name="background_primary">#F5F7FA</color>        <!-- Light blue-gray -->
-    <color name="background_secondary">#FFFFFF</color>       <!-- Pure white -->
-    
-    <!-- Grid Colors -->
-    <color name="grid_background">#FFFFFF</color>
-    <color name="grid_line_thin">#E8ECF0</color>            <!-- Very light gray -->
-    <color name="grid_line_thick">#4A90E2</color>           <!-- Primary blue -->
-    
-    <!-- Cell States -->
-    <color name="cell_default">#FFFFFF</color>              <!-- Empty cell -->
-    <color name="cell_selected">#4A90E2</color>             <!-- Selected cell -->
-    <color name="cell_selected_light">#E3F2FF</color>       <!-- Selected row/col -->
-    <color name="cell_locked">#F5F7FA</color>               <!-- Given clue -->
-    <color name="cell_same_number">#FFF9E6</color>          <!-- Same number highlight -->
-    <color name="cell_conflict">#FFE5E5</color>             <!-- Error state -->
-    
-    <!-- Text Colors -->
-    <color name="text_primary">#1A1A1A</color>              <!-- Main text -->
-    <color name="text_secondary">#757575</color>            <!-- Secondary text -->
-    <color name="text_locked">#424242</color>               <!-- Given clues -->
-    <color name="text_player">#4A90E2</color>               <!-- Player input -->
-    <color name="text_pencil">#9E9E9E</color>               <!-- Pencil marks -->
-    <color name="text_error">#E53935</color>                <!-- Errors -->
-    
-    <!-- Accent Colors -->
-    <color name="accent_primary">#4A90E2</color>            <!-- Primary blue -->
-    <color name="accent_secondary">#42A5F5</color>          <!-- Light blue -->
-    <color name="accent_success">#4CAF50</color>            <!-- Green for success -->
-    <color name="accent_warning">#FFA726</color>            <!-- Orange for hints -->
-    
-    <!-- Number Pad -->
-    <color name="number_pad_background">#FFFFFF</color>
-    <color name="number_pad_button">#F5F7FA</color>
-    <color name="number_pad_button_pressed">#E3F2FF</color>
-    <color name="number_pad_button_disabled">#E0E0E0</color>
-    
-    <!-- ═══════════════════════════════════════════════════════════════ -->
-    <!-- ALTERNATIVE THEMES -->
-    <!-- ═══════════════════════════════════════════════════════════════ -->
-    
-    <!-- Dark/AMOLED Theme -->
-    <color name="dark_background">#000000</color>
-    <color name="dark_grid_line">#1A1A1A</color>
-    <color name="dark_accent">#64B5F6</color>
-    <color name="dark_text">#FFFFFF</color>
-    
-    <!-- Pink Theme -->
-    <color name="pink_accent">#EC407A</color>
-    <color name="pink_light">#FCE4EC</color>
-    
-    <!-- Green Theme -->
-    <color name="green_accent">#66BB6A</color>
-    <color name="green_light">#E8F5E9</color>
-    
-    <!-- Purple Theme -->
-    <color name="purple_accent">#AB47BC</color>
-    <color name="purple_light">#F3E5F5</color>
-    
-    <!-- Orange Theme -->
-    <color name="orange_accent">#FF7043</color>
-    <color name="orange_light">#FBE9E7</color>
-    
-    <!-- Legacy/Required colors (mapping to new ones) -->
+    <!-- Notion-inspired design system -->
+    <color name="bg_base">#F8F7F4</color>
+    <color name="bg_elevated">#FFFFFF</color>
+    <color name="bg_elevated_alt">#F1F1EF</color>
+    <color name="bg_grid">#FFFFFF</color>
+    <color name="surface_overlay">#FFFFFF</color>
+    <color name="divider">#E7E5E0</color>
+
+    <color name="accent_primary">#2F7BFF</color>
+    <color name="accent_primary_glow">#2F7BFF</color>
+    <color name="accent_primary_pressed">#1F63D6</color>
+    <color name="accent_secondary">#F1F1EF</color>
+    <color name="accent_secondary_glow">#E7E5E0</color>
+    <color name="accent_success">#4CAF50</color>
+    <color name="accent_warning">#F5A623</color>
+    <color name="accent_danger">#E5484D</color>
+
+    <color name="text_primary">#111111</color>
+    <color name="text_secondary">#6B6B6B</color>
+    <color name="text_muted">#8B8B8B</color>
+    <color name="text_disabled">#B6B6B6</color>
+    <color name="text_on_accent">#FFFFFF</color>
+
+    <color name="grid_line_thin">#E7E5E0</color>
+    <color name="grid_line_thick">#111111</color>
+    <color name="cell_default">#FFFFFF</color>
+    <color name="cell_selected">#EAF2FF</color>
+    <color name="cell_selected_glow">#2F7BFF</color>
+    <color name="cell_highlighted">#F4F8FF</color>
+    <color name="cell_same_number">#EEF5FF</color>
+    <color name="cell_conflict">#FDECEC</color>
+    <color name="cell_locked">#FAFAF9</color>
+    <color name="cell_hint_pulse">#FFF7E8</color>
+
+    <color name="text_locked">#111111</color>
+    <color name="text_player">#2F7BFF</color>
+    <color name="text_player_correct">#2F7BFF</color>
+    <color name="text_error">#E5484D</color>
+    <color name="text_pencil">#6B6B6B</color>
+
+    <color name="number_pad_background">#F8F7F4</color>
+    <color name="number_pad_button">#FFFFFF</color>
+    <color name="number_pad_button_pressed">#EAF2FF</color>
+    <color name="number_pad_button_disabled">#F1F1EF</color>
+    <color name="numpad_key_shadow">#FFFFFF</color>
+
+    <color name="difficulty_easy">#4CAF50</color>
+    <color name="difficulty_medium">#2F7BFF</color>
+    <color name="difficulty_hard">#F5A623</color>
+    <color name="difficulty_expert">#E5484D</color>
+
+    <!-- Legacy aliases kept for existing code/resources -->
+    <color name="background_cream">@color/bg_base</color>
+    <color name="background_primary">@color/bg_base</color>
+    <color name="background_secondary">@color/bg_elevated_alt</color>
+    <color name="card_white">@color/bg_elevated</color>
+    <color name="text_black">@color/text_primary</color>
+    <color name="border_black">@color/divider</color>
+    <color name="error_red">@color/accent_danger</color>
+    <color name="success_green">@color/accent_success</color>
+    <color name="accent_purple">@color/accent_primary</color>
+    <color name="accent_yellow">@color/accent_warning</color>
+    <color name="accent_green">@color/accent_success</color>
+    <color name="grid_background">@color/bg_grid</color>
+    <color name="cell_selected_light">@color/cell_highlighted</color>
+    <color name="dark_background">@color/bg_base</color>
+    <color name="dark_grid_line">@color/grid_line_thin</color>
+    <color name="dark_accent">@color/accent_primary</color>
+    <color name="dark_text">@color/text_primary</color>
+    <color name="pink_accent">@color/accent_danger</color>
+    <color name="pink_light">#FDECEC</color>
+    <color name="green_accent">@color/accent_success</color>
+    <color name="green_light">#EDF8EE</color>
+    <color name="purple_accent">@color/accent_primary</color>
+    <color name="purple_light">#EAF2FF</color>
+    <color name="orange_accent">@color/accent_warning</color>
+    <color name="orange_light">#FFF7E8</color>
+    <color name="primary">@color/accent_primary</color>
+    <color name="primary_dark">@color/accent_primary_pressed</color>
+    <color name="accent">@color/accent_primary</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="purple_500">@color/accent_primary</color>
-    <color name="purple_700">@color/accent_primary</color>
-    <color name="teal_200">@color/accent_secondary</color>
-    <color name="primary">@color/background_primary</color>
-    <color name="primary_dark">@color/background_primary</color>
-    <color name="accent">@color/accent_primary</color>
+    <color name="purple_700">@color/accent_primary_pressed</color>
+    <color name="teal_200">@color/accent_primary</color>
+    <color name="accent_success_legacy">@color/accent_success</color>
+    <color name="accent_warning_legacy">@color/accent_warning</color>
+    <color name="accent_primary_legacy">@color/accent_primary</color>
+    <color name="accent_secondary_legacy">@color/accent_secondary</color>
+    <color name="number_pad_button_disabled_text">@color/text_disabled</color>
+    <color name="text_player_legacy">@color/text_player</color>
 </resources>

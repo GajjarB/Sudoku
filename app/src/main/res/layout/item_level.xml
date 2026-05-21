@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="4dp">
+    android:layout_marginBottom="@dimen/space_8"
+    android:background="@drawable/neo_card"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_16">
 
     <TextView
         android:id="@+id/tv_level_number"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#E0E0E0"
-        android:gravity="center"
-        android:padding="16dp"
-        android:text="1"
-        android:textSize="18sp"
+        android:layout_weight="1"
+        android:text="#001"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"
         android:textStyle="bold" />
-        
-</FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_level_meta"
+        style="@style/TextAppearance.Neo.Muted"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Easy" />
+
+    <TextView
+        android:id="@+id/tv_level_status"
+        style="@style/TextAppearance.Neo.Muted"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="Not started" />
+</LinearLayout>

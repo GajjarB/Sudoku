@@ -13,11 +13,25 @@ public class PreferencesManager {
     private static final String KEY_VIBRATION_ENABLED = "vibration_enabled";
     private static final String KEY_THEME = "app_theme";
     private static final String KEY_FIRST_RUN = "is_first_run";
+    private static final String KEY_USER_ID = "user_id";
 
     private final SharedPreferences prefs;
 
     public PreferencesManager(Context context) {
         this.prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+    }
+
+    /**
+     * Get or generate a unique user ID.
+     * Generated on first launch, persisted in SharedPreferences.
+     */
+    public String getUserId() {
+        String userId = prefs.getString(KEY_USER_ID, null);
+        if (userId == null) {
+            userId = java.util.UUID.randomUUID().toString();
+            prefs.edit().putString(KEY_USER_ID, userId).apply();
+        }
+        return userId;
     }
 
     public boolean isSoundEnabled() {
@@ -36,7 +50,7 @@ public class PreferencesManager {
         prefs.edit().putBoolean(KEY_VIBRATION_ENABLED, enabled).apply();
     }
 
-    public String getTheme() { // "LIGHT", "DARK", "AMOLED"
+    public String getTheme() { // "LIGHT", "DARK", "SYSTEM"
         return prefs.getString(KEY_THEME, "LIGHT");
     }
 

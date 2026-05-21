@@ -2,8 +2,7 @@ package com.example.sudoku.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.sudoku.R;
 import com.example.sudoku.data.repository.LevelRepository;
@@ -25,14 +24,14 @@ public class SplashActivity extends AppCompatActivity {
         SudokuDatabase db = SudokuDatabase.getInstance(getApplicationContext());
         UserRepository userRepo = new UserRepository(db.userProfileDao());
         LevelRepository levelRepo = new LevelRepository(db.levelProgressDao());
-        
         userRepo.ensureProfileExists("default_user");
         levelRepo.initializeLevels();
-        
-        // Delay for branding and loading
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+
+        findViewById(R.id.btn_continue).setOnClickListener(v -> {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
-        }, 2000);
+        });
+        findViewById(R.id.btn_sign_in).setOnClickListener(v ->
+                Toast.makeText(this, "Sign in is optional for local play.", Toast.LENGTH_SHORT).show());
     }
 }

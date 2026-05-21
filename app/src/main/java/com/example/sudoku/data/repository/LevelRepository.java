@@ -1,12 +1,13 @@
 package com.example.sudoku.data.repository;
 
 import androidx.lifecycle.LiveData;
+import com.example.sudoku.core.AppExecutors;
 import com.example.sudoku.data.local.dao.LevelProgressDao;
 import com.example.sudoku.data.local.entities.LevelProgress;
+import com.example.sudoku.utils.Constants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Repository for managing level progression and unlocks.
@@ -17,8 +18,12 @@ public class LevelRepository {
     private final ExecutorService executorService;
 
     public LevelRepository(LevelProgressDao levelDao) {
+        this(levelDao, AppExecutors.getInstance().io());
+    }
+
+    public LevelRepository(LevelProgressDao levelDao, ExecutorService executorService) {
         this.levelDao = levelDao;
-        this.executorService = Executors.newSingleThreadExecutor();
+        this.executorService = executorService;
     }
 
     public LiveData<List<LevelProgress>> getUnlockedLevels() {
@@ -33,16 +38,31 @@ public class LevelRepository {
         executorService.execute(() -> levelDao.unlockLevel(levelNumber));
     }
 
+    public void unlockLevelSync(int levelNumber) {
+        levelDao.unlockLevel(levelNumber);
+    }
+
+    public void completeLevelSync(int level, int stars, int score, long timeMs) {
+        ensureLevelsInitializedSync();
+        long now = System.currentTimeMillis();
+        levelDao.completeLevel(level, stars, score, timeMs, now);
+        levelDao.updateBestPerformance(level, stars, score, timeMs);
+        if (level < Constants.MAX_LEVEL) {
+            levelDao.unlockLevel(level + 1);
+        }
+    }
+
     public void completeLevel(int level, int stars, int score, long timeMs) {
         long now = System.currentTimeMillis();
         executorService.execute(() -> {
+            ensureLevelsInitializedSync();
             // First try to mark as completed
             levelDao.completeLevel(level, stars, score, timeMs, now);
             // Then update best performance if replayed
             levelDao.updateBestPerformance(level, stars, score, timeMs);
             
             // Auto-unlock next level
-            if (level < 999) {
+            if (level < Constants.MAX_LEVEL) {
                 levelDao.unlockLevel(level + 1);
             }
         });
@@ -53,15 +73,29 @@ public class LevelRepository {
      */
     public void initializeLevels() {
         executorService.execute(() -> {
-            // Check if levels exist (check level 1)
-            if (levelDao.getLevelProgress(1) == null) {
-                List<LevelProgress> levels = new ArrayList<>();
-                for (int i = 1; i <= 999; i++) {
-                    levels.add(new LevelProgress(i));
-                }
-                levelDao.insertAll(levels);
-            }
+            ensureLevelsInitializedSync();
         });
+    }
+
+    public void ensureLevelsInitializedSync() {
+        if (levelDao.getLevelCount() >= Constants.MAX_LEVEL) {
+            return;
+        }
+        List<LevelProgress> levels = new ArrayList<>();
+        for (int i = 1; i <= Constants.MAX_LEVEL; i++) {
+            levels.add(new LevelProgress(i));
+        }
+        levelDao.insertAll(levels);
+    }
+
+    public boolean isLevelUnlockedSync(int levelNumber) {
+        ensureLevelsInitializedSync();
+        return levelDao.isLevelUnlocked(levelNumber);
+    }
+
+    public int getHighestUnlockedLevelSync() {
+        ensureLevelsInitializedSync();
+        return levelDao.getHighestUnlockedLevel();
     }
     
     public void getTotalStars(DataCallback<Integer> callback) {
@@ -73,5 +107,11 @@ public class LevelRepository {
     
     public interface DataCallback<T> {
         void onResult(T result);
+    }
+
+    /**
+     * Repositories share AppExecutors. App lifecycle owns shutdown.
+     */
+    public void shutdown() {
     }
 }

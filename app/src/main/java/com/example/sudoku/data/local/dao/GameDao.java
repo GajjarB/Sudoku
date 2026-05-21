@@ -29,6 +29,22 @@ public interface GameDao {
     
     @Query("SELECT * FROM saved_games WHERE isCompleted = 0 ORDER BY lastPlayedAt DESC LIMIT 1")
     LiveData<SavedGame> getIncompleteGameLive();
+
+    @Query("SELECT * FROM saved_games "
+            + "WHERE isDailyChallenge = 1 AND startedAt >= :startOfDay AND startedAt < :endOfDay "
+            + "ORDER BY isCompleted ASC, lastPlayedAt DESC LIMIT 1")
+    SavedGame getDailyGameForDay(long startOfDay, long endOfDay);
+
+    @Query("DELETE FROM saved_games "
+            + "WHERE isCompleted = 0 AND isDailyChallenge = 1 "
+            + "AND startedAt >= :startOfDay AND startedAt < :endOfDay "
+            + "AND gameId != :keepGameId")
+    void deleteIncompleteDailyGamesForDayExcept(long startOfDay, long endOfDay, String keepGameId);
+
+    @Query("DELETE FROM saved_games "
+            + "WHERE isCompleted = 0 AND isDailyChallenge = 0 "
+            + "AND levelNumber = :levelNumber AND gameId != :keepGameId")
+    void deleteIncompleteGamesForLevelExcept(int levelNumber, String keepGameId);
     
     @Delete
     void deleteSavedGame(SavedGame game);

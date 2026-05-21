@@ -17,11 +17,13 @@ public class GridUtils {
         
         for (int i = 0; i < 81; i++) {
             char c = gridString.charAt(i);
-            int val = 0;
-            if (Character.isDigit(c)) {
-                val = Character.getNumericValue(c);
+            if (c >= '1' && c <= '9') {
+                grid[i / 9][i % 9] = c - '0';
+            } else if (c == '0' || c == '.') {
+                grid[i / 9][i % 9] = 0;
+            } else {
+                return new int[9][9];
             }
-            grid[i / 9][i % 9] = val;
         }
         return grid;
     }
