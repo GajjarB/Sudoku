@@ -2,6 +2,8 @@ package com.example.sudoku.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.TextView;
 import com.example.sudoku.R;
 import com.example.sudoku.core.AppExecutors;
@@ -19,22 +21,40 @@ public class CompletedActivity extends BaseActivity {
         long timeMs = getIntent().getLongExtra(Constants.EXTRA_COMPLETION_TIME, 0L);
         int mistakes = getIntent().getIntExtra(Constants.EXTRA_COMPLETION_MISTAKES, 0);
         int level = getIntent().getIntExtra(Constants.EXTRA_COMPLETION_LEVEL, 1);
+        int hintsUsed = getIntent().getIntExtra("extra_completion_hints_used", 0);
+        String difficulty = getIntent().getStringExtra("extra_completion_difficulty");
+        if (difficulty == null || difficulty.isEmpty()) {
+            difficulty = getString(R.string.difficulty_easy);
+        }
         int accuracy = Math.max(0, 100 - mistakes * 12);
         int xpEarned = Constants.BASE_XP;
 
-        ((TextView) findViewById(R.id.tv_completed_time)).setText(formatTime(timeMs) + "\nTime");
-        ((TextView) findViewById(R.id.tv_completed_mistakes)).setText(mistakes + "\nMistakes");
-        ((TextView) findViewById(R.id.tv_completed_accuracy)).setText(accuracy + "%\nAccuracy");
-        ((TextView) findViewById(R.id.tv_completed_xp)).setText("+" + xpEarned + "\nXP");
-        findViewById(R.id.btn_continue).setOnClickListener(v -> finish());
+        ((TextView) findViewById(R.id.tv_completed_time)).setText(formatTime(timeMs) + "\n" + getString(R.string.completed_time_label));
+        ((TextView) findViewById(R.id.tv_completed_mistakes)).setText(mistakes + "\n" + getString(R.string.completed_mistakes_label));
+        ((TextView) findViewById(R.id.tv_completed_accuracy)).setText(accuracy + "%\n" + getString(R.string.completed_accuracy_label));
+        ((TextView) findViewById(R.id.tv_completed_hints)).setText(hintsUsed + "\n" + getString(R.string.completed_hints_label));
+        ((TextView) findViewById(R.id.tv_completed_difficulty)).setText(difficulty + "\n" + getString(R.string.completed_difficulty_label));
+        ((TextView) findViewById(R.id.tv_completed_xp)).setText("+" + xpEarned + "\n" + getString(R.string.completed_xp_label));
+        findViewById(R.id.tv_trophy).startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse));
 
-        findViewById(R.id.btn_next_puzzle).setOnClickListener(v -> {
+        Button btnPlayAgain = findViewById(R.id.btn_continue);
+        Button btnNext = findViewById(R.id.btn_next_puzzle);
+        Button btnHome = findViewById(R.id.btn_back_home);
+        applyDuolingoPressEffect(btnPlayAgain, btnNext, btnHome);
+        btnPlayAgain.setOnClickListener(v -> {
+            Intent intent = new Intent(this, GameActivity.class);
+            intent.putExtra(Constants.EXTRA_LEVEL_NUMBER, level);
+            startActivity(intent);
+            finish();
+        });
+
+        btnNext.setOnClickListener(v -> {
             Intent intent = new Intent(this, GameActivity.class);
             intent.putExtra(Constants.EXTRA_LEVEL_NUMBER, level + 1);
             startActivity(intent);
             finish();
         });
-        findViewById(R.id.btn_back_home).setOnClickListener(v -> {
+        btnHome.setOnClickListener(v -> {
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);

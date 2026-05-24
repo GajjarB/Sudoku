@@ -35,6 +35,8 @@
     <string name="game_mode_classic">Classic Sudoku</string>
     <string name="game_mode_daily_challenge">Daily Challenge</string>
     <string name="game_difficulty_with_variant">%1$s • %2$s</string>
+    <string name="game_progress_default">Progress 0%</string>
+    <string name="game_progress_percent">Progress %1$d%%</string>
     <string name="game_time">%1$02d:%2$02d</string>
     <string name="game_completed">Completed!</string>
     <string name="game_score">Score: %1$d</string>
@@ -47,6 +49,14 @@
     <string name="game_action_resume">Resume</string>
     <string name="game_action_quit">Quit</string>
     <string name="game_action_restart">Restart</string>
+    <string name="game_feedback_nice">Nice!</string>
+    <string name="game_feedback_great_move">Great move!</string>
+    <string name="game_feedback_keep_going">Keep going!</string>
+    <string name="game_feedback_almost_there">Almost there!</string>
+    <string name="game_feedback_perfect">Perfect!</string>
+    <string name="game_feedback_complete">Puzzle complete!</string>
+    <string name="game_feedback_try_again">Try another spot 💙</string>
+    <string name="game_feedback_notes_saved">Notes updated</string>
     
     <!-- CONTROLS -->
     <string name="control_back">Go back</string>
@@ -215,6 +225,15 @@
 
     <!-- COMPLETED -->
     <string name="completed_share_toast">Reward card sharing is coming soon. Great job!</string>
+    <string name="completed_time_label">Time</string>
+    <string name="completed_mistakes_label">Mistakes</string>
+    <string name="completed_accuracy_label">Accuracy</string>
+    <string name="completed_hints_label">Hints Used</string>
+    <string name="completed_difficulty_label">Difficulty</string>
+    <string name="completed_xp_label">XP</string>
+    <string name="completed_play_again">Play Again</string>
+    <string name="completed_next_puzzle">Next Puzzle</string>
+    <string name="completed_home">Home</string>
 
     <!-- STATS -->
     <string name="stats_solved_label">Solved</string>

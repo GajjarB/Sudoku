@@ -21,6 +21,7 @@
             android:padding="24dp">
 
             <TextView
+                android:id="@+id/tv_trophy"
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:background="@drawable/achievement_badge"
@@ -87,10 +88,35 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_completed_hints"
+                    android:layout_width="0dp"
+                    android:layout_height="88dp"
+                    android:layout_columnWeight="1"
+                    android:background="@drawable/bg_surface_card"
+                    android:gravity="center"
+                    android:text="0\nHints Used"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_completed_difficulty"
+                    android:layout_width="0dp"
+                    android:layout_height="88dp"
+                    android:layout_columnWeight="1"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_surface_card"
+                    android:gravity="center"
+                    android:text="Easy\nDifficulty"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/tv_completed_xp"
                     android:layout_width="0dp"
                     android:layout_height="88dp"
                     android:layout_columnWeight="1"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/bg_surface_card"
                     android:gravity="center"
                     android:text="+100\nXP"
@@ -122,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="20dp"
-            android:text="Continue" />
+            android:text="@string/completed_play_again" />
 
         <Button
             android:id="@+id/btn_next_puzzle"
@@ -130,7 +156,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="8dp"
-            android:text="Next puzzle" />
+            android:text="@string/completed_next_puzzle" />
 
         <Button
             android:id="@+id/btn_back_home"
@@ -138,6 +164,6 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="8dp"
-            android:text="Back home" />
+            android:text="@string/completed_home" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
