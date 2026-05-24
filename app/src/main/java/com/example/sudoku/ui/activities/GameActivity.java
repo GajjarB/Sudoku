@@ -1,7 +1,6 @@
 package com.example.sudoku.ui.activities;
 
 import android.app.AlertDialog;
-import android.content.SharedPreferences;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
@@ -28,10 +27,6 @@ import com.example.sudoku.utils.Constants;
  */
 public class GameActivity extends BaseActivity {
 
-    private static final String UI_PREFS = "sudoku_ui_settings";
-    private static final String KEY_DEFAULT_NOTES = "default_notes_enabled";
-    private static final String KEY_MISTAKE_ALERTS = "mistake_alerts_enabled";
-
     private GameViewModel viewModel;
     private SudokuGridView gridView;
     private TimerView timerView;
@@ -39,7 +34,6 @@ public class GameActivity extends BaseActivity {
     private TextView hintText;
     private View loadingPanel;
     private PreferencesManager preferencesManager;
-    private SharedPreferences uiPrefs;
     private boolean shouldApplyDefaultNotes;
     private boolean defaultNotesApplied;
     private boolean restoredSelectionApplied;
@@ -54,11 +48,12 @@ public class GameActivity extends BaseActivity {
 
         viewModel = new ViewModelProvider(this).get(GameViewModel.class);
         preferencesManager = new PreferencesManager(this);
-        uiPrefs = getSharedPreferences(UI_PREFS, MODE_PRIVATE);
         shouldApplyDefaultNotes = !getIntent().hasExtra(Constants.EXTRA_GAME_ID)
-                && uiPrefs.getBoolean(KEY_DEFAULT_NOTES, false);
+                && preferencesManager.isDefaultNotesEnabled();
 
         gridView = findViewById(R.id.sudoku_grid);
+        gridView.setHighlightSameNumbers(preferencesManager.isHighlightSameNumberEnabled());
+        gridView.setHighlightConflicts(preferencesManager.isHighlightConflictsEnabled());
         NumberPadView numberPad = findViewById(R.id.number_pad);
         timerView = findViewById(R.id.timer_view);
         mistakeText = findViewById(R.id.tv_mistakes);
@@ -135,7 +130,9 @@ public class GameActivity extends BaseActivity {
 
         viewModel.getInputResult().observe(this, result -> {
             if (result == null) return;
-            if (result.type == InputResult.Type.WRONG_MOVE && preferencesManager.isVibrationEnabled()) {
+            if (result.type == InputResult.Type.WRONG_MOVE
+                    && preferencesManager.isVibrationEnabled()
+                    && preferencesManager.getHapticIntensity() > 0) {
                 gridView.performHapticFeedback(HapticFeedbackConstants.REJECT);
             }
             if (result.type == InputResult.Type.LOCKED_CELL
@@ -185,7 +182,9 @@ public class GameActivity extends BaseActivity {
         super.onPause();
         // Save game state when activity goes to background
         if (viewModel.getGameState().getValue() == GameState.PLAYING) {
-            timerView.stop();
+            if (preferencesManager.isTimerEnabled()) {
+                timerView.stop();
+            }
             viewModel.pauseGame();
         }
     }
@@ -197,8 +196,10 @@ public class GameActivity extends BaseActivity {
         GameState state = viewModel.getGameState().getValue();
         if (state == GameState.PLAYING || state == GameState.PAUSED) {
             viewModel.resumeGame();
-            timerView.setTime(viewModel.getElapsedTimeMs());
-            timerView.start();
+            if (preferencesManager.isTimerEnabled()) {
+                timerView.setTime(viewModel.getElapsedTimeMs());
+                timerView.start();
+            }
         }
     }
 
@@ -207,19 +208,27 @@ public class GameActivity extends BaseActivity {
 
         switch (state) {
             case PLAYING:
-                timerView.setTime(viewModel.getElapsedTimeMs());
-                timerView.start();
+                if (preferencesManager.isTimerEnabled()) {
+                    timerView.setTime(viewModel.getElapsedTimeMs());
+                    timerView.start();
+                }
                 break;
             case WON:
-                timerView.stop();
+                if (preferencesManager.isTimerEnabled()) {
+                    timerView.stop();
+                }
                 showVictoryDialog();
                 break;
             case GAME_OVER:
-                timerView.stop();
+                if (preferencesManager.isTimerEnabled()) {
+                    timerView.stop();
+                }
                 showGameOverDialog();
                 break;
             case PAUSED:
-                timerView.stop();
+                if (preferencesManager.isTimerEnabled()) {
+                    timerView.stop();
+                }
                 break;
             default:
                 break;
@@ -270,7 +279,9 @@ public class GameActivity extends BaseActivity {
                             .setMessage(R.string.game_paused_message)
                             .setPositiveButton(R.string.game_action_resume, (d, w) -> {
                                 viewModel.resumeGame();
-                                timerView.start();
+                                if (preferencesManager.isTimerEnabled()) {
+                                    timerView.start();
+                                }
                             })
                             .setNegativeButton(R.string.game_action_quit, (d, w) -> {
                                 viewModel.saveCurrentGame();
@@ -307,6 +318,7 @@ public class GameActivity extends BaseActivity {
         mistakeText.setTextColor(getColor(R.color.accent_danger));
         hintText.setTextColor(getColor(R.color.accent_warning));
         timerView.setTextColor(textPrimary);
+        timerView.setVisibility(preferencesManager.isTimerEnabled() ? View.VISIBLE : View.GONE);
     }
 
     private void setLoadingVisible(boolean visible) {
@@ -319,7 +331,7 @@ public class GameActivity extends BaseActivity {
     }
 
     private boolean areMistakeAlertsEnabled() {
-        return uiPrefs.getBoolean(KEY_MISTAKE_ALERTS, true);
+        return preferencesManager.isMistakeAlertsEnabled();
     }
 
     private void updateDifficultyLabel() {
@@ -328,18 +340,27 @@ public class GameActivity extends BaseActivity {
             difficulty.setText(R.string.game_mode_daily_challenge);
             return;
         }
+        String variantLabel = variantLabel(viewModel.getCurrentVariant());
         int level = viewModel.getCurrentLevel();
         if (level <= 5) {
-            difficulty.setText(R.string.difficulty_easy);
+            difficulty.setText(getString(R.string.game_difficulty_with_variant, getString(R.string.difficulty_easy), variantLabel));
         } else if (level <= 20) {
-            difficulty.setText(R.string.difficulty_medium);
+            difficulty.setText(getString(R.string.game_difficulty_with_variant, getString(R.string.difficulty_medium), variantLabel));
         } else if (level <= 50) {
-            difficulty.setText(R.string.difficulty_hard);
+            difficulty.setText(getString(R.string.game_difficulty_with_variant, getString(R.string.difficulty_hard), variantLabel));
         } else if (level <= 200) {
-            difficulty.setText(R.string.difficulty_expert);
+            difficulty.setText(getString(R.string.game_difficulty_with_variant, getString(R.string.difficulty_expert), variantLabel));
         } else {
-            difficulty.setText(R.string.difficulty_master);
+            difficulty.setText(getString(R.string.game_difficulty_with_variant, getString(R.string.difficulty_master), variantLabel));
         }
+    }
+
+    private String variantLabel(String variant) {
+        if (PreferencesManager.BOARD_VARIANT_4X4.equals(variant)) return "4x4";
+        if (PreferencesManager.BOARD_VARIANT_6X6.equals(variant)) return "6x6";
+        if (PreferencesManager.BOARD_VARIANT_12X12.equals(variant)) return "12x12";
+        if (PreferencesManager.BOARD_VARIANT_16X16.equals(variant)) return "16x16";
+        return "9x9";
     }
 
     private void showHintDialog(HintResult hint) {
