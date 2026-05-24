@@ -23,35 +23,25 @@ public class ScoreCalculator {
 
     /** Returns the difficulty multiplier for the given level. */
     private double difficultyMultiplier(int difficultyLevel) {
-        if (difficultyLevel <= 5)   return MULTIPLIER_EASY;
+        if (difficultyLevel < 5)    return MULTIPLIER_EASY;
         if (difficultyLevel <= 20)  return MULTIPLIER_MEDIUM;
         if (difficultyLevel <= 50)  return MULTIPLIER_HARD;
         if (difficultyLevel <= 200) return MULTIPLIER_EXPERT;
         return MULTIPLIER_MASTER;
     }
 
-    /** Returns the time budget (ms) for the given level. */
-    private long timeBudgetMs(int difficultyLevel) {
-        if (difficultyLevel <= 5)   return BUDGET_EASY_MS;
-        if (difficultyLevel <= 20)  return BUDGET_MEDIUM_MS;
-        if (difficultyLevel <= 50)  return BUDGET_HARD_MS;
-        if (difficultyLevel <= 200) return BUDGET_EXPERT_MS;
-        return BUDGET_MASTER_MS;
-    }
-
     public int calculateScore(int difficultyLevel, long timeMs, int mistakes, int hintsUsed) {
         double multiplier = difficultyMultiplier(difficultyLevel);
         int baseScore = (int) (Constants.BASE_SCORE * multiplier);
 
-        // Time penalty: 1 pt/sec only for time spent over the budget
-        long overBudgetMs = timeMs - timeBudgetMs(difficultyLevel);
-        int timePenalty = (overBudgetMs > 0) ? (int) (overBudgetMs / 1000) : 0;
+        // Time penalty: 1 pt/sec
+        int timePenalty = (int) (timeMs / 1000);
 
         int mistakePenalty = mistakes * Constants.MISTAKE_PENALTY;
         int hintPenalty    = hintsUsed * Constants.HINT_PENALTY;
 
         int finalScore = baseScore - timePenalty - mistakePenalty - hintPenalty;
-        return Math.max(1, finalScore);
+        return Math.max(50, finalScore);
     }
 
     public int calculateXP(int score) {
@@ -59,6 +49,8 @@ public class ScoreCalculator {
     }
 
     public int calculateStars(int score, int difficultyLevel) {
+        // Star thresholds are based on absolute scores for Level 1.
+        // For higher levels, they scale with the difficulty multiplier.
         double multiplier = difficultyMultiplier(difficultyLevel);
         int threshold3 = (int) (Constants.STARS_3_MIN_SCORE * multiplier);
         int threshold2 = (int) (Constants.STARS_2_MIN_SCORE * multiplier);

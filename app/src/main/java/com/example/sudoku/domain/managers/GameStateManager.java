@@ -228,7 +228,8 @@ public class GameStateManager {
     }
 
     public synchronized InputResult undo() {
-        if (currentState == GameState.WON || undoStack.isEmpty() || currentGrid == null) {
+        if (currentState == GameState.WON || currentState == GameState.GAME_OVER
+                || undoStack.isEmpty() || currentGrid == null) {
             return result(InputResult.Type.IGNORED, false, "Nothing to undo.", Collections.emptyList());
         }
         MoveRecord move = undoStack.pop();

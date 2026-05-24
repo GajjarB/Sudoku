@@ -41,7 +41,7 @@ public class UserRepositoryTest {
     @Test
     public void recordGameResultSync_createsMissingProfileAndStartsStreak() {
         long playedAt = toEpochMillis(LocalDate.of(2026, 5, 21));
-        when(userProfileDao.getUserProfile()).thenReturn(null);
+        when(userProfileDao.getUserProfile()).thenReturn(null, new UserProfile("default_user"));
 
         repository.recordGameResultSync("default_user", true, 3, 0,
                 10_000L, 100, 2, playedAt);
