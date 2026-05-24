@@ -22,14 +22,14 @@ public class SudokuGeneratorTest {
     public void generate_easyPuzzle_hasCorrectClueCount() {
         SudokuGenerator.Puzzle puzzle = generator.generate(38);
         int clues = countClues(puzzle.puzzle);
-        assertTrue("Easy puzzle should have ~38 clues, got " + clues, clues >= 35);
+        assertEquals("Easy puzzle should have exact clue count", 38, clues);
     }
 
     @Test
     public void generate_hardPuzzle_hasFewerClues() {
         SudokuGenerator.Puzzle puzzle = generator.generate(26);
         int clues = countClues(puzzle.puzzle);
-        assertTrue("Hard puzzle should have ~26 clues, got " + clues, clues >= 22 && clues <= 30);
+        assertEquals("Hard puzzle should have exact clue count", 26, clues);
     }
 
     @Test
