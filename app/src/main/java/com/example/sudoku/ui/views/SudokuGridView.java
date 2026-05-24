@@ -43,6 +43,7 @@ public class SudokuGridView extends View {
     private int selectedRow = -1;
     private int selectedCol = -1;
     private boolean highlightSameNumbers = true;
+    private boolean highlightConflicts = true;
     
     // ═══════════════════════════════════════════════════════════════
     // PAINT OBJECTS (Reusable)
@@ -357,7 +358,7 @@ public class SudokuGridView extends View {
                     drawHatch(canvas, left, top, right, bottom);
                 }
 
-                if (cell.isConflict()) {
+                if (highlightConflicts && cell.isConflict()) {
                     canvas.drawRect(left, top, right, bottom, conflictPaint);
                     drawConflictMarker(canvas, left, top, right, bottom);
                 }
@@ -585,6 +586,16 @@ public class SudokuGridView extends View {
      */
     public void setListener(OnCellSelectedListener listener) {
         this.listener = listener;
+    }
+
+    public void setHighlightSameNumbers(boolean enabled) {
+        this.highlightSameNumbers = enabled;
+        postInvalidateOnAnimation();
+    }
+
+    public void setHighlightConflicts(boolean enabled) {
+        this.highlightConflicts = enabled;
+        postInvalidateOnAnimation();
     }
     
     /**

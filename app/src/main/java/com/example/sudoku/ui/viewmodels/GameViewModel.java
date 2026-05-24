@@ -19,6 +19,7 @@ import com.example.sudoku.data.local.entities.SavedGame;
 import com.example.sudoku.data.repository.GameRepository;
 import com.example.sudoku.data.repository.LevelRepository;
 import com.example.sudoku.data.repository.UserRepository;
+import com.example.sudoku.data.preferences.PreferencesManager;
 import com.example.sudoku.domain.ai.BehavioralAnalyzer;
 import com.example.sudoku.domain.coach.HintResult;
 import com.example.sudoku.domain.engine.Difficulty;
@@ -72,6 +73,7 @@ public class GameViewModel extends AndroidViewModel {
     private final MutableLiveData<String> errorLiveData = new MutableLiveData<>();
 
     private final BehavioralAnalyzer behavioralAnalyzer;
+    private final PreferencesManager preferencesManager;
     private long lastMoveTimeMs = 0;
 
     private int currentRow = -1;
@@ -81,6 +83,7 @@ public class GameViewModel extends AndroidViewModel {
     private boolean gameStarted;
     private boolean currentDailyChallenge;
     private String currentDailyDateKey = "";
+    private String currentVariant = PreferencesManager.BOARD_VARIANT_9X9;
     private boolean completionRecorded;
 
     public GameViewModel(@NonNull Application application) {
@@ -99,6 +102,7 @@ public class GameViewModel extends AndroidViewModel {
         backgroundExecutor = AppExecutors.getInstance().io();
         stateManager = new GameStateManager(gameRepository);
         behavioralAnalyzer = new BehavioralAnalyzer(db.gameDao());
+        preferencesManager = new PreferencesManager(application);
         restoreSavedUiState();
     }
 
@@ -114,6 +118,7 @@ public class GameViewModel extends AndroidViewModel {
         currentRow = -1;
         currentCol = -1;
         currentDailyChallenge = isDailyChallenge;
+        currentVariant = resolveActiveVariant(preferencesManager.getBoardVariant());
         completionRecorded = false;
         persistUiState();
         loadingLiveData.setValue(true);
@@ -133,11 +138,12 @@ public class GameViewModel extends AndroidViewModel {
                 currentLevel = playableLevel;
                 savedStateHandle.set(KEY_CURRENT_LEVEL, currentLevel);
                 Difficulty difficulty = difficultyForLevel(playableLevel);
-                SudokuGenerator.Puzzle puzzle = takeFromPoolOrGenerate(difficulty, playableLevel);
+                SudokuGenerator.Puzzle puzzle = takeFromPoolOrGenerate(difficulty, playableLevel, currentVariant);
                 SavedGame savedGame = new SavedGame(UUID.randomUUID().toString(),
                         playableLevel, puzzle.puzzle, puzzle.solution, lockedCellsFor(puzzle.puzzle));
                 savedGame.isDailyChallenge = false;
                 savedGame.difficulty = difficulty.name();
+                savedGame.variant = currentVariant;
                 gameRepository.saveGameSync(savedGame);
                 gameRepository.deleteIncompleteGamesForLevelExceptSync(playableLevel, savedGame.gameId);
 
@@ -172,6 +178,7 @@ public class GameViewModel extends AndroidViewModel {
 
                 currentLevel = game.levelNumber;
                 currentDailyChallenge = game.isDailyChallenge;
+                currentVariant = resolveActiveVariant(game.variant);
                 currentDailyDateKey = game.isDailyChallenge
                         ? dailyChallengeManager.getDateKey(game.startedAt)
                         : "";
@@ -456,8 +463,8 @@ public class GameViewModel extends AndroidViewModel {
         return Difficulty.MASTER;
     }
 
-    private SudokuGenerator.Puzzle takeFromPoolOrGenerate(Difficulty difficulty, int level) {
-        PuzzlePoolEntry pooled = puzzlePoolDao.consumeOne(difficulty.name(), VARIANT_CLASSIC);
+    private SudokuGenerator.Puzzle takeFromPoolOrGenerate(Difficulty difficulty, int level, String variant) {
+        PuzzlePoolEntry pooled = puzzlePoolDao.consumeOne(difficulty.name(), variant);
         if (pooled != null) {
             return new SudokuGenerator.Puzzle(
                     pooled.puzzle, pooled.solution, pooled.clueCount, pooled.canonicalHash);
@@ -472,6 +479,7 @@ public class GameViewModel extends AndroidViewModel {
         SavedGame existing = gameRepository.getDailyGameForDaySync(startOfDay, endOfDay);
         if (existing != null) {
             currentLevel = existing.levelNumber;
+            currentVariant = resolveActiveVariant(existing.variant);
             currentDailyDateKey = dailyChallengeManager.getDateKey(existing.startedAt);
             currentRow = existing.selectedRow;
             currentCol = existing.selectedCol;
@@ -492,6 +500,7 @@ public class GameViewModel extends AndroidViewModel {
                 lockedCellsFor(challenge.puzzleGrid));
         savedGame.isDailyChallenge = true;
         savedGame.difficulty = Difficulty.MEDIUM.name();
+        savedGame.variant = currentVariant;
         gameRepository.saveGameSync(savedGame);
         gameRepository.deleteIncompleteDailyGamesForDayExceptSync(
                 startOfDay, endOfDay, savedGame.gameId);
@@ -502,6 +511,13 @@ public class GameViewModel extends AndroidViewModel {
         int clamped = Math.max(1, Math.min(Constants.MAX_LEVEL, requestedLevel));
         if (levelRepository.isLevelUnlockedSync(clamped)) {
             return clamped;
+        }
+
+        private String resolveActiveVariant(String preferredVariant) {
+            if (PreferencesManager.BOARD_VARIANT_9X9.equals(preferredVariant)) {
+                return PreferencesManager.BOARD_VARIANT_9X9;
+            }
+            return VARIANT_CLASSIC;
         }
         return levelRepository.getHighestUnlockedLevelSync();
     }
@@ -559,4 +575,5 @@ public class GameViewModel extends AndroidViewModel {
     public int getSelectedRow() { return stateManager.getSavedSelectedRow(); }
     public int getSelectedCol() { return stateManager.getSavedSelectedCol(); }
     public boolean isCurrentDailyChallenge() { return currentDailyChallenge; }
+    public String getCurrentVariant() { return currentVariant; }
 }
