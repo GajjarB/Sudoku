@@ -178,6 +178,7 @@ public class GameViewModel extends AndroidViewModel {
 
                 currentLevel = game.levelNumber;
                 currentDailyChallenge = game.isDailyChallenge;
+                currentVariant = resolveActiveVariant(game.variant);
                 currentDailyDateKey = game.isDailyChallenge
                         ? dailyChallengeManager.getDateKey(game.startedAt)
                         : "";
@@ -478,6 +479,7 @@ public class GameViewModel extends AndroidViewModel {
         SavedGame existing = gameRepository.getDailyGameForDaySync(startOfDay, endOfDay);
         if (existing != null) {
             currentLevel = existing.levelNumber;
+            currentVariant = resolveActiveVariant(existing.variant);
             currentDailyDateKey = dailyChallengeManager.getDateKey(existing.startedAt);
             currentRow = existing.selectedRow;
             currentCol = existing.selectedCol;
