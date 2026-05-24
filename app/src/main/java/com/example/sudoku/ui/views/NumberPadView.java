@@ -26,6 +26,7 @@ public class NumberPadView extends GridLayout {
     private void init(Context context) {
         setColumnCount(5);
         setRowCount(2);
+        setUseDefaultMargins(false);
         
         for (int i = 1; i <= 10; i++) {
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
@@ -38,15 +39,19 @@ public class NumberPadView extends GridLayout {
             
             Button button = new Button(context);
             final int value = i == 10 ? 0 : i;
-            button.setText(i == 10 ? "Del" : String.valueOf(i));
-            button.setTextSize(22);
+            button.setText(i == 10
+                    ? getResources().getString(com.example.sudoku.R.string.control_clear)
+                    : String.valueOf(i));
+            button.setTextSize(18);
             button.setTextColor(getResources().getColor(com.example.sudoku.R.color.text_primary));
             button.setTypeface(android.graphics.Typeface.DEFAULT_BOLD);
             button.setLayoutParams(params);
             button.setBackgroundResource(com.example.sudoku.R.drawable.neo_number_button);
             button.setMinHeight(getResources().getDimensionPixelSize(com.example.sudoku.R.dimen.number_pad_button_size));
             button.setAllCaps(false);
-            button.setContentDescription(i == 10 ? "Delete selected cell" : "Enter " + i);
+            button.setContentDescription(i == 10
+                    ? getResources().getString(com.example.sudoku.R.string.control_clear_content_description)
+                    : getResources().getString(com.example.sudoku.R.string.control_enter_number, i));
             button.setOnClickListener(v -> {
                 selectButton((Button) v);
                 if (listener != null) {

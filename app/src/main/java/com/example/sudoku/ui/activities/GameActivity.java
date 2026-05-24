@@ -44,6 +44,7 @@ public class GameActivity extends BaseActivity {
     private boolean defaultNotesApplied;
     private boolean restoredSelectionApplied;
     private boolean endScreenShown;
+    private android.widget.Button btnNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,7 @@ public class GameActivity extends BaseActivity {
         android.widget.Button btnUndo = findViewById(R.id.btn_undo);
         android.widget.Button btnRedo = findViewById(R.id.btn_redo);
         android.widget.Button btnErase = findViewById(R.id.btn_erase);
-        android.widget.Button btnNotes = findViewById(R.id.btn_notes);
+        btnNotes = findViewById(R.id.btn_notes);
         android.widget.Button btnHint = findViewById(R.id.btn_hint);
         android.view.View btnBack = findViewById(R.id.btn_back);
 
@@ -82,7 +83,9 @@ public class GameActivity extends BaseActivity {
         viewModel.getNotesMode().observe(this, isNotes -> {
             boolean enabled = Boolean.TRUE.equals(isNotes);
             btnNotes.setSelected(enabled);
-            btnNotes.setText(enabled ? "Notes On" : "Notes");
+            btnNotes.setText(enabled
+                    ? getString(R.string.control_pencil_on)
+                    : getString(R.string.control_pencil));
         });
 
         // Setup Grid Interaction
@@ -107,6 +110,7 @@ public class GameActivity extends BaseActivity {
                 restoredSelectionApplied = true;
                 gridView.selectCell(selectedRow, selectedCol);
             }
+            updateDifficultyLabel();
             setLoadingVisible(false);
             if (shouldApplyDefaultNotes && !defaultNotesApplied
                     && !Boolean.TRUE.equals(viewModel.getNotesMode().getValue())) {
@@ -236,15 +240,15 @@ public class GameActivity extends BaseActivity {
 
     private void showGameOverDialog() {
         String summary = viewModel.getPostGameSummary().getValue();
-        if (summary == null) summary = "Too many mistakes! Try again?";
+        if (summary == null) summary = getString(R.string.game_over_default_message);
         new AlertDialog.Builder(this)
-            .setTitle("Game Over")
+            .setTitle(R.string.game_over_title)
             .setMessage(summary)
-            .setPositiveButton("Retry", (d, w) -> {
+            .setPositiveButton(R.string.game_action_retry, (d, w) -> {
                 int level = viewModel.getCurrentLevel();
-                viewModel.startNewGame(level);
+                viewModel.startNewGame(level, viewModel.isCurrentDailyChallenge());
             })
-            .setNegativeButton("Back to Menu", (d, w) -> finish())
+            .setNegativeButton(R.string.game_action_back_to_menu, (d, w) -> finish())
             .setCancelable(false)
             .show();
     }
@@ -262,19 +266,19 @@ public class GameActivity extends BaseActivity {
                         timerView.stop();
                         viewModel.pauseGame();
                         new AlertDialog.Builder(GameActivity.this)
-                            .setTitle("Game Paused")
-                            .setMessage("What would you like to do?")
-                            .setPositiveButton("Resume", (d, w) -> {
+                            .setTitle(R.string.game_paused_title)
+                            .setMessage(R.string.game_paused_message)
+                            .setPositiveButton(R.string.game_action_resume, (d, w) -> {
                                 viewModel.resumeGame();
                                 timerView.start();
                             })
-                            .setNegativeButton("Quit", (d, w) -> {
+                            .setNegativeButton(R.string.game_action_quit, (d, w) -> {
                                 viewModel.saveCurrentGame();
                                 finish();
                             })
-                            .setNeutralButton("Restart", (d, w) -> {
+                            .setNeutralButton(R.string.game_action_restart, (d, w) -> {
                                 int level = viewModel.getCurrentLevel();
-                                viewModel.startNewGame(level);
+                                viewModel.startNewGame(level, viewModel.isCurrentDailyChallenge());
                             })
                             .setCancelable(false)
                             .show();
@@ -316,6 +320,26 @@ public class GameActivity extends BaseActivity {
 
     private boolean areMistakeAlertsEnabled() {
         return uiPrefs.getBoolean(KEY_MISTAKE_ALERTS, true);
+    }
+
+    private void updateDifficultyLabel() {
+        TextView difficulty = findViewById(R.id.tv_difficulty);
+        if (viewModel.isCurrentDailyChallenge()) {
+            difficulty.setText(R.string.game_mode_daily_challenge);
+            return;
+        }
+        int level = viewModel.getCurrentLevel();
+        if (level <= 5) {
+            difficulty.setText(R.string.difficulty_easy);
+        } else if (level <= 20) {
+            difficulty.setText(R.string.difficulty_medium);
+        } else if (level <= 50) {
+            difficulty.setText(R.string.difficulty_hard);
+        } else if (level <= 200) {
+            difficulty.setText(R.string.difficulty_expert);
+        } else {
+            difficulty.setText(R.string.difficulty_master);
+        }
     }
 
     private void showHintDialog(HintResult hint) {

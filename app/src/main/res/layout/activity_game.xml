@@ -37,14 +37,14 @@
                 style="@style/TextAppearance.Neo.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Classic Sudoku" />
+                android:text="@string/game_mode_classic" />
 
             <TextView
                 android:id="@+id/tv_difficulty"
                 style="@style/TextAppearance.Neo.Heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Focus Mode"
+                android:text="@string/difficulty_easy"
                 android:textColor="@color/accent_primary_glow" />
         </LinearLayout>
 
@@ -87,7 +87,7 @@
             android:background="@drawable/chip_accent"
             android:contentDescription="@string/game_timer_content_description"
             android:gravity="center"
-            android:text="00:00"
+            android:text="@string/game_timer_default"
             android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:textStyle="bold" />

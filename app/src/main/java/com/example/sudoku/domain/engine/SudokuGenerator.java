@@ -28,7 +28,7 @@ import java.util.function.LongPredicate;
  */
 public class SudokuGenerator {
 
-    private static final int MAX_GENERATION_ATTEMPTS = 20;
+    private static final int MAX_GENERATION_ATTEMPTS = 60;
     private static final long DEFAULT_TIMEOUT_MS = 10_000L;
 
     private final Random random;
@@ -85,23 +85,26 @@ public class SudokuGenerator {
         validateClueCount(clueCount);
         long deadline = System.currentTimeMillis() + timeoutMs;
 
-        Puzzle bestPuzzle = null;
-        int bestDelta = Integer.MAX_VALUE;
-
         for (int attempt = 0; attempt < MAX_GENERATION_ATTEMPTS; attempt++) {
             if (cancellation.isCancelled()) {
                 return GenerationResult.cancelled();
             }
             if (System.currentTimeMillis() > deadline) {
-                return bestPuzzle != null
-                        ? GenerationResult.success(bestPuzzle)
-                        : GenerationResult.timeout("Generation exceeded " + timeoutMs + "ms");
+                return GenerationResult.timeout("Generation exceeded " + timeoutMs + "ms");
             }
 
             int[][] solution = generateCompleteSolution();
             int[][] puzzle = carve(solution, clueCount, symmetry, cancellation);
 
-            if (puzzle == null || !solver.hasUniqueSolution(puzzle)) {
+            if (puzzle == null
+                    || !isValidCompleteSolution(solution)
+                    || !isPuzzleConsistentWithSolution(puzzle, solution)
+                    || !solver.hasUniqueSolution(puzzle)) {
+                continue;
+            }
+
+            int actualClues = countClues(puzzle);
+            if (actualClues != clueCount) {
                 continue;
             }
 
@@ -111,23 +114,10 @@ public class SudokuGenerator {
                 continue;
             }
 
-            int actualClues = countClues(puzzle);
-            int delta = Math.abs(actualClues - clueCount);
             Puzzle candidate = new Puzzle(puzzleStr, gridToString(solution), actualClues, canonical);
-
-            if (delta < bestDelta) {
-                bestPuzzle = candidate;
-                bestDelta = delta;
-            }
-
-            if (actualClues <= clueCount + 2) {
-                return GenerationResult.success(candidate);
-            }
+            return GenerationResult.success(candidate);
         }
 
-        if (bestPuzzle != null) {
-            return GenerationResult.success(bestPuzzle);
-        }
         return GenerationResult.failed(
                 "Unable to generate a unique Sudoku puzzle after "
                         + MAX_GENERATION_ATTEMPTS + " attempts");
@@ -283,6 +273,52 @@ public class SudokuGenerator {
             System.arraycopy(grid[r], 0, copy[r], 0, GRID_SIZE);
         }
         return copy;
+    }
+
+    private static boolean isValidCompleteSolution(int[][] grid) {
+        for (int row = 0; row < GRID_SIZE; row++) {
+            int rowMask = 0;
+            int colMask = 0;
+            for (int col = 0; col < GRID_SIZE; col++) {
+                int rowValue = grid[row][col];
+                int colValue = grid[col][row];
+                if (rowValue < 1 || rowValue > 9 || colValue < 1 || colValue > 9) {
+                    return false;
+                }
+                rowMask |= bitFor(rowValue);
+                colMask |= bitFor(colValue);
+            }
+            if (rowMask != ALL_CANDIDATES || colMask != ALL_CANDIDATES) {
+                return false;
+            }
+        }
+
+        for (int boxStartRow = 0; boxStartRow < GRID_SIZE; boxStartRow += BOX_SIZE) {
+            for (int boxStartCol = 0; boxStartCol < GRID_SIZE; boxStartCol += BOX_SIZE) {
+                int boxMask = 0;
+                for (int row = boxStartRow; row < boxStartRow + BOX_SIZE; row++) {
+                    for (int col = boxStartCol; col < boxStartCol + BOX_SIZE; col++) {
+                        boxMask |= bitFor(grid[row][col]);
+                    }
+                }
+                if (boxMask != ALL_CANDIDATES) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static boolean isPuzzleConsistentWithSolution(int[][] puzzle, int[][] solution) {
+        for (int row = 0; row < GRID_SIZE; row++) {
+            for (int col = 0; col < GRID_SIZE; col++) {
+                int value = puzzle[row][col];
+                if (value != 0 && value != solution[row][col]) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private void validateClueCount(int clueCount) {
