@@ -83,46 +83,12 @@
             android:text="@string/settings_notes_default" />
 
         <Button
+            android:id="@+id/btn_premium_settings"
             style="@style/Button.Secondary"
             android:layout_width="match_parent"
             android:layout_height="@dimen/neo_button_height"
             android:layout_marginTop="@dimen/space_8"
-            android:text="Show mistakes: On" />
-
-        <Button
-            style="@style/Button.Secondary"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/neo_button_height"
-            android:layout_marginTop="@dimen/space_8"
-            android:text="Auto check: On" />
-
-        <Button
-            style="@style/Button.Secondary"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/neo_button_height"
-            android:layout_marginTop="@dimen/space_8"
-            android:text="Highlight duplicates: On" />
-
-        <Button
-            style="@style/Button.Secondary"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/neo_button_height"
-            android:layout_marginTop="@dimen/space_8"
-            android:text="Show timer: On" />
-
-        <Button
-            style="@style/Button.Secondary"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/neo_button_height"
-            android:layout_marginTop="@dimen/space_8"
-            android:text="Language: English" />
-
-        <Button
-            style="@style/Button.Secondary"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/neo_button_height"
-            android:layout_marginTop="@dimen/space_8"
-            android:text="Backup and sync" />
+            android:text="Premium Membership" />
 
         <Button
             android:id="@+id/btn_privacy"
@@ -132,20 +98,6 @@
             android:layout_marginTop="@dimen/space_8"
             android:contentDescription="@string/settings_privacy_content_description"
             android:text="@string/settings_privacy" />
-
-        <Button
-            style="@style/Button.Secondary"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/neo_button_height"
-            android:layout_marginTop="@dimen/space_8"
-            android:text="Terms" />
-
-        <Button
-            style="@style/Button.Secondary"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/neo_button_height"
-            android:layout_marginTop="@dimen/space_8"
-            android:text="Reset progress" />
 
         <TextView
             style="@style/TextAppearance.Neo.Heading"

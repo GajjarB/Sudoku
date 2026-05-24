@@ -8,6 +8,7 @@
     android:padding="@dimen/space_24">
 
     <TextView
+        android:id="@+id/iv_logo"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:background="@drawable/neo_card"
@@ -18,6 +19,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/tv_welcome"
         style="@style/TextAppearance.Neo.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

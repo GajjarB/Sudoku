@@ -228,14 +228,15 @@ public class GameStateManager {
     }
 
     public synchronized InputResult undo() {
-        if (currentState == GameState.WON || undoStack.isEmpty() || currentGrid == null) {
+        if (currentState == GameState.WON || currentState == GameState.GAME_OVER
+                || undoStack.isEmpty() || currentGrid == null) {
             return result(InputResult.Type.IGNORED, false, "Nothing to undo.", Collections.emptyList());
         }
         MoveRecord move = undoStack.pop();
         redoStack.push(move);
         currentGrid[move.row][move.col] = move.beforeValue;
         // If the undone move was a wrong placement, decrement mistakes
-        if (move.afterValue != 0 && solutionGrid != null
+        if (move.beforeValue != move.afterValue && move.afterValue != 0 && solutionGrid != null
                 && move.afterValue != solutionGrid[move.row][move.col]) {
             mistakes = Math.max(0, mistakes - 1);
         }
@@ -261,6 +262,20 @@ public class GameStateManager {
         MoveRecord move = redoStack.pop();
         undoStack.push(move);
         currentGrid[move.row][move.col] = move.afterValue;
+
+        // If the redone move was a wrong placement, increment mistakes
+        if (move.beforeValue != move.afterValue && move.afterValue != 0 && solutionGrid != null
+                && move.afterValue != solutionGrid[move.row][move.col]) {
+            mistakes++;
+            if (mistakes >= Constants.MAX_MISTAKES_ALLOWED) {
+                currentState = GameState.GAME_OVER;
+                if (currentGame != null) {
+                    currentGame.isCompleted = true;
+                    currentGame.completedAt = clock.getAsLong();
+                }
+            }
+        }
+
         restoreNotes(move.afterNotesState, move.row, move.col, move.afterNotes);
         refreshConflicts();
         clearHintHighlights();
@@ -528,7 +543,7 @@ public class GameStateManager {
     }
 
     private boolean isTerminalState() {
-        return currentState == GameState.WON;
+        return currentState == GameState.WON || currentState == GameState.GAME_OVER;
     }
 
     private static String encodePersistedNotesState(boolean[][][] notes, int hintRequests,

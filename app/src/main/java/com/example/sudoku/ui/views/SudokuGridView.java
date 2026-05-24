@@ -269,7 +269,7 @@ public class SudokuGridView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         
         // Calculate cell size
-        float labelGutter = 0f;
+        float labelGutter = dpToPx(20);
         float gridSize = Math.min(w - labelGutter, h - labelGutter);
         cellSize = gridSize / GRID_SIZE;
         
@@ -297,6 +297,9 @@ public class SudokuGridView extends View {
         super.onDraw(canvas);
         
         if (grid == null) return;
+
+        // Draw coordinate labels
+        drawCoordinates(canvas);
         
         // Draw grid background
         canvas.drawRect(gridBounds, gridBackgroundPaint);
@@ -315,6 +318,9 @@ public class SudokuGridView extends View {
      * Draw cell background colors (selection, highlights).
      */
     private void drawCellBackgrounds(Canvas canvas) {
+        int selectedBoxR = (selectedRow / 3) * 3;
+        int selectedBoxC = (selectedCol / 3) * 3;
+
         for (int r = 0; r < GRID_SIZE; r++) {
             for (int c = 0; c < GRID_SIZE; c++) {
                 Cell cell = grid.getCell(r, c);
@@ -330,9 +336,9 @@ public class SudokuGridView extends View {
                     canvas.drawRect(left, top, right, bottom, lockedCellPaint);
                 }
                 
-                // Selected row/column highlight
+                // Selected row/column/box highlight
                 if (selectedRow >= 0 && selectedCol >= 0) {
-                    if (r == selectedRow || c == selectedCol) {
+                    if (r == selectedRow || c == selectedCol || (r >= selectedBoxR && r < selectedBoxR + 3 && c >= selectedBoxC && c < selectedBoxC + 3)) {
                         canvas.drawRect(left, top, right, bottom, selectedRowColPaint);
                     }
                 }
@@ -382,18 +388,14 @@ public class SudokuGridView extends View {
 
     private void drawHatch(Canvas canvas, float left, float top, float right, float bottom) {
         canvas.drawRect(left, top, right, bottom, sameNumberPaint);
-        float step = Math.max(dpToPx(6), cellSize * 0.22f);
-        for (float x = left - cellSize; x < right; x += step) {
-            canvas.drawLine(x, bottom, x + cellSize, top, markerPaint);
-        }
     }
 
     private void drawConflictMarker(Canvas canvas, float left, float top, float right, float bottom) {
-        float dotRadius = cellSize * 0.08f;
+        float dotRadius = cellSize * 0.06f;
         Paint conflictDotPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         conflictDotPaint.setStyle(Paint.Style.FILL);
         conflictDotPaint.setColor(0xFFE5484D);
-        canvas.drawCircle(right - dotRadius - dpToPx(2), top + dotRadius + dpToPx(2), dotRadius, conflictDotPaint);
+        canvas.drawCircle(right - dotRadius - dpToPx(3), top + dotRadius + dpToPx(3), dotRadius, conflictDotPaint);
     }
     
     /**

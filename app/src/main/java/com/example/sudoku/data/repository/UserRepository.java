@@ -86,7 +86,11 @@ public class UserRepository {
         int longestStreak = profile != null ? profile.longestStreak : 0;
         long lastPlayedDate = profile != null ? profile.lastPlayedDate : 0;
 
-        if (streakManager.isSameDay(lastPlayedDate, playedAt)) {
+        if (lastPlayedDate == 0) {
+            if (won) {
+                currentStreak = 1;
+            }
+        } else if (streakManager.isSameDay(lastPlayedDate, playedAt)) {
             // Same calendar day — streak unchanged regardless of win/loss
             currentStreak = Math.max(1, currentStreak);
         } else if (won && streakManager.specificDateExtendsStreak(lastPlayedDate, playedAt)) {

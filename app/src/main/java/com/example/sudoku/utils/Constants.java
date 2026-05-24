@@ -44,8 +44,8 @@ public class Constants {
     public static final int BASE_SCORE = 1000;
     public static final int TIME_BONUS_MAX = 500;
     public static final int ACCURACY_BONUS_MAX = 300;
-    public static final int MISTAKE_PENALTY = 100;
-    public static final int HINT_PENALTY = 50;
+    public static final int MISTAKE_PENALTY = 50;
+    public static final int HINT_PENALTY = 100;
     
     // XP System
     public static final int BASE_XP = 100;
@@ -68,9 +68,9 @@ public class Constants {
     // ═══════════════════════════════════════════════════════════════
     // STARS CALCULATION
     // ═══════════════════════════════════════════════════════════════
-    public static final int STARS_3_MIN_SCORE = 1500;
-    public static final int STARS_2_MIN_SCORE = 1000;
-    public static final int STARS_1_MIN_SCORE = 500;
+    public static final int STARS_3_MIN_SCORE = 900;
+    public static final int STARS_2_MIN_SCORE = 600;
+    public static final int STARS_1_MIN_SCORE = 300;
     
     // ═══════════════════════════════════════════════════════════════
     // PREFERENCES KEYS
