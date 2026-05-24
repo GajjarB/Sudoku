@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Notion-inspired design system -->
-    <color name="bg_base">#F8F7F4</color>
+    <!-- Playful duolingo-inspired system -->
+    <color name="bg_base">#FFF9F1</color>
     <color name="bg_elevated">#FFFFFF</color>
-    <color name="bg_elevated_alt">#F1F1EF</color>
+    <color name="bg_elevated_alt">#FDF1DE</color>
     <color name="bg_grid">#FFFFFF</color>
-    <color name="surface_overlay">#FFFFFF</color>
-    <color name="divider">#E7E5E0</color>
+    <color name="surface_overlay">#FFF6EA</color>
+    <color name="divider">#F0DFC8</color>
 
-    <color name="accent_primary">#2F7BFF</color>
-    <color name="accent_primary_glow">#2F7BFF</color>
-    <color name="accent_primary_pressed">#1F63D6</color>
-    <color name="accent_secondary">#F1F1EF</color>
-    <color name="accent_secondary_glow">#E7E5E0</color>
-    <color name="accent_success">#4CAF50</color>
-    <color name="accent_warning">#F5A623</color>
-    <color name="accent_danger">#E5484D</color>
+    <color name="accent_primary">#58CC02</color>
+    <color name="accent_primary_glow">#7BEA26</color>
+    <color name="accent_primary_pressed">#46A302</color>
+    <color name="accent_secondary">#1CB0F6</color>
+    <color name="accent_secondary_glow">#8DDCFF</color>
+    <color name="accent_success">#39B54A</color>
+    <color name="accent_warning">#FFB020</color>
+    <color name="accent_danger">#FF6B6B</color>
 
-    <color name="text_primary">#111111</color>
-    <color name="text_secondary">#6B6B6B</color>
-    <color name="text_muted">#8B8B8B</color>
-    <color name="text_disabled">#B6B6B6</color>
+    <color name="text_primary">#2E2E2E</color>
+    <color name="text_secondary">#59616C</color>
+    <color name="text_muted">#7E8793</color>
+    <color name="text_disabled">#B6BDC8</color>
     <color name="text_on_accent">#FFFFFF</color>
 
-    <color name="grid_line_thin">#E7E5E0</color>
-    <color name="grid_line_thick">#111111</color>
+    <color name="grid_line_thin">#E7D8C3</color>
+    <color name="grid_line_thick">#A1762D</color>
     <color name="cell_default">#FFFFFF</color>
-    <color name="cell_selected">#EAF2FF</color>
-    <color name="cell_selected_glow">#2F7BFF</color>
-    <color name="cell_highlighted">#F4F8FF</color>
-    <color name="cell_same_number">#EEF5FF</color>
-    <color name="cell_conflict">#FDECEC</color>
-    <color name="cell_locked">#FAFAF9</color>
-    <color name="cell_hint_pulse">#FFF7E8</color>
+    <color name="cell_selected">#EAFBD5</color>
+    <color name="cell_selected_glow">#58CC02</color>
+    <color name="cell_highlighted">#F3FCE6</color>
+    <color name="cell_same_number">#E8F7FF</color>
+    <color name="cell_conflict">#FFE8E8</color>
+    <color name="cell_locked">#FFF8EE</color>
+    <color name="cell_hint_pulse">#FFF4CE</color>
 
-    <color name="text_locked">#111111</color>
-    <color name="text_player">#2F7BFF</color>
-    <color name="text_player_correct">#2F7BFF</color>
-    <color name="text_error">#E5484D</color>
-    <color name="text_pencil">#6B6B6B</color>
+    <color name="text_locked">#2E2E2E</color>
+    <color name="text_player">#1CB0F6</color>
+    <color name="text_player_correct">#39B54A</color>
+    <color name="text_error">#FF6B6B</color>
+    <color name="text_pencil">#8C95A1</color>
 
-    <color name="number_pad_background">#F8F7F4</color>
+    <color name="number_pad_background">#FFF4E6</color>
     <color name="number_pad_button">#FFFFFF</color>
-    <color name="number_pad_button_pressed">#EAF2FF</color>
-    <color name="number_pad_button_disabled">#F1F1EF</color>
-    <color name="numpad_key_shadow">#FFFFFF</color>
+    <color name="number_pad_button_pressed">#EBFFD8</color>
+    <color name="number_pad_button_disabled">#F1EADF</color>
+    <color name="numpad_key_shadow">#EFD8B6</color>
 
-    <color name="difficulty_easy">#4CAF50</color>
-    <color name="difficulty_medium">#2F7BFF</color>
-    <color name="difficulty_hard">#F5A623</color>
-    <color name="difficulty_expert">#E5484D</color>
+    <color name="difficulty_easy">#39B54A</color>
+    <color name="difficulty_medium">#1CB0F6</color>
+    <color name="difficulty_hard">#FFB020</color>
+    <color name="difficulty_expert">#FF6B6B</color>
 
     <!-- Legacy aliases kept for existing code/resources -->
     <color name="background_cream">@color/bg_base</color>
@@ -60,7 +60,7 @@
     <color name="border_black">@color/divider</color>
     <color name="error_red">@color/accent_danger</color>
     <color name="success_green">@color/accent_success</color>
-    <color name="accent_purple">@color/accent_primary</color>
+    <color name="accent_purple">@color/accent_secondary</color>
     <color name="accent_yellow">@color/accent_warning</color>
     <color name="accent_green">@color/accent_success</color>
     <color name="grid_background">@color/bg_grid</color>
@@ -70,21 +70,21 @@
     <color name="dark_accent">@color/accent_primary</color>
     <color name="dark_text">@color/text_primary</color>
     <color name="pink_accent">@color/accent_danger</color>
-    <color name="pink_light">#FDECEC</color>
+    <color name="pink_light">#FFE8E8</color>
     <color name="green_accent">@color/accent_success</color>
-    <color name="green_light">#EDF8EE</color>
-    <color name="purple_accent">@color/accent_primary</color>
-    <color name="purple_light">#EAF2FF</color>
+    <color name="green_light">#E9FBE8</color>
+    <color name="purple_accent">@color/accent_secondary</color>
+    <color name="purple_light">#E8F7FF</color>
     <color name="orange_accent">@color/accent_warning</color>
-    <color name="orange_light">#FFF7E8</color>
+    <color name="orange_light">#FFF5E1</color>
     <color name="primary">@color/accent_primary</color>
     <color name="primary_dark">@color/accent_primary_pressed</color>
-    <color name="accent">@color/accent_primary</color>
+    <color name="accent">@color/accent_secondary</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="purple_500">@color/accent_primary</color>
-    <color name="purple_700">@color/accent_primary_pressed</color>
-    <color name="teal_200">@color/accent_primary</color>
+    <color name="purple_500">@color/accent_secondary</color>
+    <color name="purple_700">#0A8CC6</color>
+    <color name="teal_200">@color/accent_secondary</color>
     <color name="accent_success_legacy">@color/accent_success</color>
     <color name="accent_warning_legacy">@color/accent_warning</color>
     <color name="accent_primary_legacy">@color/accent_primary</color>

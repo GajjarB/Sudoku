@@ -45,44 +45,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/difficulty_easy"
-                android:textColor="@color/accent_primary_glow" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="122dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/space_8"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_mistakes"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:background="@drawable/chip_danger"
-                android:contentDescription="@string/game_mistakes_status_default"
-                android:gravity="center"
-                android:text="@string/game_mistakes_status_default"
-                android:textColor="@color/accent_danger"
-                android:textSize="11sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_hints"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_marginTop="@dimen/space_4"
-                android:background="@drawable/chip_warning"
-                android:contentDescription="@string/game_hints_status_default"
-                android:gravity="center"
-                android:text="@string/game_hints_status_default"
-                android:textColor="@color/accent_warning"
-                android:textSize="11sp"
-                android:textStyle="bold" />
+                android:textColor="@color/accent_primary_pressed" />
         </LinearLayout>
 
         <com.example.sudoku.ui.views.TimerView
             android:id="@+id/timer_view"
-            android:layout_width="82dp"
+            android:layout_width="96dp"
             android:layout_height="44dp"
             android:background="@drawable/chip_accent"
             android:contentDescription="@string/game_timer_content_description"
@@ -90,6 +58,61 @@
             android:text="@string/game_timer_default"
             android:textColor="@color/text_primary"
             android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/progress_strip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8"
+        android:background="@drawable/neo_card"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_12"
+        app:layout_constraintTop_toBottomOf="@id/header_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tv_mistakes"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="@dimen/space_8"
+            android:layout_weight="1"
+            android:background="@drawable/chip_danger"
+            android:contentDescription="@string/game_mistakes_status_default"
+            android:gravity="center"
+            android:text="@string/game_mistakes_status_default"
+            android:textColor="@color/accent_danger"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_hints"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="@dimen/space_8"
+            android:layout_weight="1"
+            android:background="@drawable/chip_warning"
+            android:contentDescription="@string/game_hints_status_default"
+            android:gravity="center"
+            android:text="@string/game_hints_status_default"
+            android:textColor="@color/accent_warning"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/achievement_badge"
+            android:paddingStart="@dimen/space_12"
+            android:paddingTop="@dimen/space_4"
+            android:paddingEnd="@dimen/space_12"
+            android:paddingBottom="@dimen/space_4"
+            android:text="⭐ +25 XP"
+            android:textColor="@color/accent_primary_pressed"
+            android:textSize="12sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -104,7 +127,7 @@
         app:layout_constraintBottom_toTopOf="@id/controls_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_layout">
+        app:layout_constraintTop_toBottomOf="@id/progress_strip">
 
         <com.example.sudoku.ui.views.SudokuGridView
             android:id="@+id/sudoku_grid"
@@ -145,7 +168,7 @@
             android:layout_weight="1"
             android:contentDescription="@string/control_undo"
             android:drawableTop="@drawable/ic_undo_24"
-            android:drawableTint="@color/accent_primary_glow"
+            android:drawableTint="@color/accent_secondary"
             android:text="@string/control_undo" />
 
         <Button
@@ -157,7 +180,7 @@
             android:layout_weight="1"
             android:contentDescription="@string/control_redo"
             android:drawableTop="@drawable/ic_redo_24"
-            android:drawableTint="@color/accent_primary_glow"
+            android:drawableTint="@color/accent_secondary"
             android:text="@string/control_redo" />
 
         <Button
@@ -169,7 +192,7 @@
             android:layout_weight="1"
             android:contentDescription="@string/control_erase"
             android:drawableTop="@drawable/ic_erase_24"
-            android:drawableTint="@color/accent_primary_glow"
+            android:drawableTint="@color/accent_secondary"
             android:text="@string/control_erase" />
 
         <Button
@@ -181,7 +204,7 @@
             android:layout_weight="1"
             android:contentDescription="@string/control_pencil"
             android:drawableTop="@drawable/ic_notes_24"
-            android:drawableTint="@color/accent_primary_glow"
+            android:drawableTint="@color/accent_secondary"
             android:text="@string/control_pencil" />
 
         <Button
@@ -192,7 +215,7 @@
             android:layout_weight="1"
             android:contentDescription="@string/control_hint"
             android:drawableTop="@drawable/ic_hint_24"
-            android:drawableTint="@color/accent_primary_glow"
+            android:drawableTint="@color/accent_secondary"
             android:text="@string/control_hint" />
     </LinearLayout>
 

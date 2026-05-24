@@ -193,4 +193,35 @@
     <string name="stats_current_streak_content_description">Current streak</string>
     <string name="stats_best_streak_content_description">Best streak</string>
     <string name="stats_loss_pressure_content_description">Loss pressure progress</string>
+
+    <!-- HOME MOTIVATION -->
+    <string name="home_ready_for_level">Ready for Level %1$d. Keep going!</string>
+    <string name="home_continue_game">Continue your streak</string>
+    <string name="home_level_in_progress">Level %1$d in progress — you’re almost there!</string>
+    <string name="home_new_puzzle">Start a fresh challenge</string>
+    <string name="home_daily_empty">Nothing here yet. Start today’s challenge to build momentum.</string>
+    <string name="home_daily_start">Start lesson</string>
+    <string name="home_daily_in_progress">Keep going! %1$d%% complete for today.</string>
+    <string name="home_daily_complete">Level complete! Come back tomorrow for a fresh board.</string>
+    <string name="home_daily_cta_complete">Daily complete</string>
+    <string name="home_daily_cta_continue">Continue daily</string>
+
+    <!-- LEVEL SELECT -->
+    <string name="levels_choose_label">Choose your challenge</string>
+    <string name="levels_choose_title">Start lesson</string>
+    <string name="levels_choose_subtitle">Pick a level and earn stars as you go.</string>
+    <string name="levels_list_label">Level path</string>
+    <string name="levels_list_subtitle">Track progress, unlock levels, and claim rewards.</string>
+
+    <!-- COMPLETED -->
+    <string name="completed_share_toast">Reward card sharing is coming soon. Great job!</string>
+
+    <!-- STATS -->
+    <string name="stats_solved_label">Solved</string>
+    <string name="stats_win_rate_label">Win Rate</string>
+    <string name="stats_current_streak_label">Current Streak</string>
+    <string name="stats_best_streak_label">Best Streak</string>
+    <string name="stats_mistake_empty">Play your first puzzle to unlock insight stats.</string>
+    <string name="stats_mistake_summary">%1$d losses across %2$d games (%3$d%%)</string>
+    <string name="stats_profile_summary">Total play time: %1$s\nStars earned: %2$d\nHints used: %3$d\nAverage hints/game: %4$s</string>
 </resources>

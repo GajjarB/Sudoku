@@ -7,10 +7,19 @@
     android:padding="@dimen/space_20">
 
     <TextView
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/chip_accent"
+        android:gravity="center"
+        android:text="💡"
+        android:textSize="26sp" />
+
+    <TextView
         style="@style/TextAppearance.Neo.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Smart Hint" />
+        android:layout_marginTop="@dimen/space_12"
+        android:text="Smart hint" />
 
     <TextView
         android:id="@+id/tv_hint_text"
@@ -26,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/neo_button_height"
         android:layout_marginTop="@dimen/space_16"
-        android:text="Show More Help" />
+        android:text="Show more help" />
 
     <Button
         android:id="@+id/btn_hint_apply"
@@ -34,5 +43,5 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/neo_button_height"
         android:layout_marginTop="@dimen/space_8"
-        android:text="Apply Hint" />
+        android:text="Got it" />
 </LinearLayout>

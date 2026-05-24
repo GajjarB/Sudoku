@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PremiumActivity extends StaticScreenActivity {
-    @Override protected String label() { return "Optional"; }
-    @Override protected String title() { return "Premium"; }
-    @Override protected String subtitle() { return "Core gameplay stays free. Premium adds comfort features."; }
+    @Override protected String label() { return "Optional boosts"; }
+    @Override protected String title() { return "Premium rewards"; }
+    @Override protected String subtitle() { return "Everything core stays free. Premium adds bonus comfort features."; }
     @Override protected List<StaticListAdapter.Row> rows() {
         return Arrays.asList(
                 new StaticListAdapter.Row("+", "Unlimited hints", "More guidance for training sessions.", ""),

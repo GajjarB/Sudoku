@@ -64,13 +64,13 @@ public class LevelGridAdapter extends RecyclerView.Adapter<LevelGridAdapter.Leve
         void bind(LevelProgress level, OnLevelClickListener listener) {
             tvLevel.setText(String.format("#%03d", level.levelNumber));
             tvMeta.setText(difficultyLabel(level.levelNumber));
-            tvStatus.setText(level.isCompleted ? "Completed" : level.isUnlocked ? "Not started" : "Locked");
+            tvStatus.setText(level.isCompleted ? "⭐ Complete" : level.isUnlocked ? "▶ Start" : "🔒 Locked");
             
             // Visual state based on level.isUnlocked
             if (level.isUnlocked) {
                 itemView.setAlpha(1.0f);
             } else {
-                itemView.setAlpha(0.5f);
+                itemView.setAlpha(0.65f);
             }
             
             itemView.setOnClickListener(v -> {

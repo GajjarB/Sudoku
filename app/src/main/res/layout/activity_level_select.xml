@@ -11,14 +11,14 @@
         style="@style/TextAppearance.Neo.Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Difficulty" />
+        android:text="Choose your challenge" />
 
     <TextView
         android:id="@+id/tv_level_title"
         style="@style/TextAppearance.Neo.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Game" />
+        android:text="Start lesson" />
 
     <TextView
         android:id="@+id/tv_level_subtitle"
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_4"
-        android:text="Choose a comfortable challenge." />
+        android:text="Pick a level and earn stars as you go." />
 
     <LinearLayout
         android:id="@+id/difficulty_options"
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/neo_button_height"
             android:gravity="center_vertical|start"
-            android:text="Easy    Great for beginners" />
+            android:text="🌱 Easy    Warm up and build confidence" />
 
         <Button
             android:id="@+id/btn_medium"
@@ -50,7 +50,7 @@
             android:layout_height="@dimen/neo_button_height"
             android:layout_marginTop="@dimen/space_8"
             android:gravity="center_vertical|start"
-            android:text="Medium    A balanced challenge" />
+            android:text="⚡ Medium    Keep your streak rolling" />
 
         <Button
             android:id="@+id/btn_hard"
@@ -59,7 +59,7 @@
             android:layout_height="@dimen/neo_button_height"
             android:layout_marginTop="@dimen/space_8"
             android:gravity="center_vertical|start"
-            android:text="Hard    For experienced players" />
+            android:text="🔥 Hard    Push your strategy skills" />
 
         <Button
             android:id="@+id/btn_expert"
@@ -68,7 +68,7 @@
             android:layout_height="@dimen/neo_button_height"
             android:layout_marginTop="@dimen/space_8"
             android:gravity="center_vertical|start"
-            android:text="Expert    For Sudoku masters" />
+            android:text="👑 Expert    Big XP and bigger rewards" />
     </LinearLayout>
 
     <LinearLayout
@@ -92,7 +92,7 @@
             android:layout_height="44dp"
             android:layout_marginStart="@dimen/space_8"
             android:layout_weight="1"
-            android:text="In Progress" />
+            android:text="Progress" />
 
         <Button
             style="@style/Button.Secondary"
@@ -100,7 +100,7 @@
             android:layout_height="44dp"
             android:layout_marginStart="@dimen/space_8"
             android:layout_weight="1"
-            android:text="Completed" />
+            android:text="Complete" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

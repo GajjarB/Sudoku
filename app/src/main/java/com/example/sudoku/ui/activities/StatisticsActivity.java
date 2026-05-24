@@ -43,20 +43,21 @@ public class StatisticsActivity extends BaseActivity {
             int rate = played == 0 ? 0 : Math.round((wins * 100f) / played);
             int mistakePercent = played == 0 ? 0 : Math.min(100, Math.round((losses * 100f) / played));
 
-            completed.setText(wins + "\nSolved");
-            winRate.setText(rate + "%\nWin Rate");
-            currentStreak.setText(profile.currentStreak + "\nCurrent Streak");
-            longestStreak.setText(profile.longestStreak + "\nBest Streak");
+            completed.setText(wins + "\n" + getString(R.string.stats_solved_label));
+            winRate.setText(rate + "%\n" + getString(R.string.stats_win_rate_label));
+            currentStreak.setText(profile.currentStreak + "\n" + getString(R.string.stats_current_streak_label));
+            longestStreak.setText(profile.longestStreak + "\n" + getString(R.string.stats_best_streak_label));
             mistakesProgress.setProgress(mistakePercent);
             mistakes.setText(played == 0
-                    ? "Play a puzzle to see losses and mistake pressure."
-                    : losses + " losses across " + played + " games (" + mistakePercent + "%)");
+                    ? getString(R.string.stats_mistake_empty)
+                    : getString(R.string.stats_mistake_summary, losses, played, mistakePercent));
             profileSummary = played == 0
                     ? getString(R.string.stats_no_play_time)
-                    : "Total play time: " + formatTime(profile.totalPlayTimeMs)
-                    + "\nStars earned: " + profile.totalStarsEarned
-                    + "\nHints used: " + profile.totalHintsUsed
-                    + "\nAverage hints/game: " + formatDecimal(played == 0 ? 0 : (double) profile.totalHintsUsed / played);
+                    : getString(R.string.stats_profile_summary,
+                    formatTime(profile.totalPlayTimeMs),
+                    profile.totalStarsEarned,
+                    profile.totalHintsUsed,
+                    formatDecimal(played == 0 ? 0 : (double) profile.totalHintsUsed / played));
             updateSummary(bestTimes);
         });
         loadHistoryStats(bestTimes);

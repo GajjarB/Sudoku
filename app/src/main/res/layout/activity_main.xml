@@ -25,22 +25,32 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:background="@drawable/neo_card"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/chip_accent"
                     android:gravity="center"
-                    android:text="S"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:text="🧩"
+                    android:textSize="22sp" />
 
-                <TextView
-                    style="@style/TextAppearance.Neo.Title"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/space_12"
                     android:layout_weight="1"
-                    android:text="Sudoku" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextAppearance.Neo.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Welcome back" />
+
+                    <TextView
+                        style="@style/TextAppearance.Neo.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Let’s play!" />
+                </LinearLayout>
 
                 <ImageButton
                     android:id="@+id/btn_settings"
@@ -55,7 +65,82 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_16"
+                android:background="@drawable/neo_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_16">
+
+                <TextView
+                    android:id="@+id/tv_player_level"
+                    style="@style/TextAppearance.Neo.Heading"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Ready for your next level" />
+
+                <TextView
+                    style="@style/Badge.Streak"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🔥 3 day streak" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12"
+                android:background="@drawable/neo_card"
+                android:orientation="vertical"
+                android:padding="@dimen/space_16">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextAppearance.Neo.Heading"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Today’s XP" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/achievement_badge"
+                        android:paddingStart="@dimen/space_12"
+                        android:paddingTop="@dimen/space_4"
+                        android:paddingEnd="@dimen/space_12"
+                        android:paddingBottom="@dimen/space_4"
+                        android:text="+40 XP"
+                        android:textColor="@color/accent_primary_pressed"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="@dimen/space_8"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:max="100"
+                    android:progress="40"
+                    android:progressDrawable="@drawable/neo_progress" />
+
+                <TextView
+                    style="@style/TextAppearance.Neo.Muted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:text="You’re almost there — 60 XP to hit today’s goal!" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12"
                 android:background="@drawable/card_hero"
                 android:orientation="vertical"
                 android:padding="@dimen/space_16">
@@ -87,13 +172,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_8"
-                    android:text="A calm board, refreshed every day." />
+                    android:text="Great job! Keep going to claim your reward." />
 
                 <ProgressBar
                     android:id="@+id/progress_daily"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="6dp"
+                    android:layout_height="8dp"
                     android:layout_marginTop="@dimen/space_12"
                     android:max="100"
                     android:progress="0"
@@ -105,14 +190,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/neo_button_height"
                     android:layout_marginTop="@dimen/space_12"
-                    android:text="Play" />
+                    android:text="Start lesson" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_12"
-                android:background="@drawable/neo_card"
+                android:background="@drawable/reward_card"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="@dimen/space_16">
@@ -128,70 +213,74 @@
                         style="@style/TextAppearance.Neo.Heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Continue Game" />
+                        android:text="Continue your run" />
 
                     <TextView
-                        android:id="@+id/tv_player_level"
                         style="@style/TextAppearance.Neo.Muted"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_4"
-                        android:text="Ready for a fresh puzzle" />
+                        android:text="You’re doing amazing — finish and claim bonus XP." />
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/btn_resume"
                     style="@style/Button.Secondary"
-                    android:layout_width="104dp"
+                    android:layout_width="120dp"
                     android:layout_height="@dimen/neo_button_height"
-                    android:text="Play" />
+                    android:text="Continue" />
             </LinearLayout>
-
-
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="84dp"
         android:background="@color/bg_elevated"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/space_8"
-        android:paddingEnd="@dimen/space_8">
+        android:padding="@dimen/space_8">
 
         <Button
             style="@style/Button.Secondary"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="@dimen/space_4"
             android:layout_weight="1"
-            android:text="Home" />
+            android:background="@drawable/nav_item_selected"
+            android:text="🏠\nHome"
+            android:textColor="@color/accent_primary_pressed" />
 
         <Button
             android:id="@+id/btn_nav_challenges"
             style="@style/Button.Secondary"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="56dp"
             android:layout_marginStart="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
             android:layout_weight="1"
-            android:text="Challenges" />
+            android:background="@drawable/nav_item_unselected"
+            android:text="🏆\nGoals" />
 
         <Button
             android:id="@+id/btn_stats"
             style="@style/Button.Secondary"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="56dp"
             android:layout_marginStart="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
             android:layout_weight="1"
-            android:text="Stats" />
+            android:background="@drawable/nav_item_unselected"
+            android:text="📈\nStats" />
 
         <Button
             android:id="@+id/btn_profile"
             style="@style/Button.Secondary"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="56dp"
             android:layout_marginStart="@dimen/space_4"
             android:layout_weight="1"
-            android:text="Profile" />
+            android:background="@drawable/nav_item_unselected"
+            android:text="🙂\nProfile" />
     </LinearLayout>
 </LinearLayout>

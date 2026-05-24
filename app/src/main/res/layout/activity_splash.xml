@@ -2,21 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_bg"
+    android:background="@drawable/window_gradient_bg"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/space_24">
 
     <TextView
         android:id="@+id/iv_logo"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:background="@drawable/neo_card"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/card_hero"
         android:gravity="center"
-        android:text="S"
-        android:textColor="@color/text_primary"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        android:text="🧩"
+        android:textSize="32sp" />
 
     <TextView
         android:id="@+id/tv_welcome"
@@ -25,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_24"
         android:gravity="center"
-        android:text="Welcome to Sudoku" />
+        android:text="Ready to train your brain?" />
 
     <TextView
         style="@style/TextAppearance.Neo.Body"
@@ -33,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_8"
         android:gravity="center"
-        android:text="The classic puzzle game for your mind." />
+        android:text="Play daily, build your streak, and unlock rewards." />
 
     <Button
         android:id="@+id/btn_continue"
@@ -41,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/neo_button_height"
         android:layout_marginTop="96dp"
-        android:text="Continue" />
+        android:text="Start lesson" />
 
     <Button
         android:id="@+id/btn_sign_in"
@@ -49,7 +47,5 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/neo_button_height"
         android:layout_marginTop="@dimen/space_8"
-        android:background="@android:color/transparent"
-        android:text="Sign in"
-        android:textColor="@color/text_primary" />
+        android:text="Continue" />
 </LinearLayout>

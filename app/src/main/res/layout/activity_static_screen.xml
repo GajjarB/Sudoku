@@ -28,11 +28,24 @@
         android:layout_marginTop="@dimen/space_4"
         android:text="Subtitle" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_12"
+        android:background="@drawable/achievement_badge"
+        android:paddingStart="@dimen/space_12"
+        android:paddingTop="@dimen/space_8"
+        android:paddingEnd="@dimen/space_12"
+        android:paddingBottom="@dimen/space_8"
+        android:text="✨ Keep going!"
+        android:textColor="@color/accent_primary_pressed"
+        android:textStyle="bold" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_static"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_16"
         android:layout_weight="1"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/space_16" />
