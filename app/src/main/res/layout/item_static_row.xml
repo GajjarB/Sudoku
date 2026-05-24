@@ -10,12 +10,12 @@
 
     <TextView
         android:id="@+id/tv_row_icon"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@drawable/chip_accent"
         android:gravity="center"
         android:text="S"
-        android:textColor="@color/accent_primary"
+        android:textColor="@color/accent_primary_pressed"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -48,5 +48,10 @@
         style="@style/TextAppearance.Neo.Muted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/achievement_badge"
+        android:paddingStart="@dimen/space_8"
+        android:paddingTop="@dimen/space_4"
+        android:paddingEnd="@dimen/space_8"
+        android:paddingBottom="@dimen/space_4"
         android:text="" />
 </LinearLayout>

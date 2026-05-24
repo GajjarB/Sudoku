@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ThemesActivity extends StaticScreenActivity {
-    @Override protected String label() { return "Customize"; }
+    @Override protected String label() { return "Color playground"; }
     @Override protected String title() { return "Themes"; }
-    @Override protected String subtitle() { return "Light is selected. Theme rows are ready for live color switching."; }
+    @Override protected String subtitle() { return "Make your board feel playful, calm, or bold in one tap."; }
     @Override protected List<StaticListAdapter.Row> rows() {
         return Arrays.asList(
                 new StaticListAdapter.Row("L", "Light", "Clean default theme.", "Selected"),

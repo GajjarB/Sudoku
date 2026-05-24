@@ -57,6 +57,7 @@ public class StaticListAdapter extends RecyclerView.Adapter<StaticListAdapter.Ro
             title.setText(row.title);
             subtitle.setText(row.subtitle);
             value.setText(row.value);
+            value.setVisibility(row.value == null || row.value.trim().isEmpty() ? View.GONE : View.VISIBLE);
         }
     }
 

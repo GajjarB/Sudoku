@@ -15,7 +15,7 @@
             style="@style/TextAppearance.Neo.Label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/stats_dashboard_label" />
+            android:text="Your progress" />
 
         <TextView
             style="@style/TextAppearance.Neo.Title"
@@ -23,10 +23,41 @@
             android:layout_height="wrap_content"
             android:text="@string/stats_title" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:background="@drawable/neo_card"
+            android:orientation="vertical"
+            android:padding="@dimen/space_16">
+
+            <TextView
+                style="@style/TextAppearance.Neo.Heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Daily goal" />
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="@dimen/space_8"
+                android:max="100"
+                android:progress="55"
+                android:progressDrawable="@drawable/neo_progress" />
+
+            <TextView
+                style="@style/TextAppearance.Neo.Muted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:text="Great job! Keep going for bonus gems." />
+        </LinearLayout>
+
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_12"
             android:columnCount="2">
 
             <TextView

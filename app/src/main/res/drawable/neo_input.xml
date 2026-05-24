@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false">
+        <shape>
+            <corners android:radius="18dp" />
+            <solid android:color="@color/number_pad_button_disabled" />
+            <stroke android:width="1dp" android:color="@color/divider" />
+        </shape>
+    </item>
+    <item android:state_selected="true">
+        <shape>
+            <corners android:radius="18dp" />
+            <solid android:color="#E8F8FF" />
+            <stroke android:width="2dp" android:color="@color/accent_success" />
+        </shape>
+    </item>
+    <item android:state_activated="true">
+        <shape>
+            <corners android:radius="18dp" />
+            <solid android:color="#FFE8E8" />
+            <stroke android:width="2dp" android:color="@color/accent_danger" />
+        </shape>
+    </item>
     <item android:state_focused="true">
         <shape>
-            <corners android:radius="12dp" />
-            <solid android:color="@color/bg_elevated_alt" />
-            <stroke android:width="2dp" android:color="@color/accent_primary" />
+            <corners android:radius="18dp" />
+            <solid android:color="@color/bg_elevated" />
+            <stroke android:width="2dp" android:color="@color/accent_secondary" />
         </shape>
     </item>
     <item>
         <shape>
-            <corners android:radius="12dp" />
+            <corners android:radius="18dp" />
             <solid android:color="@color/bg_elevated" />
             <stroke android:width="1dp" android:color="@color/divider" />
         </shape>

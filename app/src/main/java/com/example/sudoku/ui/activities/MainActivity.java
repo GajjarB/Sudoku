@@ -79,17 +79,17 @@ public class MainActivity extends BaseActivity {
         
         viewModel.getUserProfile().observe(this, profile -> {
             if (profile != null) {
-                tvLevel.setText("Ready for Level " + profile.currentLevel);
+                tvLevel.setText(getString(R.string.home_ready_for_level, profile.currentLevel));
             }
         });
         
         viewModel.getIncompleteGame().observe(this, game -> {
         Button btnResume = findViewById(R.id.btn_resume);
             if (game != null) {
-                continueTitle.setText("Continue Game");
-                tvLevel.setText("Level " + game.levelNumber + " in progress");
+                continueTitle.setText(R.string.home_continue_game);
+                tvLevel.setText(getString(R.string.home_level_in_progress, game.levelNumber));
                 btnResume.setVisibility(View.VISIBLE);
-                btnResume.setText("Resume");
+                btnResume.setText(R.string.menu_continue);
                 btnResume.setOnClickListener(v -> {
                     Intent intent = new Intent(MainActivity.this, GameActivity.class);
                     intent.putExtra(Constants.EXTRA_GAME_ID, game.gameId);
@@ -97,14 +97,14 @@ public class MainActivity extends BaseActivity {
                 });
                 updateDailyProgress(game, dailyProgress, dailyStatus, btnDaily);
             } else {
-                continueTitle.setText("New Puzzle");
+                continueTitle.setText(R.string.home_new_puzzle);
                 btnResume.setVisibility(View.VISIBLE);
-                btnResume.setText("Play");
+                btnResume.setText(R.string.menu_play);
                 btnResume.setOnClickListener(v ->
                         startActivity(new Intent(MainActivity.this, LevelSelectActivity.class)));
                 dailyProgress.setProgress(0);
-                dailyStatus.setText("No daily progress yet. Finish one board today.");
-                btnDaily.setText("Start Daily");
+                dailyStatus.setText(R.string.home_daily_empty);
+                btnDaily.setText(R.string.home_daily_start);
                 btnDaily.setEnabled(true);
             }
             // Pulse primary action
@@ -135,8 +135,8 @@ public class MainActivity extends BaseActivity {
     private void updateDailyProgress(SavedGame game, ProgressBar progress, TextView status, Button dailyButton) {
         if (!game.isDailyChallenge) {
             progress.setProgress(0);
-            status.setText("No daily progress yet. Finish one board today.");
-            dailyButton.setText("Start Daily");
+            status.setText(R.string.home_daily_empty);
+            dailyButton.setText(R.string.home_daily_start);
             dailyButton.setEnabled(true);
             return;
         }
@@ -145,9 +145,11 @@ public class MainActivity extends BaseActivity {
         int percent = Math.round((filled * 100f) / 81f);
         progress.setProgress(percent);
         status.setText(game.isCompleted
-                ? "Daily completed. Come back tomorrow for a fresh board."
-                : percent + "% complete. Continue today's board.");
-        dailyButton.setText(game.isCompleted ? "Daily Complete" : "Continue Daily");
+                ? getString(R.string.home_daily_complete)
+                : getString(R.string.home_daily_in_progress, percent));
+        dailyButton.setText(game.isCompleted
+                ? R.string.home_daily_cta_complete
+                : R.string.home_daily_cta_continue);
         dailyButton.setEnabled(!game.isCompleted);
         if (!game.isCompleted) {
             dailyButton.setOnClickListener(v -> {

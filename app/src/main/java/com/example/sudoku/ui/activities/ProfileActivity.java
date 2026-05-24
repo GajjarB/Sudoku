@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ProfileActivity extends StaticScreenActivity {
-    @Override protected String label() { return "Player"; }
-    @Override protected String title() { return "Arjun"; }
-    @Override protected String subtitle() { return "Level 1, 0 XP. Achievements unlock as you play."; }
+    @Override protected String label() { return "Hero profile"; }
+    @Override protected String title() { return "Puzzle Champion"; }
+    @Override protected String subtitle() { return "Level 1 and climbing. Keep solving to unlock shiny badges."; }
     @Override protected List<StaticListAdapter.Row> rows() {
         return Arrays.asList(
                 new StaticListAdapter.Row("XP", "Level Progress", "Earn XP from solves, streaks, and challenges.", "0%"),

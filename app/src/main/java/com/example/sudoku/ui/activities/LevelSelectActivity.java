@@ -36,16 +36,16 @@ public class LevelSelectActivity extends BaseActivity {
         View filters = findViewById(R.id.puzzle_filters);
 
         if (difficulty == null) {
-            label.setText("Select Difficulty");
-            title.setText("New Game");
-            subtitle.setText("Choose a comfortable challenge.");
+            label.setText(R.string.levels_choose_label);
+            title.setText(R.string.levels_choose_title);
+            subtitle.setText(R.string.levels_choose_subtitle);
             bindDifficultyButtons();
             return;
         }
 
-        label.setText("Puzzle List");
+        label.setText(R.string.levels_list_label);
         title.setText(difficulty);
-        subtitle.setText("All, in-progress, completed, and locked puzzles.");
+        subtitle.setText(R.string.levels_list_subtitle);
         difficultyOptions.setVisibility(View.GONE);
         filters.setVisibility(View.VISIBLE);
 

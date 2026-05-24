@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_enabled="false">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:top="4dp">
         <shape>
             <corners android:radius="@dimen/button_corner_radius" />
-            <solid android:color="@color/text_disabled" />
+            <solid android:color="@color/accent_primary_pressed" />
         </shape>
     </item>
-    <item android:state_pressed="true">
-        <shape>
-            <corners android:radius="@dimen/button_corner_radius" />
-            <solid android:color="#2A2A2A" />
-        </shape>
+    <item android:bottom="4dp">
+        <selector>
+            <item android:state_enabled="false">
+                <shape>
+                    <corners android:radius="@dimen/button_corner_radius" />
+                    <solid android:color="@color/text_disabled" />
+                </shape>
+            </item>
+            <item android:state_pressed="true">
+                <shape>
+                    <corners android:radius="@dimen/button_corner_radius" />
+                    <solid android:color="@color/accent_primary_pressed" />
+                </shape>
+            </item>
+            <item>
+                <shape>
+                    <corners android:radius="@dimen/button_corner_radius" />
+                    <gradient
+                        android:angle="270"
+                        android:startColor="@color/accent_primary_glow"
+                        android:endColor="@color/accent_primary"
+                        android:type="linear" />
+                </shape>
+            </item>
+        </selector>
     </item>
-    <item>
-        <shape>
-            <corners android:radius="@dimen/button_corner_radius" />
-            <solid android:color="@color/text_primary" />
-        </shape>
-    </item>
-</selector>
+</layer-list>

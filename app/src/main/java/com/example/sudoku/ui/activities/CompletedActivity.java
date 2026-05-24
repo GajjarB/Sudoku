@@ -38,7 +38,7 @@ public class CompletedActivity extends BaseActivity {
             finish();
         });
         findViewById(R.id.btn_share).setOnClickListener(v ->
-                Toast.makeText(this, "Share card ready after export polish.", Toast.LENGTH_SHORT).show());
+                Toast.makeText(this, R.string.completed_share_toast, Toast.LENGTH_SHORT).show());
     }
 
     private String formatTime(long millis) {
