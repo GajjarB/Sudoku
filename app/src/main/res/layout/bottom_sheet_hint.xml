@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_12"
-        android:text="Smart hint" />
+        android:text="Quick hint" />
 
     <TextView
         android:id="@+id/tv_hint_text"
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/neo_button_height"
         android:layout_marginTop="@dimen/space_16"
-        android:text="Show more help" />
+        android:text="More details" />
 
     <Button
         android:id="@+id/btn_hint_apply"

@@ -1,10 +1,13 @@
 package com.example.sudoku.ui.views;
 
 import android.content.Context;
+import android.view.MotionEvent;
 import android.util.AttributeSet;
 import android.widget.GridLayout;
 import android.widget.Button;
 import androidx.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Custom View representing the number pad (1-9).
@@ -12,6 +15,7 @@ import androidx.annotation.Nullable;
 public class NumberPadView extends GridLayout {
     
     private OnNumberClickListener listener;
+    private final Map<Integer, Button> valueButtons = new HashMap<>();
 
     public NumberPadView(Context context) {
         super(context);
@@ -58,7 +62,17 @@ public class NumberPadView extends GridLayout {
                     listener.onNumberClick(value);
                 }
             });
+            button.setOnTouchListener((v, event) -> {
+                int action = event.getActionMasked();
+                if (action == MotionEvent.ACTION_DOWN) {
+                    v.animate().scaleX(0.96f).scaleY(0.96f).translationY(dpToPx(2)).setDuration(60).start();
+                } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+                    v.animate().scaleX(1f).scaleY(1f).translationY(0f).setDuration(140).start();
+                }
+                return false;
+            });
             addView(button);
+            valueButtons.put(value, button);
         }
     }
     
@@ -75,6 +89,18 @@ public class NumberPadView extends GridLayout {
     private void selectButton(Button selected) {
         for (int i = 0; i < getChildCount(); i++) {
             getChildAt(i).setSelected(getChildAt(i) == selected);
+        }
+    }
+
+    public void setCompletedNumbers(boolean[] completed) {
+        if (completed == null || completed.length < 10) return;
+        for (int n = 1; n <= 9; n++) {
+            Button button = valueButtons.get(n);
+            if (button == null) continue;
+            boolean isComplete = completed[n];
+            button.setEnabled(!isComplete);
+            button.setAlpha(isComplete ? 0.62f : 1f);
+            button.setText(isComplete ? n + " ✓" : String.valueOf(n));
         }
     }
 
