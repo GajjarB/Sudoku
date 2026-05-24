@@ -67,8 +67,12 @@ public class GameActivity extends BaseActivity {
         btnNotes = findViewById(R.id.btn_notes);
         android.widget.Button btnHint = findViewById(R.id.btn_hint);
         android.view.View btnBack = findViewById(R.id.btn_back);
+        android.view.View btnPause = findViewById(R.id.btn_pause);
+        android.view.View btnSettings = findViewById(R.id.btn_game_settings);
 
         btnBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        btnPause.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        btnSettings.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
         btnUndo.setOnClickListener(v -> viewModel.undo());
         btnRedo.setOnClickListener(v -> viewModel.redo());
         btnErase.setOnClickListener(v -> viewModel.erase());

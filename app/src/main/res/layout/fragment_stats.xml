@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_base"
+    android:paddingStart="20dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextAppearance.Neo.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Progress" />
+
+        <TextView
+            style="@style/TextAppearance.Neo.Body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="See how your Sudoku journey is improving over time." />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_filter_week"
+                style="@style/Button.Secondary"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_bottom_nav_active"
+                android:text="Week" />
+
+            <Button
+                android:id="@+id/btn_filter_month"
+                style="@style/Button.Secondary"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="Month" />
+
+            <Button
+                android:id="@+id/btn_filter_all"
+                style="@style/Button.Secondary"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="All" />
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:columnCount="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/bg_surface_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Puzzles solved" android:textColor="@color/text_muted" android:textSize="12sp" />
+                <TextView android:id="@+id/tv_stats_solved" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="0" android:textColor="@color/text_primary" android:textSize="24sp" android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/bg_surface_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Current streak" android:textColor="@color/text_muted" android:textSize="12sp" />
+                <TextView android:id="@+id/tv_stats_streak" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="0 days" android:textColor="@color/text_primary" android:textSize="24sp" android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_surface_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Accuracy" android:textColor="@color/text_muted" android:textSize="12sp" />
+                <TextView android:id="@+id/tv_stats_accuracy" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="0%" android:textColor="@color/text_primary" android:textSize="24sp" android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_surface_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Best time" android:textColor="@color/text_muted" android:textSize="12sp" />
+                <TextView android:id="@+id/tv_stats_best_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="--" android:textColor="@color/text_primary" android:textSize="24sp" android:textStyle="bold" />
+            </LinearLayout>
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_surface_card"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                style="@style/TextAppearance.Neo.Heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weekly progress" />
+
+            <TextView
+                android:id="@+id/tv_stats_secondary"
+                style="@style/TextAppearance.Neo.Muted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Average time -- • XP 0" />
+
+            <com.example.sudoku.ui.views.ProgressChartView
+                android:id="@+id/progress_chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_surface_card"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                style="@style/TextAppearance.Neo.Heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Difficulty breakdown" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Easy" android:textColor="@color/text_secondary" />
+            <ProgressBar android:id="@+id/progress_easy" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="8dp" android:max="100" android:progressDrawable="@drawable/neo_progress" />
+            <TextView android:id="@+id/tv_easy_count" style="@style/TextAppearance.Neo.Muted" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 solved" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Medium" android:textColor="@color/text_secondary" />
+            <ProgressBar android:id="@+id/progress_medium" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="8dp" android:max="100" android:progressDrawable="@drawable/neo_progress" />
+            <TextView android:id="@+id/tv_medium_count" style="@style/TextAppearance.Neo.Muted" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 solved" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Hard" android:textColor="@color/text_secondary" />
+            <ProgressBar android:id="@+id/progress_hard" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="8dp" android:max="100" android:progressDrawable="@drawable/neo_progress" />
+            <TextView android:id="@+id/tv_hard_count" style="@style/TextAppearance.Neo.Muted" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 solved" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Expert" android:textColor="@color/text_secondary" />
+            <ProgressBar android:id="@+id/progress_expert" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="8dp" android:max="100" android:progressDrawable="@drawable/neo_progress" />
+            <TextView android:id="@+id/tv_expert_count" style="@style/TextAppearance.Neo.Muted" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 solved" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_surface_card"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                style="@style/TextAppearance.Neo.Heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Insight" />
+
+            <TextView
+                android:id="@+id/tv_insight_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="You are building steady momentum."
+                android:textColor="@color/text_primary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_insight_body"
+                style="@style/TextAppearance.Neo.Body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Finish two medium puzzles this week to stretch your logic speed." />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
