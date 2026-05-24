@@ -42,7 +42,8 @@ public class SettingsActivity extends BaseActivity {
             preferencesManager.setVibrationEnabled(!preferencesManager.isVibrationEnabled());
             updatePreferenceLabels();
         });
-        themeButton.setOnClickListener(v -> cycleTheme());
+        themeButton.setOnClickListener(v ->
+                startActivity(new android.content.Intent(this, ThemesActivity.class)));
         mistakeAlertsButton.setOnClickListener(v -> {
             boolean enabled = !uiPrefs.getBoolean(KEY_MISTAKE_ALERTS, true);
             uiPrefs.edit().putBoolean(KEY_MISTAKE_ALERTS, enabled).apply();
@@ -53,6 +54,8 @@ public class SettingsActivity extends BaseActivity {
             uiPrefs.edit().putBoolean(KEY_DEFAULT_NOTES, enabled).apply();
             updatePreferenceLabels();
         });
+        findViewById(R.id.btn_premium_settings).setOnClickListener(v ->
+                startActivity(new android.content.Intent(this, PremiumActivity.class)));
         findViewById(R.id.btn_privacy).setOnClickListener(v -> showPrivacyDialog());
         findViewById(R.id.btn_about).setOnClickListener(v ->
                 Toast.makeText(this, R.string.settings_about_message, Toast.LENGTH_SHORT).show());
@@ -65,27 +68,13 @@ public class SettingsActivity extends BaseActivity {
         soundButton.setText(R.string.settings_sound_unavailable);
         soundButton.setContentDescription(getString(R.string.settings_audio_unavailable_content_description));
         vibrationButton.setText(getString(R.string.settings_vibration_state, stateLabel(preferencesManager.isVibrationEnabled())));
-        themeButton.setText(getString(R.string.settings_theme_state, themeLabel(preferencesManager.getTheme())));
+        themeButton.setText(R.string.settings_theme);
         mistakeAlertsButton.setText(getString(R.string.settings_mistake_popups_state,
                 stateLabel(uiPrefs.getBoolean(KEY_MISTAKE_ALERTS, true))));
         notesButton.setText(getString(R.string.settings_notes_state,
                 stateLabel(uiPrefs.getBoolean(KEY_DEFAULT_NOTES, false))));
     }
 
-    private void cycleTheme() {
-        String current = preferencesManager.getTheme();
-        String next;
-        if ("LIGHT".equals(current)) {
-            next = "DARK";
-        } else if ("DARK".equals(current)) {
-            next = "SYSTEM";
-        } else {
-            next = "LIGHT";
-        }
-        preferencesManager.setTheme(next);
-        applyThemeMode(next);
-        updatePreferenceLabels();
-    }
 
     private void applyThemeMode(String theme) {
         if ("DARK".equals(theme)) {
@@ -97,11 +86,6 @@ public class SettingsActivity extends BaseActivity {
         }
     }
 
-    private String themeLabel(String theme) {
-        if ("DARK".equals(theme)) return "Dark";
-        if ("SYSTEM".equals(theme)) return "System";
-        return "Light";
-    }
 
     private String stateLabel(boolean enabled) {
         return getString(enabled ? R.string.settings_state_on : R.string.settings_state_off);

@@ -43,40 +43,21 @@ public class MainActivity extends BaseActivity {
             return;
         }
         
-        Button btnPlay = findViewById(R.id.btn_play);
         Button btnDaily = findViewById(R.id.btn_daily);
         View btnSettings = findViewById(R.id.btn_settings);
         Button btnStats = findViewById(R.id.btn_stats);
         TextView continueTitle = findViewById(R.id.tv_continue_title);
         TextView tvLevel = findViewById(R.id.tv_player_level);
-        TextView gamesPlayed = findViewById(R.id.tv_games_played);
-        TextView winRate = findViewById(R.id.tv_win_rate);
-        TextView bestTime = findViewById(R.id.tv_best_time);
-        TextView streak = findViewById(R.id.tv_streak);
         TextView dailyDate = findViewById(R.id.tv_daily_date);
         TextView dailyStatus = findViewById(R.id.tv_daily_status);
         ProgressBar dailyProgress = findViewById(R.id.progress_daily);
 
         dailyDate.setText(new SimpleDateFormat("MMM d", Locale.US).format(new Date()));
         
-        btnPlay.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, LevelSelectActivity.class));
-        });
-
-        findViewById(R.id.btn_easy).setOnClickListener(v -> openDifficulty("Easy"));
-        findViewById(R.id.btn_medium).setOnClickListener(v -> openDifficulty("Medium"));
-        findViewById(R.id.btn_hard).setOnClickListener(v -> openDifficulty("Hard"));
-        findViewById(R.id.btn_expert).setOnClickListener(v -> openDifficulty("Expert"));
-        findViewById(R.id.btn_challenges).setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, ChallengesActivity.class)));
         findViewById(R.id.btn_nav_challenges).setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, ChallengesActivity.class)));
         findViewById(R.id.btn_profile).setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, ProfileActivity.class)));
-        findViewById(R.id.btn_themes).setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, ThemesActivity.class)));
-        findViewById(R.id.btn_premium).setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, PremiumActivity.class)));
         
         btnDaily.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, GameActivity.class);
@@ -95,13 +76,6 @@ public class MainActivity extends BaseActivity {
         viewModel.getUserProfile().observe(this, profile -> {
             if (profile != null) {
                 tvLevel.setText("Ready for Level " + profile.currentLevel);
-                int played = profile.totalGamesPlayed;
-                int wins = profile.totalGamesWon;
-                int rate = played == 0 ? 0 : Math.round((wins * 100f) / played);
-                gamesPlayed.setText(played + "\nGames");
-                winRate.setText(rate + "%\nWins");
-                bestTime.setText(formatTime(profile.totalPlayTimeMs) + "\nPlayed");
-                streak.setText(profile.currentStreak + "\nStreak");
             }
         });
         
