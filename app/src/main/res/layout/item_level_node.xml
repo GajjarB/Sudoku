@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/card_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_surface_card"
+            android:orientation="horizontal"
+            android:padding="14dp">
+
+            <TextView
+                android:id="@+id/icon_left"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="✓"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView android:id="@+id/title_left" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Level 1" android:textColor="@color/text_primary" android:textStyle="bold" />
+                <TextView android:id="@+id/subtitle_left" style="@style/TextAppearance.Neo.Muted" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Easy warm-up" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space android:layout_width="16dp" android:layout_height="1dp" />
+
+        <LinearLayout
+            android:id="@+id/card_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_surface_card"
+            android:orientation="horizontal"
+            android:padding="14dp">
+
+            <TextView
+                android:id="@+id/icon_right"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="▶"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView android:id="@+id/title_right" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Level 2" android:textColor="@color/text_primary" android:textStyle="bold" />
+                <TextView android:id="@+id/subtitle_right" style="@style/TextAppearance.Neo.Muted" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Current puzzle" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/node_connector"
+        android:layout_width="4dp"
+        android:layout_height="26dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/divider" />
+</LinearLayout>

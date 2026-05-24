@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="164dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="12dp"
+    android:background="@drawable/bg_surface_card"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_achievement_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/achievement_badge"
+        android:gravity="center"
+        android:text="🏅"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_achievement_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="First Win"
+        android:textColor="@color/text_primary"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_achievement_subtitle"
+        style="@style/TextAppearance.Neo.Muted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Complete your first puzzle" />
+</LinearLayout>
