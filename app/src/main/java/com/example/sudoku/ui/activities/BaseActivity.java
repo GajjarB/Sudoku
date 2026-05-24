@@ -23,7 +23,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         // Apply window background
         getWindow().getDecorView().setBackgroundColor(currentTheme.backgroundColor);
         
-        // Optional: Status bar color logic could go here
+        // Window transitions
+        if (savedInstanceState == null) {
+            overridePendingTransition(com.example.sudoku.R.anim.slide_in_right, com.example.sudoku.R.anim.slide_out_left);
+        }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(com.example.sudoku.R.anim.slide_in_left, com.example.sudoku.R.anim.slide_out_right);
     }
     
     protected void applyThemeToView(android.view.View view) {

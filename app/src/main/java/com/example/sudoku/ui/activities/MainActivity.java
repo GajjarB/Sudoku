@@ -54,6 +54,10 @@ public class MainActivity extends BaseActivity {
 
         dailyDate.setText(new SimpleDateFormat("MMM d", Locale.US).format(new Date()));
         
+        // Entrance animation
+        findViewById(R.id.main_scroll_content).startAnimation(
+                android.view.animation.AnimationUtils.loadAnimation(this, R.anim.slide_up_fade_in));
+
         findViewById(R.id.btn_nav_challenges).setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, ChallengesActivity.class)));
         findViewById(R.id.btn_profile).setOnClickListener(v ->
@@ -103,6 +107,8 @@ public class MainActivity extends BaseActivity {
                 btnDaily.setText("Start Daily");
                 btnDaily.setEnabled(true);
             }
+            // Pulse primary action
+            btnResume.startAnimation(android.view.animation.AnimationUtils.loadAnimation(this, R.anim.pulse));
         });
     }
 

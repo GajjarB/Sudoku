@@ -15,6 +15,8 @@ public class StreakFlameView extends View {
 
     private Paint flamePaint;
     private int streakDays = 0;
+    private android.animation.ValueAnimator pulseAnimator;
+    private float pulseValue = 1.0f;
 
     public StreakFlameView(Context context) {
         super(context);
@@ -35,7 +37,39 @@ public class StreakFlameView extends View {
     
     public void setStreak(int days) {
         this.streakDays = days;
+        if (days > 0) {
+            startPulsing();
+        } else {
+            stopPulsing();
+        }
         invalidate();
+    }
+
+    private void startPulsing() {
+        if (pulseAnimator != null) return;
+        pulseAnimator = android.animation.ValueAnimator.ofFloat(0.9f, 1.1f);
+        pulseAnimator.setDuration(800);
+        pulseAnimator.setRepeatMode(android.animation.ValueAnimator.REVERSE);
+        pulseAnimator.setRepeatCount(android.animation.ValueAnimator.INFINITE);
+        pulseAnimator.addUpdateListener(animation -> {
+            pulseValue = (float) animation.getAnimatedValue();
+            invalidate();
+        });
+        pulseAnimator.start();
+    }
+
+    private void stopPulsing() {
+        if (pulseAnimator != null) {
+            pulseAnimator.cancel();
+            pulseAnimator = null;
+        }
+        pulseValue = 1.0f;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        stopPulsing();
+        super.onDetachedFromWindow();
     }
 
     @Override
@@ -51,7 +85,7 @@ public class StreakFlameView extends View {
         if (streakDays > 0) {
             // Draw a simple flame circle for now
             // In real app, would be a complex path or drawable
-            canvas.drawCircle(cx, cy, radius, flamePaint);
+            canvas.drawCircle(cx, cy, radius * pulseValue, flamePaint);
         }
     }
 }

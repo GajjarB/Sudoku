@@ -160,6 +160,9 @@ public class GameActivity extends BaseActivity {
         // Apply theme to specific views
         applyTheme_Local(currentTheme);
 
+        // Entrance animation for grid
+        gridView.startAnimation(android.view.animation.AnimationUtils.loadAnimation(this, R.anim.scale_up));
+
         // Start or resume game
         if (!viewModel.hasActiveGame()) {
             if (getIntent().hasExtra(Constants.EXTRA_GAME_ID)) {

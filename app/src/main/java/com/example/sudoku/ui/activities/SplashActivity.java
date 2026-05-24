@@ -27,6 +27,12 @@ public class SplashActivity extends AppCompatActivity {
         userRepo.ensureProfileExists("default_user");
         levelRepo.initializeLevels();
 
+        // Entrance animations
+        findViewById(R.id.iv_logo).startAnimation(
+                android.view.animation.AnimationUtils.loadAnimation(this, R.anim.scale_up));
+        findViewById(R.id.tv_welcome).startAnimation(
+                android.view.animation.AnimationUtils.loadAnimation(this, R.anim.fade_in));
+
         findViewById(R.id.btn_continue).setOnClickListener(v -> {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
