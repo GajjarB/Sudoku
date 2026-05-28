@@ -21,6 +21,7 @@ import com.example.sudoku.ui.activities.GameActivity;
 import com.example.sudoku.ui.activities.LevelSelectActivity;
 import com.example.sudoku.ui.activities.SettingsActivity;
 import com.example.sudoku.ui.adapters.LevelPathAdapter;
+import com.example.sudoku.ui.utils.UiEffects;
 import com.example.sudoku.ui.viewmodels.HomeViewModel;
 import com.example.sudoku.utils.Constants;
 
@@ -76,14 +77,19 @@ public class HomeFragment extends Fragment {
                 startActivity(new Intent(requireContext(), SettingsActivity.class)));
         dailyAction.setOnClickListener(v -> openDailyChallenge());
         continueAction.setOnClickListener(v -> openContinueOrNext());
+        UiEffects.applyDuolingoPressEffect(
+                view.findViewById(R.id.btn_home_settings),
+                dailyAction,
+                continueAction
+        );
 
         viewModel.getUserProfile().observe(getViewLifecycleOwner(), profile -> {
             currentProfile = profile;
             if (profile == null) return;
             greeting.setText(resolveGreeting());
             subtitle.setText(profile.currentStreak > 0
-                    ? "Keep your " + profile.currentStreak + " day streak alive."
-                    : "Solve one puzzle to start your streak today.");
+                    ? "Keep your " + profile.currentStreak + " day streak rolling with one smart puzzle."
+                    : getString(R.string.home_greeting_subtitle));
             streakChip.setText("🔥 " + profile.currentStreak + " Day Streak");
             xpChip.setText("⭐ " + profile.totalXP + " XP");
             unitTitle.setText(resolveUnitTitle(profile.currentLevel));
@@ -123,8 +129,13 @@ public class HomeFragment extends Fragment {
 
     private void updateContinueCard() {
         boolean showContinue = activeGame != null && !activeGame.isDailyChallenge;
-        continueCard.setVisibility(showContinue ? View.VISIBLE : View.GONE);
-        if (!showContinue) return;
+        continueCard.setVisibility(View.VISIBLE);
+        if (!showContinue) {
+            continueTitle.setText(R.string.home_continue_title_empty);
+            continueMeta.setText(R.string.home_continue_meta_empty);
+            continueAction.setText(R.string.home_continue_action_start);
+            return;
+        }
         continueTitle.setText(difficultyLabel(activeGame.levelNumber) + " Puzzle #" + activeGame.levelNumber);
         continueMeta.setText("Progress " + progressPercent(activeGame.currentGrid) + "% • Time " + formatElapsed(activeGame.elapsedTimeMs));
         continueAction.setText("Continue");
@@ -171,10 +182,10 @@ public class HomeFragment extends Fragment {
     }
 
     private String resolveUnitTitle(int level) {
-        if (level <= 5) return "Unit 1: Easy Basics";
-        if (level <= 20) return "Unit 2: Medium Logic";
-        if (level <= 50) return "Unit 3: Hard Focus";
-        return "Unit 4: Expert Flow";
+        if (level <= 5) return getString(R.string.home_band_easy);
+        if (level <= 20) return getString(R.string.home_band_medium);
+        if (level <= 50) return getString(R.string.home_band_hard);
+        return getString(R.string.home_band_expert);
     }
 
     private String difficultyLabel(int level) {

@@ -13,8 +13,8 @@
 
     <dimen name="card_corner_radius">24dp</dimen>
     <dimen name="card_corner_radius_lg">28dp</dimen>
-    <dimen name="button_corner_radius">20dp</dimen>
-    <dimen name="numpad_corner_radius">16dp</dimen>
+    <dimen name="button_corner_radius">22dp</dimen>
+    <dimen name="numpad_corner_radius">18dp</dimen>
     <dimen name="numpad_key_shadow_depth">4dp</dimen>
 
     <dimen name="spacing_tiny">4dp</dimen>
@@ -32,7 +32,7 @@
     <dimen name="space_24">24dp</dimen>
     <dimen name="space_32">32dp</dimen>
 
-    <dimen name="number_pad_button_size">56dp</dimen>
+    <dimen name="number_pad_button_size">60dp</dimen>
     <dimen name="number_pad_button_text">22sp</dimen>
     <dimen name="number_pad_button_corner">14dp</dimen>
     <dimen name="number_pad_elevation">2dp</dimen>

@@ -107,7 +107,7 @@
     <!-- SETTINGS -->
     <string name="settings_title">Settings</string>
     <string name="settings_heading_game_preferences">Game preferences</string>
-    <string name="settings_summary">Tune gameplay, accessibility, and board presets for a premium daily training experience.</string>
+    <string name="settings_summary">Tune gameplay, accessibility, and board presets for a polished daily Sudoku experience.</string>
     <string name="settings_gameplay">Gameplay</string>
     <string name="settings_sound">Sound Effects</string>
     <string name="settings_sound_state">Sound effects: %1$s</string>
@@ -205,23 +205,41 @@
     <string name="stats_loss_pressure_content_description">Loss pressure progress</string>
 
     <!-- HOME MOTIVATION -->
-    <string name="home_ready_for_level">Ready for Level %1$d. Keep going!</string>
-    <string name="home_continue_game">Continue your streak</string>
-    <string name="home_level_in_progress">Level %1$d in progress — you’re almost there!</string>
-    <string name="home_new_puzzle">Start a fresh challenge</string>
-    <string name="home_daily_empty">Nothing here yet. Start today’s challenge to build momentum.</string>
-    <string name="home_daily_start">Start lesson</string>
+    <string name="home_ready_for_level">Ready for Puzzle %1$d. Keep going!</string>
+    <string name="home_continue_game">Continue your puzzle</string>
+    <string name="home_level_in_progress">Puzzle %1$d in progress — you’re almost there!</string>
+    <string name="home_new_puzzle">Start a fresh puzzle</string>
+    <string name="home_daily_empty">Nothing here yet. Start today’s daily puzzle to build momentum.</string>
+    <string name="home_daily_start">Start puzzle</string>
     <string name="home_daily_in_progress">Keep going! %1$d%% complete for today.</string>
-    <string name="home_daily_complete">Level complete! Come back tomorrow for a fresh board.</string>
+    <string name="home_daily_complete">Daily puzzle complete! Come back tomorrow for a fresh board.</string>
     <string name="home_daily_cta_complete">Daily complete</string>
     <string name="home_daily_cta_continue">Continue daily</string>
+    <string name="home_greeting_subtitle">A playful place to relax, focus, and solve one smart puzzle at a time.</string>
+    <string name="home_daily_title">Daily Puzzle</string>
+    <string name="home_daily_reward">Streak + bonus</string>
+    <string name="home_daily_meta_default">Medium puzzle • Ends tonight</string>
+    <string name="home_daily_status_default">Show up, solve smart, and keep your streak glowing.</string>
+    <string name="home_continue_title_empty">No puzzle in progress</string>
+    <string name="home_continue_meta_empty">Pick a difficulty and jump straight into a new board.</string>
+    <string name="home_continue_action_start">Choose puzzle</string>
+    <string name="home_path_title">Puzzle path</string>
+    <string name="home_path_subtitle">Easy warm-ups, tougher boards, and satisfying wins — all in one smooth flow.</string>
+    <string name="home_band_easy">Easy run</string>
+    <string name="home_band_medium">Medium run</string>
+    <string name="home_band_hard">Hard run</string>
+    <string name="home_band_expert">Expert run</string>
 
     <!-- LEVEL SELECT -->
     <string name="levels_choose_label">Choose your challenge</string>
-    <string name="levels_choose_title">Start lesson</string>
-    <string name="levels_choose_subtitle">Pick a level and earn stars as you go.</string>
+    <string name="levels_choose_title">Choose your puzzle</string>
+    <string name="levels_choose_subtitle">Pick the pace you want and jump straight into a satisfying board.</string>
     <string name="levels_list_label">Level path</string>
-    <string name="levels_list_subtitle">Track progress, unlock levels, and claim rewards.</string>
+    <string name="levels_list_subtitle">Track progress, unlock fresh puzzles, and keep your streak rolling.</string>
+    <string name="levels_easy_desc">🌱 Easy    Warm up with a calm, confidence-building board</string>
+    <string name="levels_medium_desc">⚡ Medium    Settle into a satisfying logic flow</string>
+    <string name="levels_hard_desc">🔥 Hard    Push deeper with trickier patterns</string>
+    <string name="levels_expert_desc">👑 Expert    Go all in on a serious challenge</string>
 
     <!-- COMPLETED -->
     <string name="completed_share_toast">Reward card sharing is coming soon. Great job!</string>
@@ -234,6 +252,12 @@
     <string name="completed_play_again">Play Again</string>
     <string name="completed_next_puzzle">Next Puzzle</string>
     <string name="completed_home">Home</string>
+    <string name="completed_title">Puzzle complete!</string>
+    <string name="completed_body">Smooth work. You solved the board and kept your momentum going.</string>
+    <string name="completed_streak_default">🔥 0 Day Streak</string>
+    <string name="completed_goal_progress_default">Your next puzzle is ready whenever you are.</string>
+    <string name="completed_reward_chip">+100 XP</string>
+    <string name="completed_next_ready">Next puzzle ready</string>
 
     <!-- STATS -->
     <string name="stats_solved_label">Solved</string>

@@ -70,11 +70,11 @@ public class ProfileViewModel extends AndroidViewModel {
             int maxProgress = Math.max(1, nextLevelXp - levelFloorXp);
             int progressPercent = Math.min(100, Math.round((progress * 100f) / maxProgress));
 
-            String rank = "Level " + currentLevel + " • Sudoku Learner";
+            String rank = "Level " + currentLevel + " • Sudoku Player";
             String xpText = profile.totalXP + " / " + nextLevelXp + " XP";
             uiState.postValue(new ProfileUiState(
                     "S",
-                    "Sudoku Learner",
+                    "Sudoku Player",
                     rank,
                     xpText,
                     progressPercent,

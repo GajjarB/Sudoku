@@ -18,14 +18,14 @@
             style="@style/TextAppearance.Neo.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Today’s Goals" />
+            android:text="Daily momentum" />
 
         <TextView
             style="@style/TextAppearance.Neo.Body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Short missions that keep your streak and XP climbing." />
+            android:text="Quick puzzle missions, streak boosts, and a small reward to chase." />
 
         <LinearLayout
             android:layout_width="match_parent"

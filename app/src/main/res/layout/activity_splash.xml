@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_24"
         android:gravity="center"
-        android:text="Ready to train your brain?" />
+        android:text="Ready for a fresh puzzle?" />
 
     <TextView
         style="@style/TextAppearance.Neo.Body"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_8"
         android:gravity="center"
-        android:text="Play daily, build your streak, and unlock rewards." />
+        android:text="Play daily, build your streak, and enjoy a smooth puzzle flow." />
 
     <Button
         android:id="@+id/btn_continue"
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/neo_button_height"
         android:layout_marginTop="96dp"
-        android:text="Start lesson" />
+        android:text="Start puzzle" />
 
     <Button
         android:id="@+id/btn_sign_in"

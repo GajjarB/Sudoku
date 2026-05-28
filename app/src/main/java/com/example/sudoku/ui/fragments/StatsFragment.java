@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sudoku.R;
+import com.example.sudoku.ui.utils.UiEffects;
 import com.example.sudoku.ui.viewmodels.StatsViewModel;
 import com.example.sudoku.ui.views.ProgressChartView;
 
@@ -36,6 +37,7 @@ public class StatsFragment extends Fragment {
         weekButton = view.findViewById(R.id.btn_filter_week);
         monthButton = view.findViewById(R.id.btn_filter_month);
         allButton = view.findViewById(R.id.btn_filter_all);
+        UiEffects.applyDuolingoPressEffect(weekButton, monthButton, allButton);
         weekButton.setOnClickListener(v -> viewModel.setFilter(StatsViewModel.Filter.WEEK));
         monthButton.setOnClickListener(v -> viewModel.setFilter(StatsViewModel.Filter.MONTH));
         allButton.setOnClickListener(v -> viewModel.setFilter(StatsViewModel.Filter.ALL));

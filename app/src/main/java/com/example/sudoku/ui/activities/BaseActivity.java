@@ -1,10 +1,10 @@
 package com.example.sudoku.ui.activities;
 
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.sudoku.ui.utils.UiEffects;
 import com.example.sudoku.utils.ThemeStorage;
 import com.example.sudoku.utils.ThemeUtils;
 
@@ -43,32 +43,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void applyDuolingoPressEffect(View... views) {
-        if (views == null) return;
-        for (View view : views) {
-            if (view == null) continue;
-            view.setOnTouchListener((v, event) -> {
-                int action = event.getActionMasked();
-                if (action == MotionEvent.ACTION_DOWN) {
-                    v.animate()
-                            .scaleX(0.97f)
-                            .scaleY(0.97f)
-                            .translationY(dpToPx(2))
-                            .setDuration(70)
-                            .start();
-                } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
-                    v.animate()
-                            .scaleX(1f)
-                            .scaleY(1f)
-                            .translationY(0f)
-                            .setDuration(160)
-                            .start();
-                }
-                return false;
-            });
-        }
-    }
-
-    private float dpToPx(float dp) {
-        return dp * getResources().getDisplayMetrics().density;
+        UiEffects.applyDuolingoPressEffect(views);
     }
 }

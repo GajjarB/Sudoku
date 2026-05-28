@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Keep your streak alive with one smart puzzle." />
+                    android:text="@string/home_greeting_subtitle" />
             </LinearLayout>
 
             <ImageButton
@@ -100,7 +100,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Daily Challenge" />
+                    android:text="@string/home_daily_title" />
 
                 <TextView
                     android:id="@+id/tv_daily_reward"
@@ -111,7 +111,7 @@
                     android:paddingTop="6dp"
                     android:paddingEnd="12dp"
                     android:paddingBottom="6dp"
-                    android:text="+50 XP"
+                    android:text="@string/home_daily_reward"
                     android:textColor="@color/accent_primary_pressed"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -122,7 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Medium puzzle • Ends tonight" />
+                android:text="@string/home_daily_meta_default" />
 
             <TextView
                 android:id="@+id/tv_daily_status"
@@ -130,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Complete today’s challenge and earn bonus XP." />
+                android:text="@string/home_daily_status_default" />
 
             <Button
                 android:id="@+id/btn_daily_action"
@@ -138,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="14dp"
-                android:text="Start" />
+                android:text="@string/home_daily_start" />
         </LinearLayout>
 
         <LinearLayout
@@ -154,7 +154,7 @@
                 style="@style/TextAppearance.Neo.Heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Continue Playing" />
+                android:text="@string/home_continue_game" />
 
             <TextView
                 android:id="@+id/tv_continue_title"
@@ -162,7 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="No active puzzle" />
+                android:text="@string/home_continue_title_empty" />
 
             <TextView
                 android:id="@+id/tv_continue_meta"
@@ -170,7 +170,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Progress 0% • Time 00:00" />
+                android:text="@string/home_continue_meta_empty" />
 
             <Button
                 android:id="@+id/btn_continue_action"
@@ -178,7 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="14dp"
-                android:text="Continue" />
+                android:text="@string/home_continue_action_start" />
         </LinearLayout>
 
         <TextView
@@ -187,14 +187,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Unit 1: Easy Basics" />
+            android:text="@string/home_path_title" />
 
         <TextView
             style="@style/TextAppearance.Neo.Muted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Progress through the path to unlock harder puzzles and boss boards." />
+            android:text="@string/home_path_subtitle" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_level_path"
