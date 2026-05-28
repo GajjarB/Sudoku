@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Great job!" />
+                android:text="@string/completed_title" />
 
             <TextView
                 style="@style/TextAppearance.Neo.Body"
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="You completed the puzzle and unlocked more progress on your journey." />
+                android:text="@string/completed_body" />
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -130,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="🔥 0 Day Streak" />
+                android:text="@string/completed_streak_default" />
 
             <TextView
                 android:id="@+id/tv_completed_goal_progress"
@@ -139,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="Goal progress updated and the next level is now ready." />
+                android:text="@string/completed_goal_progress_default" />
         </LinearLayout>
 
         <Button

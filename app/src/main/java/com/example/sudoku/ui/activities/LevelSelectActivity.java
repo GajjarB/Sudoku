@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.sudoku.R;
 import com.example.sudoku.ui.adapters.LevelGridAdapter;
+import com.example.sudoku.ui.utils.UiEffects;
 import com.example.sudoku.ui.viewmodels.LevelSelectViewModel;
 import com.example.sudoku.utils.Constants;
 
@@ -65,10 +66,15 @@ public class LevelSelectActivity extends BaseActivity {
     }
 
     private void bindDifficultyButtons() {
-        findViewById(R.id.btn_easy).setOnClickListener(v -> openDifficulty("Easy"));
-        findViewById(R.id.btn_medium).setOnClickListener(v -> openDifficulty("Medium"));
-        findViewById(R.id.btn_hard).setOnClickListener(v -> openDifficulty("Hard"));
-        findViewById(R.id.btn_expert).setOnClickListener(v -> openDifficulty("Expert"));
+        View easy = findViewById(R.id.btn_easy);
+        View medium = findViewById(R.id.btn_medium);
+        View hard = findViewById(R.id.btn_hard);
+        View expert = findViewById(R.id.btn_expert);
+        UiEffects.applyDuolingoPressEffect(easy, medium, hard, expert);
+        easy.setOnClickListener(v -> openDifficulty("Easy"));
+        medium.setOnClickListener(v -> openDifficulty("Medium"));
+        hard.setOnClickListener(v -> openDifficulty("Hard"));
+        expert.setOnClickListener(v -> openDifficulty("Expert"));
     }
 
     private void openDifficulty(String difficulty) {

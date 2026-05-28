@@ -58,6 +58,12 @@ public class MainActivity extends BaseActivity {
     private void showFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(
+                        R.anim.fade_in,
+                        0,
+                        R.anim.fade_in,
+                        0
+                )
                 .replace(R.id.main_fragment_container, fragment)
                 .commit();
     }

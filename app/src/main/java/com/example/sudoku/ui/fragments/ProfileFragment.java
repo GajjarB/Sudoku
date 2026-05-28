@@ -18,6 +18,7 @@ import com.example.sudoku.R;
 import com.example.sudoku.ui.activities.PremiumActivity;
 import com.example.sudoku.ui.activities.SettingsActivity;
 import com.example.sudoku.ui.activities.ThemesActivity;
+import com.example.sudoku.ui.utils.UiEffects;
 import com.example.sudoku.ui.viewmodels.ProfileViewModel;
 
 public class ProfileFragment extends Fragment {
@@ -44,6 +45,7 @@ public class ProfileFragment extends Fragment {
         Button upgrade = view.findViewById(R.id.btn_upgrade);
 
         upgrade.setOnClickListener(v -> startActivity(new Intent(requireContext(), PremiumActivity.class)));
+        UiEffects.applyDuolingoPressEffect(upgrade);
 
         viewModel.getUiState().observe(getViewLifecycleOwner(), state -> {
             if (state == null) return;

@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:top="3dp">
+    <item android:top="4dp">
         <shape>
             <corners android:radius="@dimen/numpad_corner_radius" />
             <solid android:color="@color/numpad_key_shadow" />
         </shape>
     </item>
-    <item android:bottom="3dp">
+    <item android:bottom="4dp">
         <selector>
             <item android:state_enabled="false">
                 <shape>
                     <corners android:radius="@dimen/numpad_corner_radius" />
                     <solid android:color="@color/number_pad_button_disabled" />
+                    <stroke android:width="1dp" android:color="@color/divider" />
                 </shape>
             </item>
             <item android:state_pressed="true">
                 <shape>
                     <corners android:radius="@dimen/numpad_corner_radius" />
-                    <solid android:color="@color/number_pad_button_pressed" />
-                    <stroke android:width="1dp" android:color="@color/accent_primary" />
+                    <gradient
+                        android:angle="270"
+                        android:startColor="@color/chip_green_soft"
+                        android:endColor="@color/number_pad_button_pressed" />
+                    <stroke android:width="2dp" android:color="@color/accent_primary" />
                 </shape>
             </item>
             <item android:state_selected="true">
                 <shape>
                     <corners android:radius="@dimen/numpad_corner_radius" />
-                    <solid android:color="@color/number_pad_button_pressed" />
+                    <gradient
+                        android:angle="270"
+                        android:startColor="@color/chip_green_soft"
+                        android:endColor="@color/number_pad_button_pressed" />
                     <stroke android:width="2dp" android:color="@color/accent_primary" />
                 </shape>
             </item>
             <item>
                 <shape>
                     <corners android:radius="@dimen/numpad_corner_radius" />
-                    <solid android:color="@color/number_pad_button" />
-                    <stroke android:width="1dp" android:color="@color/divider" />
+                    <gradient
+                        android:angle="270"
+                        android:startColor="@color/bg_elevated"
+                        android:endColor="@color/chip_gold_soft" />
+                    <stroke android:width="1dp" android:color="@color/board_outline" />
                 </shape>
             </item>
         </selector>

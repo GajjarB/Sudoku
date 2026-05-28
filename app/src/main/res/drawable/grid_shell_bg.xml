@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:top="4dp">
+    <item android:top="6dp">
         <shape>
-            <corners android:radius="22dp" />
-            <solid android:color="@color/divider" />
+            <corners android:radius="28dp" />
+            <solid android:color="@color/board_shadow" />
         </shape>
     </item>
-    <item android:bottom="4dp">
+    <item android:bottom="6dp">
         <shape>
-            <corners android:radius="22dp" />
-            <solid android:color="@color/bg_grid" />
-            <stroke android:width="1dp" android:color="@color/divider" />
+            <corners android:radius="28dp" />
+            <gradient
+                android:angle="270"
+                android:startColor="@color/bg_elevated"
+                android:endColor="@color/surface_peach" />
+            <stroke android:width="1dp" android:color="@color/board_outline" />
         </shape>
     </item>
 </layer-list>

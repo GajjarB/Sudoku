@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sudoku.R;
 import com.example.sudoku.data.local.entities.LevelProgress;
+import com.example.sudoku.ui.utils.UiEffects;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,7 @@ public class LevelPathAdapter extends RecyclerView.Adapter<LevelPathAdapter.Leve
         icon.setText(resolveIcon(level));
         icon.setBackgroundResource(resolveIconBackground(level));
         card.setAlpha(level.isUnlocked ? 1f : 0.72f);
+        UiEffects.applyDuolingoPressEffect(card);
         card.setOnClickListener(level.isUnlocked ? v -> listener.onLevelClicked(level) : null);
     }
 
@@ -77,25 +79,25 @@ public class LevelPathAdapter extends RecyclerView.Adapter<LevelPathAdapter.Leve
 
     private String buildSubtitle(LevelProgress level) {
         if (level.isCompleted) {
-            return level.levelNumber % 10 == 0 ? "Boss cleared" : "Completed";
+            return level.levelNumber % 10 == 0 ? "Milestone cleared" : "Solved";
         }
         if (!level.isUnlocked) {
-            return level.levelNumber % 10 == 0 ? "Boss locked" : "Locked";
+            return level.levelNumber % 10 == 0 ? "Milestone locked" : "Locked";
         }
         if (level.levelNumber == activeLevel) {
             return "Current puzzle";
         }
         if (level.levelNumber % 5 == 0) {
-            return "Challenge node";
+            return "Bonus challenge";
         }
         return difficultyLabel(level.levelNumber);
     }
 
     private String difficultyLabel(int levelNumber) {
-        if (levelNumber <= 5) return "Easy basics";
+        if (levelNumber <= 5) return "Easy flow";
         if (levelNumber <= 20) return "Medium logic";
         if (levelNumber <= 50) return "Hard focus";
-        return "Expert climb";
+        return "Expert grind";
     }
 
     private String resolveIcon(LevelProgress level) {

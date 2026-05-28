@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sudoku.R;
+import com.example.sudoku.ui.utils.UiEffects;
 import com.example.sudoku.ui.viewmodels.GoalsViewModel;
 
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class GoalCardAdapter extends RecyclerView.Adapter<GoalCardAdapter.GoalVi
         holder.reward.setText(item.rewardXp + " XP");
         holder.progressBar.setProgress(item.target == 0 ? 0 : Math.round((item.progress * 100f) / item.target));
         holder.button.setText(item.actionLabel);
+        UiEffects.applyDuolingoPressEffect(holder.button);
         holder.button.setOnClickListener(v -> listener.onGoalAction(item));
     }
 

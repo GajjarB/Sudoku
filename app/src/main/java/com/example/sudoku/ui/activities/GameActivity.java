@@ -1,6 +1,7 @@
 package com.example.sudoku.ui.activities;
 
 import android.app.AlertDialog;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
@@ -159,12 +160,12 @@ public class GameActivity extends BaseActivity {
             }
             if (result.type == InputResult.Type.CORRECT_MOVE || result.type == InputResult.Type.PUZZLE_COMPLETED) {
                 gridView.animateCorrectInput();
-                showFloatingFeedback(pickPositiveFeedback(result.type == InputResult.Type.PUZZLE_COMPLETED));
+                showFloatingFeedback(pickPositiveFeedback(result.type == InputResult.Type.PUZZLE_COMPLETED), true);
             } else if (result.type == InputResult.Type.WRONG_MOVE) {
                 gridView.animateWrongInput();
-                showFloatingFeedback(getString(R.string.game_feedback_try_again));
+                showFloatingFeedback(getString(R.string.game_feedback_try_again), false);
             } else if (result.type == InputResult.Type.NOTE_UPDATED) {
-                showFloatingFeedback(getString(R.string.game_feedback_notes_saved));
+                showFloatingFeedback(getString(R.string.game_feedback_notes_saved), null);
             }
             if (result.type == InputResult.Type.LOCKED_CELL
                     || (result.type == InputResult.Type.WRONG_MOVE && areMistakeAlertsEnabled())) {
@@ -414,7 +415,9 @@ public class GameActivity extends BaseActivity {
         }
         int progress = Math.min(100, Math.round((filled * 100f) / 81f));
         progressBar.animate().cancel();
-        progressBar.setProgress(progress);
+        ObjectAnimator.ofInt(progressBar, "progress", progressBar.getProgress(), progress)
+                .setDuration(220)
+                .start();
         progressChip.setText(getString(R.string.game_progress_percent, progress));
     }
 
@@ -453,20 +456,36 @@ public class GameActivity extends BaseActivity {
         }
     }
 
-    private void showFloatingFeedback(String text) {
+    private void showFloatingFeedback(String text, Boolean positive) {
         if (floatingFeedbackText == null || text == null || text.isEmpty()) return;
         floatingFeedbackText.animate().cancel();
         floatingFeedbackText.setText(text);
+        if (Boolean.TRUE.equals(positive)) {
+            floatingFeedbackText.setBackgroundResource(R.drawable.chip_accent);
+            floatingFeedbackText.setTextColor(getColor(R.color.accent_primary_pressed));
+        } else if (Boolean.FALSE.equals(positive)) {
+            floatingFeedbackText.setBackgroundResource(R.drawable.chip_danger);
+            floatingFeedbackText.setTextColor(getColor(R.color.accent_danger));
+        } else {
+            floatingFeedbackText.setBackgroundResource(R.drawable.chip_warning);
+            floatingFeedbackText.setTextColor(getColor(R.color.accent_warning));
+        }
         floatingFeedbackText.setVisibility(View.VISIBLE);
         floatingFeedbackText.setAlpha(0f);
         floatingFeedbackText.setTranslationY(dpToPx(14));
+        floatingFeedbackText.setScaleX(0.94f);
+        floatingFeedbackText.setScaleY(0.94f);
         floatingFeedbackText.animate()
                 .alpha(1f)
                 .translationY(0f)
-                .setDuration(120)
+                .scaleX(1f)
+                .scaleY(1f)
+                .setDuration(140)
                 .withEndAction(() -> floatingFeedbackText.animate()
                         .alpha(0f)
                         .translationY(-dpToPx(8))
+                        .scaleX(0.98f)
+                        .scaleY(0.98f)
                         .setStartDelay(520)
                         .setDuration(220)
                         .withEndAction(() -> floatingFeedbackText.setVisibility(View.GONE))

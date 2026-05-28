@@ -10,7 +10,7 @@ public class PremiumActivity extends StaticScreenActivity {
     @Override protected String subtitle() { return "Everything core stays free. Premium adds bonus comfort features."; }
     @Override protected List<StaticListAdapter.Row> rows() {
         return Arrays.asList(
-                new StaticListAdapter.Row("+", "Unlimited hints", "More guidance for training sessions.", ""),
+                new StaticListAdapter.Row("+", "Unlimited hints", "More guidance for focused play sessions.", ""),
                 new StaticListAdapter.Row("A", "Advanced stats", "Trends, accuracy, and difficulty analysis.", ""),
                 new StaticListAdapter.Row("T", "Exclusive themes", "More calm color systems.", ""),
                 new StaticListAdapter.Row("0", "No ads", "Distraction-free play.", ""),

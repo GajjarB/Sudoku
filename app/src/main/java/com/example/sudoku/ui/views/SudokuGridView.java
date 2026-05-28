@@ -68,6 +68,8 @@ public class SudokuGridView extends View {
     private Paint markerPaint;
     private Paint sectionTintPaint;
     private Paint feedbackPaint;
+    private Paint boardShadowPaint;
+    private Paint boardOutlinePaint;
     
     // ═══════════════════════════════════════════════════════════════
     // DIMENSIONS
@@ -266,6 +268,15 @@ public class SudokuGridView extends View {
 
         feedbackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         feedbackPaint.setStyle(Paint.Style.FILL);
+
+        boardShadowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        boardShadowPaint.setColor(getResources().getColor(R.color.board_shadow));
+        boardShadowPaint.setStyle(Paint.Style.FILL);
+
+        boardOutlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        boardOutlinePaint.setColor(getResources().getColor(R.color.board_outline));
+        boardOutlinePaint.setStrokeWidth(dpToPx(1.25f));
+        boardOutlinePaint.setStyle(Paint.Style.STROKE);
     }
     
     /**
@@ -319,6 +330,9 @@ public class SudokuGridView extends View {
         
         if (grid == null) return;
 
+        RectF shadowBounds = new RectF(gridBounds);
+        shadowBounds.offset(0f, dpToPx(5));
+        canvas.drawRoundRect(shadowBounds, boardCornerRadius, boardCornerRadius, boardShadowPaint);
         canvas.drawRoundRect(gridBounds, boardCornerRadius, boardCornerRadius, gridBackgroundPaint);
 
         Path clipPath = new Path();
@@ -333,6 +347,7 @@ public class SudokuGridView extends View {
         drawInputFeedback(canvas);
 
         canvas.restoreToCount(save);
+        canvas.drawRoundRect(gridBounds, boardCornerRadius, boardCornerRadius, boardOutlinePaint);
     }
 
     private void drawBoxSectionBackgrounds(Canvas canvas) {
@@ -343,7 +358,7 @@ public class SudokuGridView extends View {
                     float top = gridTop + boxRow * BOX_SIZE * cellSize;
                     float right = left + BOX_SIZE * cellSize;
                     float bottom = top + BOX_SIZE * cellSize;
-                    canvas.drawRect(left, top, right, bottom, sectionTintPaint);
+                    canvas.drawRoundRect(left, top, right, bottom, dpToPx(12), dpToPx(12), sectionTintPaint);
                 }
             }
         }
@@ -374,7 +389,7 @@ public class SudokuGridView extends View {
                 // Selected row/column/box highlight
                 if (selectedRow >= 0 && selectedCol >= 0) {
                     if (r == selectedRow || c == selectedCol || (r >= selectedBoxR && r < selectedBoxR + 3 && c >= selectedBoxC && c < selectedBoxC + 3)) {
-                        canvas.drawRect(left, top, right, bottom, selectedRowColPaint);
+                        canvas.drawRoundRect(left, top, right, bottom, dpToPx(10), dpToPx(10), selectedRowColPaint);
                     }
                 }
                 
@@ -393,7 +408,7 @@ public class SudokuGridView extends View {
                 }
 
                 if (highlightConflicts && cell.isConflict()) {
-                    canvas.drawRect(left, top, right, bottom, conflictPaint);
+                    canvas.drawRoundRect(left, top, right, bottom, dpToPx(10), dpToPx(10), conflictPaint);
                     drawConflictMarker(canvas, left, top, right, bottom);
                 }
                 
@@ -404,15 +419,15 @@ public class SudokuGridView extends View {
                     selectedCellPaint.setAlpha(alpha);
                     canvas.drawRoundRect(left, top, right, bottom, dpToPx(6), dpToPx(6), selectedCellPaint);
                     selectedCellPaint.setAlpha(255);
-                    float inset = dpToPx(3);
-                    canvas.drawRoundRect(left + inset, top + inset, right - inset, bottom - inset, dpToPx(5), dpToPx(5), selectedOutlinePaint);
+                    float inset = dpToPx(2.5f);
+                    canvas.drawRoundRect(left + inset, top + inset, right - inset, bottom - inset, dpToPx(7), dpToPx(7), selectedOutlinePaint);
                 }
             }
         }
     }
 
     private void drawHatch(Canvas canvas, float left, float top, float right, float bottom) {
-        canvas.drawRect(left, top, right, bottom, sameNumberPaint);
+        canvas.drawRoundRect(left, top, right, bottom, dpToPx(10), dpToPx(10), sameNumberPaint);
     }
 
     private void drawConflictMarker(Canvas canvas, float left, float top, float right, float bottom) {
@@ -474,10 +489,8 @@ public class SudokuGridView extends View {
                         paint = textLockedPaint;
                     } else if (cell.isConflict()) {
                         paint = textErrorPaint;
-                    } else if (cell.isCorrect()) {
-                        paint = textPlayerPaint;
                     } else {
-                        paint = textErrorPaint;
+                        paint = textPlayerPaint;
                     }
                     
                     // Center text vertically
@@ -667,8 +680,8 @@ public class SudokuGridView extends View {
         
         // Subtle pulse animation
         selectionAnimator = ValueAnimator.ofFloat(0.7f, 1.0f);
-        selectionAnimator.setDuration(200);
-        selectionAnimator.setInterpolator(new OvershootInterpolator(0.9f));
+        selectionAnimator.setDuration(220);
+        selectionAnimator.setInterpolator(new OvershootInterpolator(1.05f));
         selectionAnimator.addUpdateListener(animation -> {
             selectionAnimValue = (float) animation.getAnimatedValue();
             postInvalidateOnAnimation();
@@ -680,8 +693,9 @@ public class SudokuGridView extends View {
         if (inputPopAnimator != null) {
             inputPopAnimator.cancel();
         }
-        inputPopAnimator = ValueAnimator.ofFloat(0.92f, 1.08f, 1.0f);
-        inputPopAnimator.setDuration(180);
+        inputPopAnimator = ValueAnimator.ofFloat(0.94f, 1.09f, 0.985f, 1.0f);
+        inputPopAnimator.setDuration(210);
+        inputPopAnimator.setInterpolator(new OvershootInterpolator(0.8f));
         inputPopAnimator.addUpdateListener(animation -> {
             inputPopScale = (float) animation.getAnimatedValue();
             postInvalidateOnAnimation();
@@ -697,8 +711,8 @@ public class SudokuGridView extends View {
         if (feedbackAnimator != null) {
             feedbackAnimator.cancel();
         }
-        feedbackAnimator = ValueAnimator.ofFloat(0.55f, 0f);
-        feedbackAnimator.setDuration(250);
+        feedbackAnimator = ValueAnimator.ofFloat(success ? 0.5f : 0.42f, 0f);
+        feedbackAnimator.setDuration(success ? 260 : 320);
         feedbackAnimator.addUpdateListener(animation -> {
             feedbackAlpha = (float) animation.getAnimatedValue();
             postInvalidateOnAnimation();
@@ -715,7 +729,8 @@ public class SudokuGridView extends View {
         int baseColor = feedbackSuccess ? getResources().getColor(R.color.accent_success) : getResources().getColor(R.color.accent_danger);
         feedbackPaint.setColor(baseColor);
         feedbackPaint.setAlpha((int) (feedbackAlpha * 255));
-        canvas.drawRoundRect(left, top, right, bottom, dpToPx(6), dpToPx(6), feedbackPaint);
+        float inset = dpToPx(2);
+        canvas.drawRoundRect(left + inset, top + inset, right - inset, bottom - inset, dpToPx(8), dpToPx(8), feedbackPaint);
     }
 
     /**
@@ -723,8 +738,8 @@ public class SudokuGridView extends View {
      */
     public void shakeSelectedCell() {
         ObjectAnimator shake = ObjectAnimator.ofFloat(this, View.TRANSLATION_X,
-                0f, 6f, -6f, 4f, -4f, 2f, -2f, 0f);
-        shake.setDuration(260);
+                0f, 5f, -5f, 3f, -3f, 1.5f, -1.5f, 0f);
+        shake.setDuration(240);
         shake.start();
     }
 

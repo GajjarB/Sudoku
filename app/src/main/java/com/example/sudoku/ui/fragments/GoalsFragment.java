@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sudoku.R;
 import com.example.sudoku.ui.activities.GameActivity;
 import com.example.sudoku.ui.adapters.GoalCardAdapter;
+import com.example.sudoku.ui.utils.UiEffects;
 import com.example.sudoku.ui.viewmodels.GoalsViewModel;
 import com.example.sudoku.utils.Constants;
 
@@ -42,6 +43,7 @@ public class GoalsFragment extends Fragment {
         ((RecyclerView) view.findViewById(R.id.recycler_weekly_goals)).setAdapter(weeklyAdapter);
 
         primaryAction.setOnClickListener(v -> launchPuzzle(true, 1));
+        UiEffects.applyDuolingoPressEffect(primaryAction);
 
         viewModel.getUserProfile().observe(getViewLifecycleOwner(), profile -> {
             if (profile != null) {

@@ -18,7 +18,7 @@
         style="@style/TextAppearance.Neo.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start lesson" />
+        android:text="@string/levels_choose_title" />
 
     <TextView
         android:id="@+id/tv_level_subtitle"
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_4"
-        android:text="Pick a level and earn stars as you go." />
+        android:text="@string/levels_choose_subtitle" />
 
     <LinearLayout
         android:id="@+id/difficulty_options"
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/neo_button_height"
             android:gravity="center_vertical|start"
-            android:text="🌱 Easy    Warm up and build confidence" />
+            android:text="@string/levels_easy_desc" />
 
         <Button
             android:id="@+id/btn_medium"
@@ -50,7 +50,7 @@
             android:layout_height="@dimen/neo_button_height"
             android:layout_marginTop="@dimen/space_8"
             android:gravity="center_vertical|start"
-            android:text="⚡ Medium    Keep your streak rolling" />
+            android:text="@string/levels_medium_desc" />
 
         <Button
             android:id="@+id/btn_hard"
@@ -59,7 +59,7 @@
             android:layout_height="@dimen/neo_button_height"
             android:layout_marginTop="@dimen/space_8"
             android:gravity="center_vertical|start"
-            android:text="🔥 Hard    Push your strategy skills" />
+            android:text="@string/levels_hard_desc" />
 
         <Button
             android:id="@+id/btn_expert"
@@ -68,7 +68,7 @@
             android:layout_height="@dimen/neo_button_height"
             android:layout_marginTop="@dimen/space_8"
             android:gravity="center_vertical|start"
-            android:text="👑 Expert    Big XP and bigger rewards" />
+            android:text="@string/levels_expert_desc" />
     </LinearLayout>
 
     <LinearLayout

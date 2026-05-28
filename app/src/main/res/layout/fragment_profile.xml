@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Sudoku Learner" />
+                android:text="Sudoku Player" />
 
             <TextView
                 android:id="@+id/tv_profile_rank"
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Level 1 • Rising tactician" />
+                android:text="Level 1 • Calm puzzler" />
 
             <TextView
                 android:id="@+id/tv_profile_xp"

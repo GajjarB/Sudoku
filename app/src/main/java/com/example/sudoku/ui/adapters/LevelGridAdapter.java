@@ -4,10 +4,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.sudoku.R;
 import com.example.sudoku.data.local.entities.LevelProgress;
+import com.example.sudoku.ui.utils.UiEffects;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +76,7 @@ public class LevelGridAdapter extends RecyclerView.Adapter<LevelGridAdapter.Leve
             } else {
                 itemView.setAlpha(0.65f);
             }
+            UiEffects.applyDuolingoPressEffect(itemView);
             
             itemView.setOnClickListener(v -> {
                 if (level.isUnlocked && listener != null) {

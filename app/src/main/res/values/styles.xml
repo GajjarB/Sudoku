@@ -82,10 +82,11 @@
         <item name="android:backgroundTint">@null</item>
         <item name="backgroundTint">@null</item>
         <item name="android:textColor">@color/text_secondary</item>
-        <item name="android:textSize">11sp</item>
-        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:minHeight">48dp</item>
+        <item name="android:minHeight">54dp</item>
         <item name="android:padding">@dimen/space_8</item>
     </style>
 
