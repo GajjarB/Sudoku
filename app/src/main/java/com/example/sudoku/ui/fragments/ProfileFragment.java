@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,10 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sudoku.R;
-import com.example.sudoku.ui.activities.PremiumActivity;
 import com.example.sudoku.ui.activities.SettingsActivity;
-import com.example.sudoku.ui.activities.ThemesActivity;
-import com.example.sudoku.ui.utils.UiEffects;
 import com.example.sudoku.ui.viewmodels.ProfileViewModel;
 
 public class ProfileFragment extends Fragment {
@@ -42,10 +38,6 @@ public class ProfileFragment extends Fragment {
         LinearLayout achievements = view.findViewById(R.id.container_achievements);
         LinearLayout customization = view.findViewById(R.id.container_customization);
         LinearLayout settings = view.findViewById(R.id.container_settings);
-        Button upgrade = view.findViewById(R.id.btn_upgrade);
-
-        upgrade.setOnClickListener(v -> startActivity(new Intent(requireContext(), PremiumActivity.class)));
-        UiEffects.applyDuolingoPressEffect(upgrade);
 
         viewModel.getUiState().observe(getViewLifecycleOwner(), state -> {
             if (state == null) return;
@@ -95,9 +87,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void openAction(String action) {
-        if ("themes".equals(action)) {
-            startActivity(new Intent(requireContext(), ThemesActivity.class));
-        } else if ("settings".equals(action)) {
+        if ("settings".equals(action)) {
             startActivity(new Intent(requireContext(), SettingsActivity.class));
         }
     }

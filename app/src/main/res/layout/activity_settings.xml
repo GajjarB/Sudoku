@@ -15,7 +15,7 @@
             style="@style/TextAppearance.Neo.Label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Customize your play" />
+            android:text="@string/settings_customize_label" />
 
         <TextView
             style="@style/TextAppearance.Neo.Title"
@@ -126,23 +126,7 @@
                 style="@style/TextAppearance.Neo.Heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_board_and_input" />
-
-            <Button
-                android:id="@+id/btn_board_preset"
-                style="@style/Button.Secondary"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/neo_button_height"
-                android:layout_marginTop="@dimen/space_8"
-                android:text="@string/settings_board_preset_default" />
-
-            <Button
-                android:id="@+id/btn_input_mode"
-                style="@style/Button.Secondary"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/neo_button_height"
-                android:layout_marginTop="@dimen/space_8"
-                android:text="@string/settings_input_mode_default" />
+                android:text="@string/settings_controls" />
 
             <Button
                 android:id="@+id/btn_haptic_intensity"
@@ -165,70 +149,7 @@
                 style="@style/TextAppearance.Neo.Heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_accessibility" />
-
-            <Button
-                android:id="@+id/btn_high_contrast"
-                style="@style/Button.Secondary"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/neo_button_height"
-                android:layout_marginTop="@dimen/space_8"
-                android:text="@string/settings_high_contrast_default" />
-
-            <Button
-                android:id="@+id/btn_color_blind"
-                style="@style/Button.Secondary"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/neo_button_height"
-                android:layout_marginTop="@dimen/space_8"
-                android:text="@string/settings_color_blind_default" />
-
-            <Button
-                android:id="@+id/btn_left_handed"
-                style="@style/Button.Secondary"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/neo_button_height"
-                android:layout_marginTop="@dimen/space_8"
-                android:text="@string/settings_left_handed_default" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_12"
-            android:background="@drawable/neo_card"
-            android:orientation="vertical"
-            android:padding="@dimen/space_16">
-
-            <TextView
-                style="@style/TextAppearance.Neo.Heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_notifications" />
-
-            <Button
-                android:id="@+id/btn_daily_reminders"
-                style="@style/Button.Secondary"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/neo_button_height"
-                android:layout_marginTop="@dimen/space_8"
-                android:text="@string/settings_daily_reminders_default" />
-
-            <Button
-                android:id="@+id/btn_quiet_hours"
-                style="@style/Button.Secondary"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/neo_button_height"
-                android:layout_marginTop="@dimen/space_8"
-                android:text="@string/settings_quiet_hours_default" />
-
-            <Button
-                android:id="@+id/btn_premium_settings"
-                style="@style/Button.Secondary"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/neo_button_height"
-                android:layout_marginTop="@dimen/space_8"
-                android:text="@string/settings_premium_membership" />
+                android:text="@string/settings_support" />
 
             <Button
                 android:id="@+id/btn_privacy"

@@ -395,11 +395,7 @@ public class GameActivity extends BaseActivity {
     }
 
     private String variantLabel(String variant) {
-        if (PreferencesManager.BOARD_VARIANT_4X4.equals(variant)) return "4x4";
-        if (PreferencesManager.BOARD_VARIANT_6X6.equals(variant)) return "6x6";
-        if (PreferencesManager.BOARD_VARIANT_12X12.equals(variant)) return "12x12";
-        if (PreferencesManager.BOARD_VARIANT_16X16.equals(variant)) return "16x16";
-        return "9x9";
+        return getString(R.string.game_variant_9x9);
     }
 
     private void updateProgressUi(com.example.sudoku.domain.models.Grid grid) {

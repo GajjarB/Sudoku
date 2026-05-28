@@ -55,7 +55,7 @@ public class GameViewModel extends AndroidViewModel {
     private final ExecutorService backgroundExecutor;
     private final GameStateManager stateManager;
     private final SavedStateHandle savedStateHandle;
-    private static final String VARIANT_CLASSIC = "CLASSIC_9X9";
+    private static final String VARIANT_CLASSIC = PreferencesManager.BOARD_VARIANT_9X9;
     private static final long AUTOSAVE_DEBOUNCE_MS = 500L;
 
     private final Handler autoSaveHandler = new Handler(Looper.getMainLooper());
@@ -512,14 +512,14 @@ public class GameViewModel extends AndroidViewModel {
         if (levelRepository.isLevelUnlockedSync(clamped)) {
             return clamped;
         }
-
-        private String resolveActiveVariant(String preferredVariant) {
-            if (PreferencesManager.BOARD_VARIANT_9X9.equals(preferredVariant)) {
-                return PreferencesManager.BOARD_VARIANT_9X9;
-            }
-            return VARIANT_CLASSIC;
-        }
         return levelRepository.getHighestUnlockedLevelSync();
+    }
+
+    private String resolveActiveVariant(String preferredVariant) {
+        if (PreferencesManager.BOARD_VARIANT_9X9.equals(preferredVariant)) {
+            return PreferencesManager.BOARD_VARIANT_9X9;
+        }
+        return VARIANT_CLASSIC;
     }
 
     private String lockedCellsFor(String puzzleGrid) {
