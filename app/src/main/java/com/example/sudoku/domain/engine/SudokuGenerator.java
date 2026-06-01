@@ -226,7 +226,17 @@ public class SudokuGenerator {
                 }
             }
             if (anyAlreadyEmpty) continue;
-            if (removed + partners.size() > cellsToRemove) continue;
+            if (removed + partners.size() > cellsToRemove) {
+                // If the whole partner set is too large, try subset of partners if possible
+                // (e.g. just the cell itself if it's not already removed)
+                if (partners.size() > 1) {
+                    partners = Collections.singletonList(new int[]{row, col});
+                    if (puzzle[row][col] == 0) continue;
+                    if (removed + 1 > cellsToRemove) continue;
+                } else {
+                    continue;
+                }
+            }
 
             int[] backup = new int[partners.size()];
             for (int i = 0; i < partners.size(); i++) {
