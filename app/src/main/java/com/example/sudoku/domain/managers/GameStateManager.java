@@ -237,6 +237,7 @@ public class GameStateManager {
         currentGrid[move.row][move.col] = move.beforeValue;
         // If the undone move was a wrong placement, decrement mistakes
         if (move.beforeValue != move.afterValue && move.afterValue != 0 && solutionGrid != null
+                && move.row >= 0 && move.row < 9 && move.col >= 0 && move.col < 9
                 && move.afterValue != solutionGrid[move.row][move.col]) {
             mistakes = Math.max(0, mistakes - 1);
         }
@@ -265,6 +266,7 @@ public class GameStateManager {
 
         // If the redone move was a wrong placement, increment mistakes
         if (move.beforeValue != move.afterValue && move.afterValue != 0 && solutionGrid != null
+                && move.row >= 0 && move.row < 9 && move.col >= 0 && move.col < 9
                 && move.afterValue != solutionGrid[move.row][move.col]) {
             mistakes++;
             if (mistakes >= Constants.MAX_MISTAKES_ALLOWED) {
@@ -284,7 +286,7 @@ public class GameStateManager {
     }
 
     public synchronized HintResult requestHint(int hintLevel) {
-        if (currentState != GameState.PLAYING || currentGrid == null) {
+        if (currentState != GameState.PLAYING || currentGrid == null || solutionGrid == null) {
             return HintResult.unavailable("No active puzzle.");
         }
         if (currentGame != null && currentGame.hintsRemaining <= 0) {

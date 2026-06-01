@@ -512,14 +512,14 @@ public class GameViewModel extends AndroidViewModel {
         if (levelRepository.isLevelUnlockedSync(clamped)) {
             return clamped;
         }
-
-        private String resolveActiveVariant(String preferredVariant) {
-            if (PreferencesManager.BOARD_VARIANT_9X9.equals(preferredVariant)) {
-                return PreferencesManager.BOARD_VARIANT_9X9;
-            }
-            return VARIANT_CLASSIC;
-        }
         return levelRepository.getHighestUnlockedLevelSync();
+    }
+
+    private String resolveActiveVariant(String preferredVariant) {
+        if (PreferencesManager.BOARD_VARIANT_9X9.equals(preferredVariant)) {
+            return PreferencesManager.BOARD_VARIANT_9X9;
+        }
+        return VARIANT_CLASSIC;
     }
 
     private String lockedCellsFor(String puzzleGrid) {
