@@ -70,6 +70,9 @@ public interface GameDao {
     
     @Query("SELECT AVG(totalTimeMs) FROM game_history WHERE playedAt >= :since")
     double getAverageCompletionTime(long since);
+
+    @Query("SELECT AVG(totalTimeMs) FROM game_history WHERE playedAt >= :start AND playedAt < :end AND totalTimeMs > 0")
+    double getAverageCompletionTimeForWindow(long start, long end);
     
     // ═══════════════════════════════════════════════════════════════
     // PLAYER BEHAVIOR (AI Analytics)
