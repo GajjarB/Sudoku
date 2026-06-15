@@ -551,8 +551,9 @@ public class SelfLearningGameController {
             game
         );
         
-        // TODO: Update game state, check completion, etc.
-        // This would be handled by your GameStateManager
+        if (gameStateManager != null) {
+            gameStateManager.processInput(selectedRow, selectedCol, number, false);
+        }
     }
     
     /**
