@@ -62,9 +62,27 @@ public interface GameDao {
     @Query("SELECT * FROM game_history ORDER BY playedAt DESC LIMIT :limit")
     List<GameHistory> getRecentGames(int limit);
     
+    @Query("SELECT COUNT(*) as count FROM game_history WHERE playedAt >= :start AND playedAt < :end")
+    int getGameCountInRange(long start, long end);
+
+    @Query("SELECT AVG(totalTimeMs) FROM game_history WHERE playedAt >= :start AND playedAt < :end AND totalTimeMs > 0")
+    double getAverageTimeInRange(long start, long end);
+
     @Query("SELECT * FROM game_history WHERE playedAt >= :since ORDER BY playedAt DESC")
     List<GameHistory> getGamesSince(long since);
     
+    @Query("SELECT " +
+            "SUM(CASE WHEN totalTimeMs > 0 THEN totalTimeMs ELSE 0 END) as totalTime, " +
+            "MIN(CASE WHEN totalTimeMs > 0 THEN totalTimeMs ELSE NULL END) as bestTime, " +
+            "SUM(xpEarned) as xpEarned, " +
+            "SUM(CASE WHEN levelNumber <= 5 THEN 1 ELSE 0 END) as easyCount, " +
+            "SUM(CASE WHEN levelNumber > 5 AND levelNumber <= 20 THEN 1 ELSE 0 END) as mediumCount, " +
+            "SUM(CASE WHEN levelNumber > 20 AND levelNumber <= 50 THEN 1 ELSE 0 END) as hardCount, " +
+            "SUM(CASE WHEN levelNumber > 50 THEN 1 ELSE 0 END) as expertCount, " +
+            "COUNT(*) as gameCount " +
+            "FROM game_history WHERE playedAt >= :since")
+    GameStats getGameStatsSince(long since);
+
     @Query("SELECT COUNT(*) FROM game_history WHERE isDailyChallenge = 1")
     int getTotalDailyChallengesCompleted();
     
