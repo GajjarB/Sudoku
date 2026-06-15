@@ -60,26 +60,15 @@ public class StatsViewModel extends AndroidViewModel {
                     : 0L;
             List<GameHistory> filteredHistory = database.gameDao().getGamesSince(since);
 
-            int solved = filteredHistory.size();
+            int solved = stats != null ? stats.gameCount : 0;
             int accuracy = profile.totalGamesPlayed == 0 ? 0 : Math.round((profile.totalGamesWon * 100f) / profile.totalGamesPlayed);
-            long bestTime = Long.MAX_VALUE;
-            long totalTime = 0L;
-            int xpEarned = 0;
-            int easy = 0;
-            int medium = 0;
-            int hard = 0;
-            int expert = 0;
-            for (GameHistory game : filteredHistory) {
-                if (game.totalTimeMs > 0) {
-                    bestTime = Math.min(bestTime, game.totalTimeMs);
-                    totalTime += game.totalTimeMs;
-                }
-                xpEarned += game.xpEarned;
-                if (game.levelNumber <= 5) easy++;
-                else if (game.levelNumber <= 20) medium++;
-                else if (game.levelNumber <= 50) hard++;
-                else expert++;
-            }
+            long bestTime = stats != null && stats.bestTime > 0 ? stats.bestTime : Long.MAX_VALUE;
+            long totalTime = stats != null ? stats.totalTime : 0L;
+            int xpEarned = stats != null ? stats.xpEarned : 0;
+            int easy = stats != null ? stats.easyCount : 0;
+            int medium = stats != null ? stats.mediumCount : 0;
+            int hard = stats != null ? stats.hardCount : 0;
+            int expert = stats != null ? stats.expertCount : 0;
             long averageTime = solved == 0 ? 0 : totalTime / solved;
 
             String[] labels = new String[7];

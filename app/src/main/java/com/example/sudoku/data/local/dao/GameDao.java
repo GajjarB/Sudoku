@@ -62,6 +62,12 @@ public interface GameDao {
     @Query("SELECT * FROM game_history ORDER BY playedAt DESC LIMIT :limit")
     List<GameHistory> getRecentGames(int limit);
     
+    @Query("SELECT COUNT(*) as count FROM game_history WHERE playedAt >= :start AND playedAt < :end")
+    int getGameCountInRange(long start, long end);
+
+    @Query("SELECT AVG(totalTimeMs) FROM game_history WHERE playedAt >= :start AND playedAt < :end AND totalTimeMs > 0")
+    double getAverageTimeInRange(long start, long end);
+
     @Query("SELECT * FROM game_history WHERE playedAt >= :since ORDER BY playedAt DESC")
     List<GameHistory> getGamesSince(long since);
     
