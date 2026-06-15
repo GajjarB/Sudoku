@@ -198,11 +198,11 @@ public class PreferencesManager {
     }
 
     public String getBoardVariant() {
-        return prefs.getString(KEY_BOARD_VARIANT, BOARD_VARIANT_9X9);
+        return BOARD_VARIANT_9X9;
     }
 
     public void setBoardVariant(String variant) {
-        prefs.edit().putString(KEY_BOARD_VARIANT, variant).apply();
+        prefs.edit().putString(KEY_BOARD_VARIANT, BOARD_VARIANT_9X9).apply();
     }
 
     public String getTheme() { // "LIGHT", "DARK", "SYSTEM"

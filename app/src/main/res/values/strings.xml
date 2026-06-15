@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Sudoku</string>
+    <string name="splash_logo">🧩</string>
+    <string name="splash_title">Ready for a fresh puzzle?</string>
+    <string name="splash_subtitle">Play daily, build your streak, and enjoy a smooth puzzle flow.</string>
+    <string name="splash_action_start">Start puzzle</string>
     
     <!-- MAIN MENU -->
     <string name="menu_play">Play</string>
@@ -34,6 +38,7 @@
     <string name="game_timer_default">00:00</string>
     <string name="game_mode_classic">Classic Sudoku</string>
     <string name="game_mode_daily_challenge">Daily Challenge</string>
+    <string name="game_variant_9x9">9x9</string>
     <string name="game_difficulty_with_variant">%1$s • %2$s</string>
     <string name="game_progress_default">Progress 0%</string>
     <string name="game_progress_percent">Progress %1$d%%</string>
@@ -106,6 +111,7 @@
     
     <!-- SETTINGS -->
     <string name="settings_title">Settings</string>
+    <string name="settings_customize_label">Customize your play</string>
     <string name="settings_heading_game_preferences">Game preferences</string>
     <string name="settings_summary">Tune gameplay, accessibility, and board presets for a polished daily Sudoku experience.</string>
     <string name="settings_gameplay">Gameplay</string>
@@ -129,6 +135,8 @@
     <string name="settings_input_mode_default">Input mode: Cell First</string>
     <string name="settings_theme">Theme</string>
     <string name="settings_theme_state">Theme: %1$s</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_system">System</string>
     <string name="settings_mistake_popups_state">Mistake popups: %1$s</string>
     <string name="settings_mistake_popups_default">Mistake popups: On</string>
     <string name="settings_notes_state">Start games in notes: %1$s</string>
@@ -136,6 +144,7 @@
     <string name="settings_timer_state">In-game timer: %1$s</string>
     <string name="settings_timer_default">In-game timer: On</string>
     <string name="settings_board_and_input">Board and input</string>
+    <string name="settings_controls">Controls</string>
     <string name="settings_board_preset_state">Board preset: %1$s</string>
     <string name="settings_board_preset_default">Board preset: 9x9</string>
     <string name="settings_board_preset_saved_message">Board preset updated for new games.</string>

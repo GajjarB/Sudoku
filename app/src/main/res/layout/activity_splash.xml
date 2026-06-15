@@ -13,7 +13,7 @@
         android:layout_height="72dp"
         android:background="@drawable/card_hero"
         android:gravity="center"
-        android:text="🧩"
+        android:text="@string/splash_logo"
         android:textSize="32sp" />
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_24"
         android:gravity="center"
-        android:text="Ready for a fresh puzzle?" />
+        android:text="@string/splash_title" />
 
     <TextView
         style="@style/TextAppearance.Neo.Body"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_8"
         android:gravity="center"
-        android:text="Play daily, build your streak, and enjoy a smooth puzzle flow." />
+        android:text="@string/splash_subtitle" />
 
     <Button
         android:id="@+id/btn_continue"
@@ -39,13 +39,5 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/neo_button_height"
         android:layout_marginTop="96dp"
-        android:text="Start puzzle" />
-
-    <Button
-        android:id="@+id/btn_sign_in"
-        style="@style/Button.Secondary"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/neo_button_height"
-        android:layout_marginTop="@dimen/space_8"
-        android:text="Continue" />
+        android:text="@string/splash_action_start" />
 </LinearLayout>

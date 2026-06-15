@@ -19,14 +19,7 @@ public class SettingsActivity extends BaseActivity {
     private Button timerButton;
     private Button highlightConflictsButton;
     private Button highlightSameButton;
-    private Button boardPresetButton;
-    private Button inputModeButton;
     private Button hapticButton;
-    private Button dailyRemindersButton;
-    private Button quietHoursButton;
-    private Button highContrastButton;
-    private Button colorBlindButton;
-    private Button leftHandedButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +35,7 @@ public class SettingsActivity extends BaseActivity {
         timerButton = findViewById(R.id.btn_timer);
         highlightConflictsButton = findViewById(R.id.btn_highlight_conflicts);
         highlightSameButton = findViewById(R.id.btn_highlight_same);
-        boardPresetButton = findViewById(R.id.btn_board_preset);
-        inputModeButton = findViewById(R.id.btn_input_mode);
         hapticButton = findViewById(R.id.btn_haptic_intensity);
-        dailyRemindersButton = findViewById(R.id.btn_daily_reminders);
-        quietHoursButton = findViewById(R.id.btn_quiet_hours);
-        highContrastButton = findViewById(R.id.btn_high_contrast);
-        colorBlindButton = findViewById(R.id.btn_color_blind);
-        leftHandedButton = findViewById(R.id.btn_left_handed);
 
         soundButton.setOnClickListener(v -> {
             preferencesManager.setSoundEnabled(!preferencesManager.isSoundEnabled());
@@ -59,8 +45,11 @@ public class SettingsActivity extends BaseActivity {
             preferencesManager.setVibrationEnabled(!preferencesManager.isVibrationEnabled());
             updatePreferenceLabels();
         });
-        themeButton.setOnClickListener(v ->
-                startActivity(new android.content.Intent(this, ThemesActivity.class)));
+        themeButton.setOnClickListener(v -> {
+            preferencesManager.setTheme(nextTheme(preferencesManager.getTheme()));
+            applyThemeMode(preferencesManager.getTheme());
+            updatePreferenceLabels();
+        });
         mistakeAlertsButton.setOnClickListener(v -> {
             preferencesManager.setMistakeAlertsEnabled(!preferencesManager.isMistakeAlertsEnabled());
             updatePreferenceLabels();
@@ -81,44 +70,10 @@ public class SettingsActivity extends BaseActivity {
             preferencesManager.setHighlightSameNumberEnabled(!preferencesManager.isHighlightSameNumberEnabled());
             updatePreferenceLabels();
         });
-        boardPresetButton.setOnClickListener(v -> {
-            preferencesManager.setBoardVariant(nextBoardVariant(preferencesManager.getBoardVariant()));
-            Toast.makeText(this, R.string.settings_board_preset_saved_message, Toast.LENGTH_SHORT).show();
-            updatePreferenceLabels();
-        });
-        inputModeButton.setOnClickListener(v -> {
-            String next = PreferencesManager.INPUT_MODE_CELL_FIRST.equals(preferencesManager.getInputMode())
-                    ? PreferencesManager.INPUT_MODE_DIGIT_FIRST
-                    : PreferencesManager.INPUT_MODE_CELL_FIRST;
-            preferencesManager.setInputMode(next);
-            updatePreferenceLabels();
-        });
         hapticButton.setOnClickListener(v -> {
             preferencesManager.setHapticIntensity((preferencesManager.getHapticIntensity() + 1) % 4);
             updatePreferenceLabels();
         });
-        dailyRemindersButton.setOnClickListener(v -> {
-            preferencesManager.setDailyRemindersEnabled(!preferencesManager.isDailyRemindersEnabled());
-            updatePreferenceLabels();
-        });
-        quietHoursButton.setOnClickListener(v -> {
-            preferencesManager.setQuietHoursEnabled(!preferencesManager.isQuietHoursEnabled());
-            updatePreferenceLabels();
-        });
-        highContrastButton.setOnClickListener(v -> {
-            preferencesManager.setHighContrastEnabled(!preferencesManager.isHighContrastEnabled());
-            updatePreferenceLabels();
-        });
-        colorBlindButton.setOnClickListener(v -> {
-            preferencesManager.setColorBlindPaletteEnabled(!preferencesManager.isColorBlindPaletteEnabled());
-            updatePreferenceLabels();
-        });
-        leftHandedButton.setOnClickListener(v -> {
-            preferencesManager.setLeftHandedModeEnabled(!preferencesManager.isLeftHandedModeEnabled());
-            updatePreferenceLabels();
-        });
-        findViewById(R.id.btn_premium_settings).setOnClickListener(v ->
-                startActivity(new android.content.Intent(this, PremiumActivity.class)));
         findViewById(R.id.btn_privacy).setOnClickListener(v -> showPrivacyDialog());
         findViewById(R.id.btn_about).setOnClickListener(v ->
                 Toast.makeText(this, R.string.settings_about_message, Toast.LENGTH_SHORT).show());
@@ -131,7 +86,7 @@ public class SettingsActivity extends BaseActivity {
         soundButton.setText(getString(R.string.settings_sound_state, stateLabel(preferencesManager.isSoundEnabled())));
         soundButton.setContentDescription(getString(R.string.settings_sound_content_description));
         vibrationButton.setText(getString(R.string.settings_vibration_state, stateLabel(preferencesManager.isVibrationEnabled())));
-        themeButton.setText(R.string.settings_theme);
+        themeButton.setText(getString(R.string.settings_theme_state, themeLabel(preferencesManager.getTheme())));
         mistakeAlertsButton.setText(getString(R.string.settings_mistake_popups_state,
                 stateLabel(preferencesManager.isMistakeAlertsEnabled())));
         notesButton.setText(getString(R.string.settings_notes_state,
@@ -142,22 +97,8 @@ public class SettingsActivity extends BaseActivity {
                 stateLabel(preferencesManager.isHighlightConflictsEnabled())));
         highlightSameButton.setText(getString(R.string.settings_highlight_same_state,
                 stateLabel(preferencesManager.isHighlightSameNumberEnabled())));
-        boardPresetButton.setText(getString(R.string.settings_board_preset_state,
-                boardVariantLabel(preferencesManager.getBoardVariant())));
-        inputModeButton.setText(getString(R.string.settings_input_mode_state,
-                inputModeLabel(preferencesManager.getInputMode())));
         hapticButton.setText(getString(R.string.settings_haptic_state,
                 hapticLabel(preferencesManager.getHapticIntensity())));
-        dailyRemindersButton.setText(getString(R.string.settings_daily_reminders_state,
-                stateLabel(preferencesManager.isDailyRemindersEnabled())));
-        quietHoursButton.setText(getString(R.string.settings_quiet_hours_state,
-                stateLabel(preferencesManager.isQuietHoursEnabled())));
-        highContrastButton.setText(getString(R.string.settings_high_contrast_state,
-                stateLabel(preferencesManager.isHighContrastEnabled())));
-        colorBlindButton.setText(getString(R.string.settings_color_blind_state,
-                stateLabel(preferencesManager.isColorBlindPaletteEnabled())));
-        leftHandedButton.setText(getString(R.string.settings_left_handed_state,
-                stateLabel(preferencesManager.isLeftHandedModeEnabled())));
     }
 
     private void applyThemeMode(String theme) {
@@ -175,12 +116,6 @@ public class SettingsActivity extends BaseActivity {
         return getString(enabled ? R.string.settings_state_on : R.string.settings_state_off);
     }
 
-    private String inputModeLabel(String mode) {
-        return getString(PreferencesManager.INPUT_MODE_DIGIT_FIRST.equals(mode)
-                ? R.string.settings_input_digit_first
-                : R.string.settings_input_cell_first);
-    }
-
     private String hapticLabel(int intensity) {
         if (intensity <= 0) return getString(R.string.settings_haptic_off);
         if (intensity == 1) return getString(R.string.settings_haptic_light);
@@ -188,20 +123,16 @@ public class SettingsActivity extends BaseActivity {
         return getString(R.string.settings_haptic_strong);
     }
 
-    private String boardVariantLabel(String variant) {
-        if (PreferencesManager.BOARD_VARIANT_4X4.equals(variant)) return "4x4";
-        if (PreferencesManager.BOARD_VARIANT_6X6.equals(variant)) return "6x6";
-        if (PreferencesManager.BOARD_VARIANT_12X12.equals(variant)) return "12x12";
-        if (PreferencesManager.BOARD_VARIANT_16X16.equals(variant)) return "16x16";
-        return "9x9";
+    private String nextTheme(String current) {
+        if ("LIGHT".equals(current)) return "DARK";
+        if ("DARK".equals(current)) return "SYSTEM";
+        return "LIGHT";
     }
 
-    private String nextBoardVariant(String current) {
-        if (PreferencesManager.BOARD_VARIANT_4X4.equals(current)) return PreferencesManager.BOARD_VARIANT_6X6;
-        if (PreferencesManager.BOARD_VARIANT_6X6.equals(current)) return PreferencesManager.BOARD_VARIANT_9X9;
-        if (PreferencesManager.BOARD_VARIANT_9X9.equals(current)) return PreferencesManager.BOARD_VARIANT_12X12;
-        if (PreferencesManager.BOARD_VARIANT_12X12.equals(current)) return PreferencesManager.BOARD_VARIANT_16X16;
-        return PreferencesManager.BOARD_VARIANT_4X4;
+    private String themeLabel(String current) {
+        if ("DARK".equals(current)) return getString(R.string.theme_dark);
+        if ("SYSTEM".equals(current)) return getString(R.string.settings_theme_system);
+        return getString(R.string.settings_theme_light);
     }
 
     private void showPrivacyDialog() {

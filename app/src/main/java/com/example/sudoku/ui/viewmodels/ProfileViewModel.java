@@ -52,7 +52,7 @@ public class ProfileViewModel extends AndroidViewModel {
             achievements.add(new AchievementItem(profile.currentStreak >= 7 ? "🔥" : "📅", "Streak Master", "Keep a 7-day streak", profile.currentStreak >= 7));
 
             List<RowItem> customization = new ArrayList<>();
-            customization.add(new RowItem("Themes", "Duolingo Green active", "themes"));
+            customization.add(new RowItem("Themes", "Current app theme", "settings"));
             customization.add(new RowItem("Board Style", "Classic rounded grid", null));
             customization.add(new RowItem("App Icon", "Default", null));
             customization.add(new RowItem("Number Style", "Bold digits", null));
