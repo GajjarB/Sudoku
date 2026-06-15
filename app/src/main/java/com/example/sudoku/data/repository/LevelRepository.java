@@ -108,5 +108,4 @@ public class LevelRepository {
     public interface DataCallback<T> {
         void onResult(T result);
     }
-
 }
