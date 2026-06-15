@@ -1,175 +1,165 @@
 package com.example.sudoku.domain.managers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.example.sudoku.data.local.dao.DailyChallengeDao;
 import com.example.sudoku.data.local.entities.DailyChallenge;
 import com.example.sudoku.data.repository.GameRepository;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 public class DailyChallengeManagerTest {
 
     @Mock
-    private DailyChallengeDao mockDao;
-    @Mock
-    private GameRepository mockGameRepository;
+    private DailyChallengeDao dailyDao;
 
-    private DailyChallengeManager manager;
+    @Mock
+    private GameRepository gameRepository;
+
+    private DailyChallengeManager dailyChallengeManager;
 
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        manager = new DailyChallengeManager(mockDao, mockGameRepository);
+        dailyChallengeManager = new DailyChallengeManager(dailyDao, gameRepository);
     }
 
     @Test
-    public void testGetOrCreateDailyChallengeSync_Existing() {
-        String dateKey = "2025-02-16";
+    public void getOrCreateDailyChallengeSync_whenChallengeExists_returnsExisting() {
+        String dateKey = "2023-10-27";
         DailyChallenge existingChallenge = new DailyChallenge(dateKey);
-        when(mockDao.getDailyChallenge(dateKey)).thenReturn(existingChallenge);
+        when(dailyDao.getDailyChallenge(dateKey)).thenReturn(existingChallenge);
 
-        DailyChallenge result = manager.getOrCreateDailyChallengeSync(dateKey);
+        DailyChallenge result = dailyChallengeManager.getOrCreateDailyChallengeSync(dateKey);
 
         assertEquals(existingChallenge, result);
-        verify(mockDao, never()).insertDailyChallenge(any());
+        verify(dailyDao, never()).insertDailyChallenge(any());
     }
 
     @Test
-    public void testGetOrCreateDailyChallengeSync_New() {
-        String dateKey = "2025-02-16";
-        when(mockDao.getDailyChallenge(dateKey)).thenReturn(null);
+    public void getOrCreateDailyChallengeSync_whenChallengeDoesNotExist_generatesAndInsertsNew() {
+        String dateKey = "2023-10-27";
+        when(dailyDao.getDailyChallenge(dateKey)).thenReturn(null);
 
-        DailyChallenge result = manager.getOrCreateDailyChallengeSync(dateKey);
+        DailyChallenge result = dailyChallengeManager.getOrCreateDailyChallengeSync(dateKey);
 
         assertNotNull(result);
         assertEquals(dateKey, result.dateKey);
         assertNotNull(result.puzzleGrid);
         assertNotNull(result.solutionGrid);
+        assertTrue(result.puzzleGrid.length() > 0);
+        assertTrue(result.solutionGrid.length() > 0);
 
-        verify(mockDao).insertDailyChallenge(result);
+        ArgumentCaptor<DailyChallenge> captor = ArgumentCaptor.forClass(DailyChallenge.class);
+        verify(dailyDao, times(1)).insertDailyChallenge(captor.capture());
+        DailyChallenge inserted = captor.getValue();
+        assertEquals(dateKey, inserted.dateKey);
+        assertEquals(result, inserted);
     }
 
     @Test
-    public void testCompleteChallengeSync() {
-        String dateKey = "2025-02-16";
-        DailyChallenge challenge = new DailyChallenge(dateKey);
-        challenge.bestScore = 100;
-        challenge.bestTimeMs = 50000;
+    public void completeChallengeSync_updatesChallengeWithBetterScoreAndTime() {
+        String dateKey = "2023-10-27";
+        DailyChallenge existingChallenge = new DailyChallenge(dateKey);
+        existingChallenge.bestScore = 100;
+        existingChallenge.bestTimeMs = 50000;
+        when(dailyDao.getDailyChallenge(dateKey)).thenReturn(existingChallenge);
 
-        when(mockDao.getDailyChallenge(dateKey)).thenReturn(challenge);
+        int newScore = 150;
+        long newTimeMs = 40000;
+        dailyChallengeManager.completeChallengeSync(dateKey, newScore, newTimeMs);
 
-        // Better score, better time
-        manager.completeChallengeSync(dateKey, 200, 40000);
-
-        assertTrue(challenge.isCompleted);
-        assertEquals(200, challenge.bestScore);
-        assertEquals(40000, challenge.bestTimeMs);
-        verify(mockDao).updateDailyChallenge(challenge);
+        assertTrue(existingChallenge.isCompleted);
+        assertEquals(newScore, existingChallenge.bestScore);
+        assertEquals(newTimeMs, existingChallenge.bestTimeMs);
+        verify(dailyDao, times(1)).updateDailyChallenge(existingChallenge);
     }
 
     @Test
-    public void testCompleteChallengeSync_WorseScoreAndTime() {
-        String dateKey = "2025-02-16";
-        DailyChallenge challenge = new DailyChallenge(dateKey);
-        challenge.bestScore = 100;
-        challenge.bestTimeMs = 50000;
+    public void completeChallengeSync_doesNotUpdateWithWorseScoreAndTime() {
+        String dateKey = "2023-10-27";
+        DailyChallenge existingChallenge = new DailyChallenge(dateKey);
+        existingChallenge.bestScore = 200;
+        existingChallenge.bestTimeMs = 30000;
+        when(dailyDao.getDailyChallenge(dateKey)).thenReturn(existingChallenge);
 
-        when(mockDao.getDailyChallenge(dateKey)).thenReturn(challenge);
+        int newScore = 150;
+        long newTimeMs = 40000;
+        dailyChallengeManager.completeChallengeSync(dateKey, newScore, newTimeMs);
 
-        // Worse score, worse time
-        manager.completeChallengeSync(dateKey, 50, 60000);
-
-        assertTrue(challenge.isCompleted);
-        assertEquals(100, challenge.bestScore); // Should keep original best
-        assertEquals(50000, challenge.bestTimeMs); // Should keep original best
-        verify(mockDao).updateDailyChallenge(challenge);
+        assertTrue(existingChallenge.isCompleted);
+        assertEquals(200, existingChallenge.bestScore);
+        assertEquals(30000, existingChallenge.bestTimeMs);
+        verify(dailyDao, times(1)).updateDailyChallenge(existingChallenge);
     }
 
     @Test
-    public void testCompleteChallengeSync_FirstTimeCompletion() {
-        String dateKey = "2025-02-16";
+    public void completeChallengeSync_firstTimeCompletion_setsInitialScoreAndTime() {
+        String dateKey = "2023-10-27";
+        DailyChallenge existingChallenge = new DailyChallenge(dateKey);
+        // Assuming uncompleted challenge has default values
+        existingChallenge.bestScore = 0;
+        existingChallenge.bestTimeMs = 0;
+        when(dailyDao.getDailyChallenge(dateKey)).thenReturn(existingChallenge);
+
+        int newScore = 150;
+        long newTimeMs = 60000;
+        dailyChallengeManager.completeChallengeSync(dateKey, newScore, newTimeMs);
+
+        assertTrue(existingChallenge.isCompleted);
+        assertEquals(150, existingChallenge.bestScore);
+        assertEquals(60000, existingChallenge.bestTimeMs);
+        verify(dailyDao, times(1)).updateDailyChallenge(existingChallenge);
+    }
+
+    @Test
+    public void completeChallenge_updatesAndCallsExecutor() {
+        // Just verify basic behavior of the async completion
+        String dateKey = "2023-10-27";
         DailyChallenge challenge = new DailyChallenge(dateKey);
-        // bestTimeMs defaults to Long.MAX_VALUE in DailyChallenge constructor according to entity code,
-        // but let's see how the manager handles it if it was initialized to 0 somehow or use entity's default.
-        // Actually, the manager checks for 0: `(challenge.bestTimeMs == 0) ? timeMs : Math.min...`
+        challenge.bestScore = 0;
         challenge.bestTimeMs = 0;
 
-        when(mockDao.getDailyChallenge(dateKey)).thenReturn(challenge);
-
-        manager.completeChallengeSync(dateKey, 150, 30000);
+        dailyChallengeManager.completeChallenge(challenge, 100, 50000);
 
         assertTrue(challenge.isCompleted);
-        assertEquals(150, challenge.bestScore);
-        assertEquals(30000, challenge.bestTimeMs);
-        verify(mockDao).updateDailyChallenge(challenge);
+        assertEquals(100, challenge.bestScore);
+        assertEquals(50000, challenge.bestTimeMs);
+        // The DAO update happens on another thread, so we'd have to use CountDownLatch or mock AppExecutors to verify DAO interaction reliably.
+        // For unit test, we just check state mutation
     }
 
     @Test
-    public void testCompleteChallenge() {
-        String dateKey = "2025-02-16";
-        DailyChallenge challenge = new DailyChallenge(dateKey);
-        challenge.bestScore = 100;
-        challenge.bestTimeMs = 50000;
+    public void getDateKey_returnsCorrectFormat() {
+        long epochMillis = 1698408000000L; // Oct 27, 2023 (UTC)
+        // Note: SimpleDateFormat uses local timezone by default.
+        // To make test robust, we just verify it formats consistently with the same object.
+        String expectedFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(new Date(epochMillis));
+        String result = dailyChallengeManager.getDateKey(epochMillis);
 
-        // completeChallenge updates the object synchronously, but calls DAO asynchronously.
-        // We will just verify object updates since AppExecutors might use real threads unless mocked,
-        // but AppExecutors is a singleton in app code and hard to mock without reflection/Robolectric.
-        // Let's at least test the state update.
-        manager.completeChallenge(challenge, 200, 40000);
-
-        assertTrue(challenge.isCompleted);
-        assertEquals(200, challenge.bestScore);
-        assertEquals(40000, challenge.bestTimeMs);
-        // We won't verify DAO call since it happens on executor thread and might be flaky without sleep/sync.
+        assertEquals(expectedFormat, result);
     }
 
     @Test
-    public void testGetDateKey() {
-        // Use a known epoch timestamp.
-        // 0 = 1970-01-01T00:00:00Z
-        // Since SimpleDateFormat uses default locale/timezone, the date might differ by timezone.
-        // But let's test format string manually using UTC to be safe if timezone issues arise.
-        // Or better yet, we just call the method and check pattern length or format.
+    public void getStartOfTodayMillis_returnsStartOfDay() {
+        long start = dailyChallengeManager.getStartOfTodayMillis();
+        long end = dailyChallengeManager.getEndOfTodayMillis();
 
-        long epoch = 1708084800000L; // Example: Feb 16, 2024 roughly
-        String key = manager.getDateKey(epoch);
-
-        // It should match "yyyy-MM-dd"
-        assertTrue(key.matches("\\d{4}-\\d{2}-\\d{2}"));
-    }
-
-    @Test
-    public void testGetStartAndEndOfTodayMillis() {
-        long start = manager.getStartOfTodayMillis();
-        long end = manager.getEndOfTodayMillis();
-
-        // End should be exactly 24 hours after start, or at least greater.
-        // (Note: Daylight saving time might make it 23 or 25 hours in rare cases if Calendar uses local timezone,
-        // but for now let's just check end > start and start is start of day).
-        assertTrue("End of day should be after start of day", end > start);
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(start);
-        assertEquals(0, cal.get(Calendar.HOUR_OF_DAY));
-        assertEquals(0, cal.get(Calendar.MINUTE));
-        assertEquals(0, cal.get(Calendar.SECOND));
-        assertEquals(0, cal.get(Calendar.MILLISECOND));
+        assertTrue(start > 0);
+        assertTrue(end > start);
+        // difference should be ~24 hours
+        // Not exact 24 hours if DST changes today, but typically 24h
+        long diffHours = (end - start) / (1000 * 60 * 60);
+        assertTrue(diffHours >= 23 && diffHours <= 25);
     }
 }

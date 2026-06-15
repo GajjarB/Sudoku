@@ -88,18 +88,24 @@ public class StatsViewModel extends AndroidViewModel {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(now);
             calendar.add(Calendar.DAY_OF_YEAR, -6);
+
+            long[] dayStarts = new long[7];
+            long[] dayEnds = new long[7];
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("EEE", Locale.US);
             for (int i = 0; i < 7; i++) {
-                long dayStart = startOfDay(calendar.getTimeInMillis());
-                long dayEnd = dayStart + 24L * 60 * 60 * 1000;
-                labels[i] = new java.text.SimpleDateFormat("EEE", Locale.US).format(calendar.getTime());
-                int count = 0;
-                for (GameHistory game : filteredHistory) {
-                    if (game.playedAt >= dayStart && game.playedAt < dayEnd) {
-                        count++;
+                dayStarts[i] = startOfDay(calendar.getTimeInMillis());
+                dayEnds[i] = dayStarts[i] + 24L * 60 * 60 * 1000;
+                labels[i] = sdf.format(calendar.getTime());
+                calendar.add(Calendar.DAY_OF_YEAR, 1);
+            }
+
+            for (GameHistory game : filteredHistory) {
+                for (int i = 0; i < 7; i++) {
+                    if (game.playedAt >= dayStarts[i] && game.playedAt < dayEnds[i]) {
+                        values[i]++;
+                        break;
                     }
                 }
-                values[i] = count;
-                calendar.add(Calendar.DAY_OF_YEAR, 1);
             }
 
             String insightTitle = "You are building steady momentum.";

@@ -107,68 +107,80 @@ public class LogicalSolver {
     private boolean placeHiddenSingle(CandidateGrid cg, Map<String, Integer> usage, int[][] solution) {
         for (int d = 1; d <= N; d++) {
             int bit = 1 << d;
-            // rows
-            for (int r = 0; r < N; r++) {
-                int cells = 0;
-                int colHit = -1;
-                for (int c = 0; c < N; c++) {
-                    if (cg.isSolved(r, c)) continue;
-                    if ((cg.candidates(r, c) & bit) != 0) {
-                        cells++;
-                        colHit = c;
-                    }
-                }
-                if (cells == 1) {
-                    if (solution == null || solution[r][colHit] == 0 || solution[r][colHit] == d) {
-                        cg.place(r, colHit, d);
-                        usage.merge(Constants.STRATEGY_HIDDEN_SINGLE, 1, Integer::sum);
-                        return true;
-                    }
+            if (placeHiddenSingleInRows(cg, usage, solution, d, bit)) return true;
+            if (placeHiddenSingleInCols(cg, usage, solution, d, bit)) return true;
+            if (placeHiddenSingleInBoxes(cg, usage, solution, d, bit)) return true;
+        }
+        return false;
+    }
+
+    private boolean placeHiddenSingleInRows(CandidateGrid cg, Map<String, Integer> usage, int[][] solution, int d, int bit) {
+        for (int r = 0; r < N; r++) {
+            int cells = 0;
+            int colHit = -1;
+            for (int c = 0; c < N; c++) {
+                if (cg.isSolved(r, c)) continue;
+                if ((cg.candidates(r, c) & bit) != 0) {
+                    cells++;
+                    colHit = c;
                 }
             }
-            // cols
-            for (int c = 0; c < N; c++) {
-                int cells = 0;
-                int rowHit = -1;
-                for (int r = 0; r < N; r++) {
+            if (cells == 1) {
+                if (solution == null || solution[r][colHit] == 0 || solution[r][colHit] == d) {
+                    cg.place(r, colHit, d);
+                    usage.merge(Constants.STRATEGY_HIDDEN_SINGLE, 1, Integer::sum);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean placeHiddenSingleInCols(CandidateGrid cg, Map<String, Integer> usage, int[][] solution, int d, int bit) {
+        for (int c = 0; c < N; c++) {
+            int cells = 0;
+            int rowHit = -1;
+            for (int r = 0; r < N; r++) {
+                if (cg.isSolved(r, c)) continue;
+                if ((cg.candidates(r, c) & bit) != 0) {
+                    cells++;
+                    rowHit = r;
+                }
+            }
+            if (cells == 1) {
+                if (solution == null || solution[rowHit][c] == 0 || solution[rowHit][c] == d) {
+                    cg.place(rowHit, c, d);
+                    usage.merge(Constants.STRATEGY_HIDDEN_SINGLE, 1, Integer::sum);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean placeHiddenSingleInBoxes(CandidateGrid cg, Map<String, Integer> usage, int[][] solution, int d, int bit) {
+        for (int box = 0; box < N; box++) {
+            int br = (box / B) * B;
+            int bc = (box % B) * B;
+            int cells = 0;
+            int rowHit = -1;
+            int colHit = -1;
+            for (int r = br; r < br + B; r++) {
+                for (int c = bc; c < bc + B; c++) {
                     if (cg.isSolved(r, c)) continue;
                     if ((cg.candidates(r, c) & bit) != 0) {
                         cells++;
                         rowHit = r;
-                    }
-                }
-                if (cells == 1) {
-                    if (solution == null || solution[rowHit][c] == 0 || solution[rowHit][c] == d) {
-                        cg.place(rowHit, c, d);
-                        usage.merge(Constants.STRATEGY_HIDDEN_SINGLE, 1, Integer::sum);
-                        return true;
+                        colHit = c;
                     }
                 }
             }
-            // boxes
-            for (int box = 0; box < N; box++) {
-                int br = (box / B) * B;
-                int bc = (box % B) * B;
-                int cells = 0;
-                int rowHit = -1;
-                int colHit = -1;
-                for (int r = br; r < br + B; r++) {
-                    for (int c = bc; c < bc + B; c++) {
-                        if (cg.isSolved(r, c)) continue;
-                        if ((cg.candidates(r, c) & bit) != 0) {
-                            cells++;
-                            rowHit = r;
-                            colHit = c;
-                        }
-                    }
-                }
-                if (cells == 1) {
-                    if (solution == null || solution[rowHit][colHit] == 0
-                            || solution[rowHit][colHit] == d) {
-                        cg.place(rowHit, colHit, d);
-                        usage.merge(Constants.STRATEGY_HIDDEN_SINGLE, 1, Integer::sum);
-                        return true;
-                    }
+            if (cells == 1) {
+                if (solution == null || solution[rowHit][colHit] == 0
+                        || solution[rowHit][colHit] == d) {
+                    cg.place(rowHit, colHit, d);
+                    usage.merge(Constants.STRATEGY_HIDDEN_SINGLE, 1, Integer::sum);
+                    return true;
                 }
             }
         }
