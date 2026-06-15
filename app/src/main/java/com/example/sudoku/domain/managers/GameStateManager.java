@@ -457,13 +457,37 @@ public class GameStateManager {
     private void refreshConflicts() {
         conflicts = new boolean[9][9];
         if (currentGrid == null || solutionGrid == null || lockedCells == null) return;
+
+        int[] rowConflicts = new int[9];
+        int[] colConflicts = new int[9];
+        int[] boxConflicts = new int[9];
+
+        // 1st pass: identify all wrong cells and record their values in the conflicts caches
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
                 int value = currentGrid[row][col];
                 if (!lockedCells[row][col] && value != 0 && value != solutionGrid[row][col]) {
                     conflicts[row][col] = true;
-                    for (int[] conflict : GameValidator.getConflictingCells(currentGrid, row, col, value)) {
-                        conflicts[conflict[0]][conflict[1]] = true;
+                    int mask = 1 << value;
+                    rowConflicts[row] |= mask;
+                    colConflicts[col] |= mask;
+                    int boxIdx = (row / 3) * 3 + (col / 3);
+                    boxConflicts[boxIdx] |= mask;
+                }
+            }
+        }
+
+        // 2nd pass: mark any cell that shares a value with a wrong cell in the same row/col/box
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                int value = currentGrid[row][col];
+                if (value != 0 && !conflicts[row][col]) {
+                    int mask = 1 << value;
+                    int boxIdx = (row / 3) * 3 + (col / 3);
+                    if ((rowConflicts[row] & mask) != 0 ||
+                        (colConflicts[col] & mask) != 0 ||
+                        (boxConflicts[boxIdx] & mask) != 0) {
+                        conflicts[row][col] = true;
                     }
                 }
             }
