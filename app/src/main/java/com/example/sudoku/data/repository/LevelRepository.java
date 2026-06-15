@@ -108,10 +108,4 @@ public class LevelRepository {
     public interface DataCallback<T> {
         void onResult(T result);
     }
-
-    /**
-     * Repositories share AppExecutors. App lifecycle owns shutdown.
-     */
-    public void shutdown() {
-    }
 }
