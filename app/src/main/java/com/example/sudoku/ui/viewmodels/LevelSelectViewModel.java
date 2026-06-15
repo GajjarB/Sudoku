@@ -34,6 +34,5 @@ public class LevelSelectViewModel extends AndroidViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        levelRepository.shutdown();
     }
 }

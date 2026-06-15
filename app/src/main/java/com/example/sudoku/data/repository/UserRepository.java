@@ -157,10 +157,4 @@ public class UserRepository {
         return cal.get(java.util.Calendar.YEAR) + "-"
                 + String.format(java.util.Locale.US, "%02d", cal.get(java.util.Calendar.MONTH) + 1);
     }
-
-    /**
-     * Repositories share AppExecutors. App lifecycle owns shutdown.
-     */
-    public void shutdown() {
-    }
 }
