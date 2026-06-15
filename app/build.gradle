@@ -3,6 +3,9 @@ plugins {
 }
 
 android {
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
     namespace = 'com.example.sudoku'
     compileSdk = 36
 
