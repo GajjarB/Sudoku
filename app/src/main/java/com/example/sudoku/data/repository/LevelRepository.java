@@ -109,6 +109,12 @@ public class LevelRepository {
         void onResult(T result);
     }
 
+    public void resetLevelProgress() {
+        executorService.execute(() -> {
+            levelDao.resetLevelProgress();
+        });
+    }
+
     /**
      * Repositories share AppExecutors. App lifecycle owns shutdown.
      */
