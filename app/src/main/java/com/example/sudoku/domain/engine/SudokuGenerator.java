@@ -10,6 +10,7 @@ import static com.example.sudoku.domain.engine.SudokuConstants.bitFor;
 import static com.example.sudoku.domain.engine.SudokuConstants.boxIndex;
 
 import java.util.ArrayList;
+import java.security.SecureRandom;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -35,7 +36,7 @@ public class SudokuGenerator {
     private final SudokuSolver solver;
 
     public SudokuGenerator() {
-        this(new Random());
+        this(new SecureRandom());
     }
 
     /** Seeded generator — used for reproducible daily challenges. */

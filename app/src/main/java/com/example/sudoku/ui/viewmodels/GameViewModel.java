@@ -558,8 +558,6 @@ public class GameViewModel extends AndroidViewModel {
             stateManager.saveCurrentGame();
         } catch (Exception ignored) {
         }
-        gameRepository.shutdown();
-        levelRepository.shutdown();
     }
 
     public LiveData<Grid> getGrid() { return gridLiveData; }

@@ -1,6 +1,5 @@
 package com.example.sudoku.domain.models;
 
-import java.util.List;
 import java.util.ArrayList;
 
 /**
