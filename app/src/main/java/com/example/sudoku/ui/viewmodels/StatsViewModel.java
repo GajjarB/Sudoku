@@ -59,7 +59,6 @@ public class StatsViewModel extends AndroidViewModel {
                     : currentFilter == Filter.MONTH ? now - 30L * 24 * 60 * 60 * 1000
                     : 0L;
             List<GameHistory> filteredHistory = database.gameDao().getGamesSince(since);
-            List<GameHistory> recent14Days = database.gameDao().getGamesSince(now - 14L * 24 * 60 * 60 * 1000);
 
             int solved = filteredHistory.size();
             int accuracy = profile.totalGamesPlayed == 0 ? 0 : Math.round((profile.totalGamesWon * 100f) / profile.totalGamesPlayed);
@@ -110,8 +109,8 @@ public class StatsViewModel extends AndroidViewModel {
 
             String insightTitle = "You are building steady momentum.";
             String insightBody = "Play a couple more medium puzzles this week to keep stretching your logic speed.";
-            double currentAvg = averageForWindow(recent14Days, now - 7L * 24 * 60 * 60 * 1000, now);
-            double previousAvg = averageForWindow(recent14Days, now - 14L * 24 * 60 * 60 * 1000, now - 7L * 24 * 60 * 60 * 1000);
+            double currentAvg = database.gameDao().getAverageCompletionTimeForWindow(now - 7L * 24 * 60 * 60 * 1000, now);
+            double previousAvg = database.gameDao().getAverageCompletionTimeForWindow(now - 14L * 24 * 60 * 60 * 1000, now - 7L * 24 * 60 * 60 * 1000);
             if (currentAvg > 0 && previousAvg > 0 && currentAvg < previousAvg) {
                 insightTitle = "You improved your average solve time.";
                 insightBody = "You are solving about " + Math.round(((previousAvg - currentAvg) / previousAvg) * 100) + "% faster than the previous week.";
@@ -152,18 +151,6 @@ public class StatsViewModel extends AndroidViewModel {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTimeInMillis();
-    }
-
-    private double averageForWindow(List<GameHistory> history, long start, long end) {
-        long total = 0L;
-        int count = 0;
-        for (GameHistory game : history) {
-            if (game.playedAt >= start && game.playedAt < end && game.totalTimeMs > 0) {
-                total += game.totalTimeMs;
-                count++;
-            }
-        }
-        return count == 0 ? 0 : (double) total / count;
     }
 
     public static class StatsUiState {
