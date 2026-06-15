@@ -172,9 +172,4 @@ public class GameRepository {
         });
     }
 
-    /**
-     * Repositories share AppExecutors. App lifecycle owns shutdown.
-     */
-    public void shutdown() {
-    }
 }

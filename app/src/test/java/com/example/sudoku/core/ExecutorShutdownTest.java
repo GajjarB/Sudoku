@@ -10,21 +10,6 @@ import static org.junit.Assert.*;
 public class ExecutorShutdownTest {
 
     @Test
-    public void repositoryShutdown_doesNotShutdownInjectedSharedExecutor() throws Exception {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        try {
-            GameRepository repository = new GameRepository(null, executor);
-
-            repository.shutdown();
-
-            assertFalse("Repository must not own shared executor shutdown", executor.isShutdown());
-        } finally {
-            executor.shutdownNow();
-            assertTrue(executor.awaitTermination(1, TimeUnit.SECONDS));
-        }
-    }
-
-    @Test
     public void appExecutors_ioUsesNamedSharedThreads() throws Exception {
         final String[] threadName = new String[1];
 

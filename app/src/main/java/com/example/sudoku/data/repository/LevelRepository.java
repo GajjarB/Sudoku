@@ -109,9 +109,4 @@ public class LevelRepository {
         void onResult(T result);
     }
 
-    /**
-     * Repositories share AppExecutors. App lifecycle owns shutdown.
-     */
-    public void shutdown() {
-    }
 }

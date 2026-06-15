@@ -31,9 +31,4 @@ public class LevelSelectViewModel extends AndroidViewModel {
         return unlockedLevels;
     }
 
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-        levelRepository.shutdown();
-    }
 }
