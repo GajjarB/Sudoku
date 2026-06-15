@@ -59,25 +59,15 @@ public class GoalsViewModel extends AndroidViewModel {
             long now = System.currentTimeMillis();
             long startOfDay = startOfDay(now);
             long startOfWeek = startOfWeek(now);
-            List<GameHistory> todayGames = database.gameDao().getGamesSince(startOfDay);
-            List<GameHistory> weekGames = database.gameDao().getGamesSince(startOfWeek);
             SavedGame activeGame = gameRepository.getIncompleteGameSync();
 
-            int solvedToday = todayGames.size();
-            int lowMistakeToday = 0;
-            for (GameHistory game : todayGames) {
-                if (game.mistakesMade < 3) {
-                    lowMistakeToday++;
-                }
-            }
+            int solvedToday = database.gameDao().getGamesCountSince(startOfDay);
+            int lowMistakeToday = database.gameDao().getLowMistakeGamesCountSince(startOfDay, 3);
+
             boolean notesUsed = activeGame != null && (activeGame.notesMode || (activeGame.notes != null && !activeGame.notes.isEmpty()));
-            int weeklySolved = weekGames.size();
-            int weeklyMedium = 0;
-            for (GameHistory game : weekGames) {
-                if (game.levelNumber > 5 && game.levelNumber <= 20) {
-                    weeklyMedium++;
-                }
-            }
+
+            int weeklySolved = database.gameDao().getGamesCountSince(startOfWeek);
+            int weeklyMedium = database.gameDao().getMediumGamesCountSince(startOfWeek, 5, 20);
 
             List<GoalCardItem> dailyGoals = new ArrayList<>();
             dailyGoals.add(new GoalCardItem("🎯", "Solve 1 puzzle", solvedToday >= 1 ? "Completed" : solvedToday + "/1 completed", 20, Math.min(solvedToday, 1), 1, solvedToday >= 1 ? "Claim" : "Start", 1, false));

@@ -65,6 +65,15 @@ public interface GameDao {
     @Query("SELECT * FROM game_history WHERE playedAt >= :since ORDER BY playedAt DESC")
     List<GameHistory> getGamesSince(long since);
     
+    @Query("SELECT COUNT(*) FROM game_history WHERE playedAt >= :since")
+    int getGamesCountSince(long since);
+
+    @Query("SELECT COUNT(*) FROM game_history WHERE playedAt >= :since AND mistakesMade < :maxMistakes")
+    int getLowMistakeGamesCountSince(long since, int maxMistakes);
+
+    @Query("SELECT COUNT(*) FROM game_history WHERE playedAt >= :since AND levelNumber > :minLevel AND levelNumber <= :maxLevel")
+    int getMediumGamesCountSince(long since, int minLevel, int maxLevel);
+
     @Query("SELECT COUNT(*) FROM game_history WHERE isDailyChallenge = 1")
     int getTotalDailyChallengesCompleted();
     
