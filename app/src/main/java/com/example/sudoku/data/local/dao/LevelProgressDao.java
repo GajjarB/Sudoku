@@ -52,4 +52,7 @@ public interface LevelProgressDao {
     
     @Query("SELECT SUM(starsEarned) FROM level_progress WHERE isCompleted = 1")
     int getTotalStars();
+
+    @Query("UPDATE level_progress SET isUnlocked = CASE WHEN levelNumber = 1 THEN 1 ELSE 0 END, isCompleted = 0, starsEarned = 0, bestScore = 0, bestTimeMs = 9223372036854775807, timesPlayed = 0, timesCompleted = 0, firstCompletedAt = 0, lastPlayedAt = 0")
+    void resetLevelProgress();
 }
