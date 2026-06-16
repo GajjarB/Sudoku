@@ -52,6 +52,8 @@ public class GameActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Enable window content transitions for shared element
+        getWindow().requestFeature(android.view.Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
         applyStoredThemeMode();
         setContentView(R.layout.activity_game);

@@ -86,6 +86,11 @@ public class LevelSelectActivity extends BaseActivity {
     private void openLevel(int level) {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra(Constants.EXTRA_LEVEL_NUMBER, level);
-        startActivity(intent);
+
+        // Add shared element transition for smooth UI transition
+        android.app.ActivityOptions options = android.app.ActivityOptions.makeSceneTransitionAnimation(
+            this
+        );
+        startActivity(intent, options.toBundle());
     }
 }

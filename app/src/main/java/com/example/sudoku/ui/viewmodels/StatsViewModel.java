@@ -60,6 +60,8 @@ public class StatsViewModel extends AndroidViewModel {
                     : 0L;
             List<GameHistory> filteredHistory = database.gameDao().getGamesSince(since);
 
+            com.example.sudoku.data.local.dao.GameStats stats = database.gameDao().getAggregatedStatsSince(since);
+
             int solved = stats != null ? stats.gameCount : 0;
             int accuracy = profile.totalGamesPlayed == 0 ? 0 : Math.round((profile.totalGamesWon * 100f) / profile.totalGamesPlayed);
             long bestTime = stats != null && stats.bestTime > 0 ? stats.bestTime : Long.MAX_VALUE;

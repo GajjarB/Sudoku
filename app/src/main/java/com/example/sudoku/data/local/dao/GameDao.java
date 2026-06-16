@@ -88,6 +88,18 @@ public interface GameDao {
 
     @Query("SELECT AVG(totalTimeMs) FROM game_history WHERE playedAt >= :start AND playedAt < :end AND totalTimeMs > 0")
     double getAverageCompletionTimeForWindow(long start, long end);
+
+    @Query("SELECT "
+            + "SUM(totalTimeMs) AS totalTime, "
+            + "MIN(totalTimeMs) AS bestTime, "
+            + "SUM(xpEarned) AS xpEarned, "
+            + "SUM(CASE WHEN levelNumber <= 5 THEN 1 ELSE 0 END) AS easyCount, "
+            + "SUM(CASE WHEN levelNumber > 5 AND levelNumber <= 20 THEN 1 ELSE 0 END) AS mediumCount, "
+            + "SUM(CASE WHEN levelNumber > 20 AND levelNumber <= 50 THEN 1 ELSE 0 END) AS hardCount, "
+            + "SUM(CASE WHEN levelNumber > 50 THEN 1 ELSE 0 END) AS expertCount, "
+            + "COUNT(*) AS gameCount "
+            + "FROM game_history WHERE playedAt >= :since")
+    GameStats getAggregatedStatsSince(long since);
     
     // ═══════════════════════════════════════════════════════════════
     // PLAYER BEHAVIOR (AI Analytics)
