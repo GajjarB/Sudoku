@@ -1,0 +1,46 @@
+<<<<<<< SEARCH
+    public void onNumberInput(int number) {
+        boolean noteMode = Boolean.TRUE.equals(notesModeLiveData.getValue());
+        InputResult result = stateManager.processInput(currentRow, currentCol, number, noteMode);
+        handleInputResult(result);
+        if (result != null
+                && result.type != InputResult.Type.IGNORED
+                && result.type != InputResult.Type.LOCKED_CELL) {
+            boolean correct = result.type == InputResult.Type.CORRECT_MOVE
+                    || result.type == InputResult.Type.PUZZLE_COMPLETED;
+            recordBehavior(currentRow, currentCol, number, correct);
+        }
+        hintLevel = 1;
+        persistUiState();
+        scheduleAutoSave();
+    }
+=======
+    public void onNumberInput(int number) {
+        boolean noteMode = Boolean.TRUE.equals(notesModeLiveData.getValue());
+        InputResult result = stateManager.processInput(currentRow, currentCol, number, noteMode);
+        handleInputResult(result);
+        if (result != null
+                && result.type != InputResult.Type.IGNORED
+                && result.type != InputResult.Type.LOCKED_CELL) {
+            boolean correct = result.type == InputResult.Type.CORRECT_MOVE
+                    || result.type == InputResult.Type.PUZZLE_COMPLETED;
+            recordBehavior(currentRow, currentCol, number, correct);
+
+            // Post achievement event when game is completed
+            if (result.type == InputResult.Type.PUZZLE_COMPLETED) {
+                com.example.sudoku.domain.achievements.AchievementEngine.INSTANCE.postEvent(
+                    new com.example.sudoku.domain.achievements.AchievementEvent.GameCompleted(
+                        stateManager.getElapsedTime(),
+                        stateManager.getMistakes(),
+                        stateManager.getHintsUsed(),
+                        currentLevel,
+                        currentDailyChallenge
+                    )
+                );
+            }
+        }
+        hintLevel = 1;
+        persistUiState();
+        scheduleAutoSave();
+    }
+>>>>>>> REPLACE
