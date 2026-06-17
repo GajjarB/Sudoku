@@ -25,22 +25,22 @@ object PuzzleCurator {
 
         return when (type) {
             CuratedType.SYMMETRIC_DIAMOND -> {
-                generator.generate(difficulty, CancellationToken.none(), SymmetryStrategy.DIAGONAL)
+                generator.generate(difficulty.targetClues(), SymmetryStrategy.DIAGONAL, 10000L, CancellationToken.NONE) { false }
             }
             CuratedType.CROSS_HATCH -> {
-                generator.generate(difficulty, CancellationToken.none(), SymmetryStrategy.ORTHOGONAL)
+                generator.generate(difficulty.targetClues(), SymmetryStrategy.ORTHOGONAL, 10000L, CancellationToken.NONE) { false }
             }
             CuratedType.MINIMALIST_BORDER -> {
                 // Outer ring preservation would be implemented here
-                generator.generate(difficulty, CancellationToken.none(), SymmetryStrategy.ROTATIONAL_180)
+                generator.generate(difficulty.targetClues(), SymmetryStrategy.ROTATIONAL_180, 10000L, CancellationToken.NONE) { false }
             }
             CuratedType.TECHNIQUE_X_WING -> {
                 // In production, this would repeatedly generate and run LogicalSolver
                 // until it finds one where X-Wing is the ONLY breakthrough path.
-                generator.generate(Difficulty.EXPERT, CancellationToken.none())
+                generator.generate(Difficulty.EXPERT.targetClues(), SymmetryStrategy.ROTATIONAL_180, 10000L, CancellationToken.NONE) { false }
             }
             CuratedType.TECHNIQUE_NAKED_TRIPLE -> {
-                generator.generate(Difficulty.HARD, CancellationToken.none())
+                generator.generate(Difficulty.HARD.targetClues(), SymmetryStrategy.ROTATIONAL_180, 10000L, CancellationToken.NONE) { false }
             }
         }
     }
