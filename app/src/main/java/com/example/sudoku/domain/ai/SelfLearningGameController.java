@@ -5,6 +5,7 @@ import com.example.sudoku.data.local.dao.GameDao;
 import com.example.sudoku.data.local.entities.CognitiveMetrics;
 import com.example.sudoku.data.local.entities.SavedGame;
 import com.example.sudoku.domain.engine.SudokuGenerator;
+import com.example.sudoku.domain.managers.GameStateManager;
 
 import java.util.UUID;
 
@@ -21,12 +22,14 @@ public class SelfLearningGameController {
     private BehavioralAnalyzer analyzer;
     private IntelligentPuzzleGenerator puzzleGen;
     private ProgressiveDifficultySystem difficultySystem;
+    private GameStateManager gameStateManager;
     
     // Track current cell selection
     private long cellSelectedTime;
     private int selectedRow, selectedCol;
     
-    public void init(GameDao dao) {
+    public void init(GameDao dao, GameStateManager gameStateManager) {
+        this.gameStateManager = gameStateManager;
         this.dao = dao;
         this.analyzer = new BehavioralAnalyzer(dao);
         this.puzzleGen = new IntelligentPuzzleGenerator(dao, analyzer);
@@ -78,6 +81,10 @@ public class SelfLearningGameController {
             thinkingTime,
             game
         );
+
+        if (gameStateManager != null) {
+            gameStateManager.processInput(selectedRow, selectedCol, number, false);
+        }
     }
     
     public void runDailyAnalysis() {
