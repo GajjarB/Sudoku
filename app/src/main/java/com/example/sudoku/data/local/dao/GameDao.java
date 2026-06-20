@@ -100,6 +100,12 @@ public interface GameDao {
             + "COUNT(*) AS gameCount "
             + "FROM game_history WHERE playedAt >= :since")
     GameStats getAggregatedStatsSince(long since);
+
+    @Query("SELECT EXISTS(SELECT 1 FROM game_history WHERE isPerfectGame = 1)")
+    boolean hasPerfectGame();
+
+    @Query("SELECT EXISTS(SELECT 1 FROM game_history WHERE totalTimeMs > 0 AND totalTimeMs <= :timeLimitMs)")
+    boolean hasFastGame(long timeLimitMs);
     
     // ═══════════════════════════════════════════════════════════════
     // PLAYER BEHAVIOR (AI Analytics)
