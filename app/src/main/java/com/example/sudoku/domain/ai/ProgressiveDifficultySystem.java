@@ -5,6 +5,7 @@ import com.example.sudoku.data.local.dao.GameDao;
 import com.example.sudoku.data.local.entities.CognitiveMetrics;
 import com.example.sudoku.data.local.entities.SolvingPattern;
 import com.example.sudoku.domain.engine.SudokuGenerator;
+import com.example.sudoku.domain.engine.Difficulty;
 import com.example.sudoku.utils.Constants;
 
 import java.util.List;
@@ -92,8 +93,7 @@ public class ProgressiveDifficultySystem {
     
     private SudokuGenerator.Puzzle generateEasierPuzzle(int level, String reason) {
         SudokuGenerator gen = new SudokuGenerator();
-        int clues = Constants.CLUES_EASY_MAX;
-        return gen.generate(clues);
+        return gen.generate(Difficulty.EASY).puzzle();
     }
     
     private SudokuGenerator.Puzzle generateBreakthroughPuzzle(int level, CognitiveMetrics metrics) {
@@ -107,9 +107,7 @@ public class ProgressiveDifficultySystem {
     
     private SudokuGenerator.Puzzle generateHarderPuzzle(int level, CognitiveMetrics metrics) {
         SudokuGenerator gen = new SudokuGenerator();
-        int clues = Constants.CLUES_EXPERT_MIN + 
-                   (int) (Math.random() * (Constants.CLUES_EXPERT_MAX - Constants.CLUES_EXPERT_MIN + 1));
-        return gen.generate(clues);
+        return gen.generate(Difficulty.EXPERT).puzzle();
     }
     
     private String findNextStrategyToLearn(List<SolvingPattern> patterns) {

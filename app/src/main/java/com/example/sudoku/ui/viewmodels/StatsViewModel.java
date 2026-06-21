@@ -61,8 +61,6 @@ public class StatsViewModel extends AndroidViewModel {
 
             // The chart always only shows the last 7 days regardless of the selected filter.
             // Avoid loading the entire history into memory for MONTH or ALL filters.
-            long chartSince = now - 7L * 24 * 60 * 60 * 1000;
-            List<GameHistory> chartHistory = database.gameDao().getGamesSince(chartSince);
 
             com.example.sudoku.data.local.dao.GameStats stats = database.gameDao().getAggregatedStatsSince(since);
 
@@ -83,23 +81,13 @@ public class StatsViewModel extends AndroidViewModel {
             calendar.setTimeInMillis(now);
             calendar.add(Calendar.DAY_OF_YEAR, -6);
 
-            long[] dayStarts = new long[7];
-            long[] dayEnds = new long[7];
             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("EEE", Locale.US);
             for (int i = 0; i < 7; i++) {
-                dayStarts[i] = startOfDay(calendar.getTimeInMillis());
-                dayEnds[i] = dayStarts[i] + 24L * 60 * 60 * 1000;
+                long dayStart = startOfDay(calendar.getTimeInMillis());
+                long dayEnd = dayStart + 24L * 60 * 60 * 1000;
                 labels[i] = sdf.format(calendar.getTime());
+                values[i] = database.gameDao().getGameCountInRange(dayStart, dayEnd);
                 calendar.add(Calendar.DAY_OF_YEAR, 1);
-            }
-
-            for (GameHistory game : chartHistory) {
-                for (int i = 0; i < 7; i++) {
-                    if (game.playedAt >= dayStarts[i] && game.playedAt < dayEnds[i]) {
-                        values[i]++;
-                        break;
-                    }
-                }
             }
 
             String insightTitle = "You are building steady momentum.";

@@ -62,7 +62,7 @@ public class ProgressiveDifficultySystemTest {
         SudokuGenerator.Puzzle puzzle = system.generateNextChallenge(1);
 
         assertNotNull(puzzle);
-        assertEquals(Constants.CLUES_EASY_MAX, puzzle.clueCount);
+        assertTrue("Expected between 38 and 44 but got " + puzzle.clueCount, puzzle.clueCount >= 38 && puzzle.clueCount <= 44);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class ProgressiveDifficultySystemTest {
 
         String puzzleStr = "0".repeat(81);
         String solutionStr = "1".repeat(81);
-        SudokuGenerator.Puzzle expectedPuzzle = new SudokuGenerator.Puzzle(puzzleStr, solutionStr, 30);
+        SudokuGenerator.Puzzle expectedPuzzle = new SudokuGenerator.Puzzle(puzzleStr, solutionStr, 30, 0);
         when(puzzleGen.generatePersonalizedPuzzle(1)).thenReturn(expectedPuzzle);
 
         SudokuGenerator.Puzzle puzzle = system.generateNextChallenge(1);
@@ -99,7 +99,7 @@ public class ProgressiveDifficultySystemTest {
         SudokuGenerator.Puzzle puzzle = system.generateNextChallenge(1);
 
         assertNotNull(puzzle);
-        assertTrue(puzzle.clueCount >= Constants.CLUES_EXPERT_MIN && puzzle.clueCount <= Constants.CLUES_EXPERT_MAX);
+        assertTrue("Expected between 24 and 27 but got " + puzzle.clueCount, puzzle.clueCount >= 24 && puzzle.clueCount <= 27);
     }
 
     @Test
@@ -114,7 +114,7 @@ public class ProgressiveDifficultySystemTest {
 
         String puzzleStr = "0".repeat(81);
         String solutionStr = "1".repeat(81);
-        SudokuGenerator.Puzzle expectedPuzzle = new SudokuGenerator.Puzzle(puzzleStr, solutionStr, 35);
+        SudokuGenerator.Puzzle expectedPuzzle = new SudokuGenerator.Puzzle(puzzleStr, solutionStr, 35, 0);
         when(puzzleGen.generatePersonalizedPuzzle(1)).thenReturn(expectedPuzzle);
 
         SudokuGenerator.Puzzle puzzle = system.generateNextChallenge(1);
