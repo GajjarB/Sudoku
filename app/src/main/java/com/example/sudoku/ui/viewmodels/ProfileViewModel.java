@@ -44,11 +44,14 @@ public class ProfileViewModel extends AndroidViewModel {
                     profile = new UserProfile("default_user");
                 }
             }
-            List<GameHistory> history = database.gameDao().getRecentGames(50);
+
+            boolean hasPerfectGame = database.gameDao().hasPerfectGame();
+            boolean hasFastGame = database.gameDao().hasFastGame(5 * 60 * 1000L);
+
             List<AchievementItem> achievements = new ArrayList<>();
             achievements.add(new AchievementItem(profile.totalGamesWon >= 1 ? "✅" : "🏁", "First Win", "Complete your first puzzle", profile.totalGamesWon >= 1));
-            achievements.add(new AchievementItem(hasPerfectGame(history) ? "✨" : "🎯", "Perfect Game", "Finish with no mistakes and no hints", hasPerfectGame(history)));
-            achievements.add(new AchievementItem(hasFastGame(history) ? "⚡" : "⏱️", "Speed Solver", "Finish under 5 minutes", hasFastGame(history)));
+            achievements.add(new AchievementItem(hasPerfectGame ? "✨" : "🎯", "Perfect Game", "Finish with no mistakes and no hints", hasPerfectGame));
+            achievements.add(new AchievementItem(hasFastGame ? "⚡" : "⏱️", "Speed Solver", "Finish under 5 minutes", hasFastGame));
             achievements.add(new AchievementItem(profile.currentStreak >= 7 ? "🔥" : "📅", "Streak Master", "Keep a 7-day streak", profile.currentStreak >= 7));
 
             List<RowItem> customization = new ArrayList<>();
@@ -82,20 +85,6 @@ public class ProfileViewModel extends AndroidViewModel {
                     customization,
                     settings));
         });
-    }
-
-    private boolean hasPerfectGame(List<GameHistory> history) {
-        for (GameHistory game : history) {
-            if (game.isPerfectGame) return true;
-        }
-        return false;
-    }
-
-    private boolean hasFastGame(List<GameHistory> history) {
-        for (GameHistory game : history) {
-            if (game.totalTimeMs > 0 && game.totalTimeMs <= 5 * 60 * 1000L) return true;
-        }
-        return false;
     }
 
     private int xpForLevel(int level) {
