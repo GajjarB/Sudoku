@@ -31,6 +31,7 @@ public class LevelRepositoryTest {
         mocks = MockitoAnnotations.openMocks(this);
         executor = Executors.newSingleThreadExecutor();
         repository = new LevelRepository(levelDao, executor);
+        repository.resetInitCacheForTesting();
     }
 
     @After
