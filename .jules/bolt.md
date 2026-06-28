@@ -4,3 +4,7 @@
 ## 2024-06-20 - Optimized ProfileViewModel GameHistory loading
 **Learning:** In the `ProfileViewModel`, checking for lifetime achievements (Perfect Game, Speed Solver) by querying the most recent 50 `GameHistory` objects into memory, then iterating over them, creates unnecessary O(N) allocation and serialization overhead. This also introduces a logic flaw where achievements could be 'forgotten' if the matching game falls outside the last 50.
 **Action:** Replaced the in-memory object loop with highly optimized `SELECT EXISTS(...)` Room queries (`hasPerfectGame`, `hasFastGame`). This leverages SQLite efficiently, returning a single boolean and avoiding excessive JVM allocations.
+
+## 2024-07-02 - Prevented Redundant DB Queries in LevelRepository
+**Learning:** The `ensureLevelsInitializedSync()` method in `LevelRepository` was running `SELECT COUNT(*) FROM level_progress` on almost every method call (e.g., `isLevelUnlockedSync`, `getHighestUnlockedLevelSync`, `completeLevel`). This created a significant bottleneck, especially during initialization checks in game and home screen workflows.
+**Action:** Introduced a `volatile boolean isInitializedCache` memory cache. Always check this fast in-memory flag before executing expensive database queries like `COUNT(*)` to check if a large initial state is set up.

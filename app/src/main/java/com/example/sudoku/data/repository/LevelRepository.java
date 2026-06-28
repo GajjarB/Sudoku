@@ -16,6 +16,8 @@ public class LevelRepository {
 
     private final LevelProgressDao levelDao;
     private final ExecutorService executorService;
+    // Cache the initialization state to avoid redundant DB COUNT queries on every operation.
+    private volatile boolean isInitializedCache = false;
 
     public LevelRepository(LevelProgressDao levelDao) {
         this(levelDao, AppExecutors.getInstance().io());
@@ -78,7 +80,11 @@ public class LevelRepository {
     }
 
     public void ensureLevelsInitializedSync() {
+        if (isInitializedCache) {
+            return;
+        }
         if (levelDao.getLevelCount() >= Constants.MAX_LEVEL) {
+            isInitializedCache = true;
             return;
         }
         List<LevelProgress> levels = new ArrayList<>();
@@ -86,6 +92,7 @@ public class LevelRepository {
             levels.add(new LevelProgress(i));
         }
         levelDao.insertAll(levels);
+        isInitializedCache = true;
     }
 
     public boolean isLevelUnlockedSync(int levelNumber) {
