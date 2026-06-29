@@ -1,0 +1,4 @@
+## 2024-06-29 - Prevent Unencrypted HTTP Traffic
+**Vulnerability:** Android application lacked explicit declaration to disallow cleartext (unencrypted HTTP) traffic, risking sensitive data exposure or Man-in-the-Middle (MitM) attacks.
+**Learning:** By default on some older Android versions, or if left unspecified, an app may allow plain HTTP connections. For an application like this, even if external network calls are minimal, ensuring cleartext traffic is disabled provides defense-in-depth and enforces secure communication (HTTPS only).
+**Prevention:** Always add `android:usesCleartextTraffic="false"` to the `<application>` tag in `AndroidManifest.xml` to mandate encrypted network communication across the entire application.
