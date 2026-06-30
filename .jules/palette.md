@@ -1,3 +1,3 @@
-## 2024-05-18 - Replacing static TextView with indeterminate ProgressBar
-**Learning:** For layout-specific micro-UX enhancements, converting static components like `TextView` to a container with multiple elements (e.g., `LinearLayout` with an indeterminate `ProgressBar` and `TextView`) is a safe and effective way to introduce visual loading states without breaking underlying backend references to layout IDs. Make sure to use `@color/accent_primary` for `indeterminateTint` to align with the design theme.
-**Action:** Prefer substituting `TextView` loading indicators with richer composite layouts for future async UI improvements.
+# Palette's Journal
+
+## Critical UX/Accessibility Learnings

@@ -186,7 +186,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:indeterminate="true"
-                android:indeterminateTint="@color/accent_primary" />
+                android:indeterminateTint="@color/accent_primary_pressed" />
 
             <TextView
                 style="@style/TextAppearance.Neo.Body"
