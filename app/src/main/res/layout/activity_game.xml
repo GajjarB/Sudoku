@@ -174,16 +174,29 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/game_board_content_description" />
 
-        <TextView
+        <LinearLayout
             android:id="@+id/loading_panel"
-            style="@style/TextAppearance.Neo.Body"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/bg_grid"
             android:gravity="center"
-            android:text="@string/game_loading"
-            android:textColor="@color/text_muted"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/accent_primary" />
+
+            <TextView
+                style="@style/TextAppearance.Neo.Body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12"
+                android:text="@string/game_loading"
+                android:textColor="@color/text_muted"
+                android:textStyle="bold" />
+        </LinearLayout>
     </FrameLayout>
 
     <LinearLayout
