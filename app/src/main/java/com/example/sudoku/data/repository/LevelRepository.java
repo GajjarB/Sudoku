@@ -17,6 +17,8 @@ public class LevelRepository {
     private final LevelProgressDao levelDao;
     private final ExecutorService executorService;
 
+    private volatile boolean levelsInitialized = false;
+
     public LevelRepository(LevelProgressDao levelDao) {
         this(levelDao, AppExecutors.getInstance().io());
     }
