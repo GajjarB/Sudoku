@@ -79,11 +79,14 @@ public class LevelRepository {
         });
     }
 
-    public void ensureLevelsInitializedSync() {
-        if (levelsInitialized) return;
+    private static volatile boolean isInitialized = false;
 
+    public void ensureLevelsInitializedSync() {
+        if (isInitialized) {
+            return;
+        }
         if (levelDao.getLevelCount() >= Constants.MAX_LEVEL) {
-            levelsInitialized = true;
+            isInitialized = true;
             return;
         }
         List<LevelProgress> levels = new ArrayList<>();
@@ -91,11 +94,7 @@ public class LevelRepository {
             levels.add(new LevelProgress(i));
         }
         levelDao.insertAll(levels);
-        levelsInitialized = true;
-    }
-
-    void resetInitCacheForTesting() {
-        levelsInitialized = false;
+        isInitialized = true;
     }
 
     public boolean isLevelUnlockedSync(int levelNumber) {

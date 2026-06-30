@@ -1,9 +1,11 @@
 ## 2024-05-23 - Prevented O(N) Memory Scaling in Stats ViewModel
 **Learning:** In the `StatsViewModel`, the "MONTH" and "ALL" filters were loading the entire `GameHistory` list into memory (`database.gameDao().getGamesSince(since)`) just to populate a static 7-day chart view via nested iteration. This created a significant memory bottleneck for long-term users.
 **Action:** Always ensure that data queried strictly matches UI needs. Introduced a specific `chartSince` 7-day lookback for the loop query, effectively decoupling chart population from the potentially unbounded `since` date used for aggregated statistic queries.
+
 ## 2024-06-20 - Optimized ProfileViewModel GameHistory loading
 **Learning:** In the `ProfileViewModel`, checking for lifetime achievements (Perfect Game, Speed Solver) by querying the most recent 50 `GameHistory` objects into memory, then iterating over them, creates unnecessary O(N) allocation and serialization overhead. This also introduces a logic flaw where achievements could be 'forgotten' if the matching game falls outside the last 50.
 **Action:** Replaced the in-memory object loop with highly optimized `SELECT EXISTS(...)` Room queries (`hasPerfectGame`, `hasFastGame`). This leverages SQLite efficiently, returning a single boolean and avoiding excessive JVM allocations.
-## 2024-07-26 - Add in-memory initialization cache to LevelRepository
-**Learning:** `LevelRepository.ensureLevelsInitializedSync()` was redundantly calling `levelDao.getLevelCount()` before nearly every level operation (completing levels, checking if unlocked, getting highest unlocked). This caused frequent and unnecessary `SELECT COUNT(*)` database hits, blocking performance.
-**Action:** Introduced a `private volatile boolean levelsInitialized` cache in `LevelRepository`. Now, if levels are already known to be initialized, the expensive database lookup is entirely bypassed, turning a database call into a simple boolean check in memory. Added `resetInitCacheForTesting` to manage state in unit tests.
+
+## 2026-06-25 - Avoid Repeated Initialization Checks in LevelRepository
+**Learning:** The `LevelRepository.ensureLevelsInitializedSync()` method executes a `SELECT COUNT(*)` on the database to check if levels need initialization. Because methods like `isLevelUnlockedSync` and `getHighestUnlockedLevelSync` both call it, simple sequential logic (like finding a playable level) triggers redundant synchronous database queries for an operation that only needs to happen once per app lifecycle.
+**Action:** Introduced a `static volatile boolean` memory cache to bypass the database check once initialization is confirmed, reducing I/O overhead on common level loading paths.
