@@ -1,4 +1,4 @@
-## 2024-03-24 - Enforce HTTPS by Disabling Cleartext Traffic
-**Vulnerability:** The application did not explicitly disable cleartext network traffic (`android:usesCleartextTraffic="false"`). While Android 9+ disables it by default, older versions supported by the app (minSdk = 24 / Android 7.0) default to allowing cleartext traffic, which leaves the app vulnerable to Man-in-the-Middle (MITM) attacks if it inadvertently makes HTTP requests instead of HTTPS.
-**Learning:** Even though newer Android versions are secure by default, we must explicitly declare security configurations in the manifest to protect users on older supported Android versions. This is a critical defense-in-depth measure.
-**Prevention:** Always include `android:usesCleartextTraffic="false"` in `<application>` tag within the `AndroidManifest.xml` unless there is an extremely specific, isolated, and documented requirement for cleartext traffic (which should then be handled via Network Security Configuration).
+## 2026-06-23 - Sentinel Added Network Security Config
+**Vulnerability:** Cleartext traffic was permitted by default.
+**Learning:** By adding `android:usesCleartextTraffic="false"` to the AndroidManifest, the application forces HTTPS encryption on all outgoing HTTP requests, a critical defense-in-depth step against MitM attacks, especially if future 3rd-party libraries initiate HTTP connections.
+**Prevention:** Keep `usesCleartextTraffic="false"` in the application manifest.
