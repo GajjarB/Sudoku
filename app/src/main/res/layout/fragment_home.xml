@@ -48,7 +48,7 @@
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:background="@drawable/neo_icon_button"
-                android:contentDescription="Settings"
+                android:contentDescription="@string/menu_settings"
                 android:padding="14dp"
                 android:src="@drawable/ic_settings_24" />
         </LinearLayout>
