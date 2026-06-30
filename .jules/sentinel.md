@@ -1,4 +1,4 @@
-## 2024-06-28 - Explicitly Disable Cleartext Traffic
-**Vulnerability:** Cleartext traffic was not explicitly disabled in the application manifest. While API 28+ disables it by default, older devices or misconfigurations could still permit unencrypted network requests, violating the defense-in-depth principle.
-**Learning:** Adding explicit security configurations in AndroidManifest.xml (like `android:usesCleartextTraffic="false"`) is critical to enforce secure communication (HTTPS) universally across all SDK versions supported by the app (minSdk=24).
-**Prevention:** Always include explicit security-hardening flags in AndroidManifest.xml rather than relying on Android OS default behaviors, which can vary by API level.
+## 2026-06-23 - Sentinel Added Network Security Config
+**Vulnerability:** Cleartext traffic was permitted by default.
+**Learning:** By adding `android:usesCleartextTraffic="false"` to the AndroidManifest, the application forces HTTPS encryption on all outgoing HTTP requests, a critical defense-in-depth step against MitM attacks, especially if future 3rd-party libraries initiate HTTP connections.
+**Prevention:** Keep `usesCleartextTraffic="false"` in the application manifest.
