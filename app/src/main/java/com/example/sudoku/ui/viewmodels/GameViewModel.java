@@ -523,12 +523,11 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     private String lockedCellsFor(String puzzleGrid) {
-        int[][] currentGrid = GridUtils.parseGrid(puzzleGrid);
-        StringBuilder lockedStr = new StringBuilder(81);
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                lockedStr.append(currentGrid[row][col] != 0 ? '1' : '0');
-            }
+        if (puzzleGrid == null) return "";
+        StringBuilder lockedStr = new StringBuilder(puzzleGrid.length());
+        for (int i = 0; i < puzzleGrid.length(); i++) {
+            char c = puzzleGrid.charAt(i);
+            lockedStr.append((c >= '1' && c <= '9') ? '1' : '0');
         }
         return lockedStr.toString();
     }
