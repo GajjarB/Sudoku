@@ -71,6 +71,10 @@ public class LevelRepository {
         });
     }
 
+    public void resetInitCacheForTesting() {
+        isInitialized = false;
+    }
+
     /**
      * Initialize all 999 levels on first run.
      */
@@ -79,8 +83,6 @@ public class LevelRepository {
             ensureLevelsInitializedSync();
         });
     }
-
-    private static volatile boolean isInitialized = false;
 
     public void ensureLevelsInitializedSync() {
         if (isInitialized) {
