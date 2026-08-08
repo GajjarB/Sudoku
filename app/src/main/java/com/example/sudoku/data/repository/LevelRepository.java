@@ -16,7 +16,6 @@ public class LevelRepository {
 
     private final LevelProgressDao levelDao;
     private final ExecutorService executorService;
-    private volatile boolean isInitialized = false;
 
     private volatile boolean levelsInitialized = false;
 
@@ -81,6 +80,11 @@ public class LevelRepository {
     }
 
     private static volatile boolean isInitialized = false;
+
+    // VisibleForTesting
+    public void resetInitCacheForTesting() {
+        isInitialized = false;
+    }
 
     public void ensureLevelsInitializedSync() {
         if (isInitialized) {
