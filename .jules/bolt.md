@@ -13,3 +13,7 @@
 ## 2026-07-01 - Optimized GameViewModel lockedCellsFor string parsing
 **Learning:** In the `GameViewModel`, `lockedCellsFor` was unnecessarily parsing an 81-character puzzle string into an `int[9][9]` 2D array by delegating to `GridUtils.parseGrid`, only to iterate over the entire array again to recreate an 81-character '0'/'1' string. This resulted in O(N) intermediate heap allocations via `new int[9][9]` for a simple string transform.
 **Action:** Replaced the intermediate array logic with a direct 1-pass string iteration and `StringBuilder` conversion, eliminating the heavy allocations completely.
+## 2024-05-18 - StringBuilder optimization in GameValidator
+
+**Learning:** Replacing `StringBuilder` with a pre-allocated `char[]` size of 81 helps to optimize performance during the fast, repeated character conversions of `gridToString()` in `GameValidator`.
+**Action:** Always pre-allocate fixed-length string structures like `char[]` over relying on dynamic resizable elements such as `StringBuilder` for high-frequency or inner-loop execution paths, especially for short constraints.
