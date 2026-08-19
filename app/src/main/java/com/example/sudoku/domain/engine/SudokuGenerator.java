@@ -271,11 +271,14 @@ public class SudokuGenerator {
     }
 
     private static String gridToString(int[][] grid) {
-        StringBuilder sb = new StringBuilder(TOTAL_CELLS);
+        char[] chars = new char[TOTAL_CELLS];
+        int index = 0;
         for (int r = 0; r < GRID_SIZE; r++) {
-            for (int c = 0; c < GRID_SIZE; c++) sb.append(grid[r][c]);
+            for (int c = 0; c < GRID_SIZE; c++) {
+                chars[index++] = (char) ('0' + grid[r][c]);
+            }
         }
-        return sb.toString();
+        return new String(chars);
     }
 
     private static int[][] copyGrid(int[][] grid) {
