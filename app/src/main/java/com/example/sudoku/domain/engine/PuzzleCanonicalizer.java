@@ -192,8 +192,13 @@ public final class PuzzleCanonicalizer {
     }
 
     private static String gridToString(int[][] g) {
-        StringBuilder sb = new StringBuilder(N * N);
-        for (int r = 0; r < N; r++) for (int c = 0; c < N; c++) sb.append(g[r][c]);
-        return sb.toString();
+        char[] chars = new char[N * N];
+        int index = 0;
+        for (int r = 0; r < N; r++) {
+            for (int c = 0; c < N; c++) {
+                chars[index++] = (char) ('0' + g[r][c]);
+            }
+        }
+        return new String(chars);
     }
 }
