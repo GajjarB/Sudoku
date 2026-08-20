@@ -16,7 +16,6 @@ public class LevelRepository {
 
     private final LevelProgressDao levelDao;
     private final ExecutorService executorService;
-    private volatile boolean isInitialized = false;
 
     private volatile boolean levelsInitialized = false;
 
@@ -96,6 +95,11 @@ public class LevelRepository {
         }
         levelDao.insertAll(levels);
         isInitialized = true;
+    }
+
+    // For testing
+    public void resetInitCacheForTesting() {
+        isInitialized = false;
     }
 
     public boolean isLevelUnlockedSync(int levelNumber) {
