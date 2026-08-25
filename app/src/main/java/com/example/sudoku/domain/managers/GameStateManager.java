@@ -33,6 +33,8 @@ public class GameStateManager {
     private final LongSupplier clock;
     private final Stack<MoveRecord> undoStack = new Stack<>();
     private final Stack<MoveRecord> redoStack = new Stack<>();
+    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+
     private final Map<String, Integer> strategySuccessCounts = new HashMap<>();
 
     private SavedGame currentGame;
@@ -602,17 +604,20 @@ public class GameStateManager {
      */
     private static String encodeNotes(boolean[][][] notes) {
         if (notes == null) return "";
-        StringBuilder sb = new StringBuilder(81 * 3);
+        char[] chars = new char[81 * 3];
+        int idx = 0;
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
                 int mask = 0;
                 for (int v = 1; v <= 9; v++) {
                     if (notes[r][c][v]) mask |= (1 << v);
                 }
-                sb.append(String.format(Locale.US, "%03X", mask));
+                chars[idx++] = HEX_ARRAY[(mask >>> 8) & 0x0F];
+                chars[idx++] = HEX_ARRAY[(mask >>> 4) & 0x0F];
+                chars[idx++] = HEX_ARRAY[mask & 0x0F];
             }
         }
-        return sb.toString();
+        return new String(chars);
     }
 
     private static boolean[][][] decodeNotes(String encoded) {
