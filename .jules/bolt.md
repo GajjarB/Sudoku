@@ -13,3 +13,6 @@
 ## 2026-07-01 - Optimized GameViewModel lockedCellsFor string parsing
 **Learning:** In the `GameViewModel`, `lockedCellsFor` was unnecessarily parsing an 81-character puzzle string into an `int[9][9]` 2D array by delegating to `GridUtils.parseGrid`, only to iterate over the entire array again to recreate an 81-character '0'/'1' string. This resulted in O(N) intermediate heap allocations via `new int[9][9]` for a simple string transform.
 **Action:** Replaced the intermediate array logic with a direct 1-pass string iteration and `StringBuilder` conversion, eliminating the heavy allocations completely.
+## 2024-05-24 - Avoid String.format in GameStateManager Serialization
+**Learning:** In `GameStateManager`, state serialization methods like `encodeNotes` are called frequently (e.g., when pushing to the undo stack). The use of `String.format` to format hexadecimal values inside a nested 81-iteration loop creates severe CPU and garbage collection overhead.
+**Action:** Replace `String.format` in tight loops with direct static character array lookups (e.g., using a predefined `HEX_ARRAY`) to prevent intermediate heap allocations and significantly improve runtime efficiency.
