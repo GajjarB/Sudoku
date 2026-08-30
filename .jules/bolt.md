@@ -13,3 +13,6 @@
 ## 2026-07-01 - Optimized GameViewModel lockedCellsFor string parsing
 **Learning:** In the `GameViewModel`, `lockedCellsFor` was unnecessarily parsing an 81-character puzzle string into an `int[9][9]` 2D array by delegating to `GridUtils.parseGrid`, only to iterate over the entire array again to recreate an 81-character '0'/'1' string. This resulted in O(N) intermediate heap allocations via `new int[9][9]` for a simple string transform.
 **Action:** Replaced the intermediate array logic with a direct 1-pass string iteration and `StringBuilder` conversion, eliminating the heavy allocations completely.
+## 2024-07-28 - Optimized GameValidator gridToString for High-Frequency Use
+**Learning:** In `GameValidator.java`, `gridToString` is frequently called during real-time gameplay (e.g. for serialization, validation, move tracking). Using `StringBuilder` to parse an 81-cell `int[][]` grid creates unnecessary intermediate object allocations under heavy load. A simpler 1-pass approach using character arithmetic over a pre-allocated `char[81]` avoids these allocations entirely.
+**Action:** Replaced `StringBuilder` with a pre-allocated `char[81]` and character arithmetic (`(char) ('0' + value)`) for `gridToString`, lowering garbage collection pressure.
