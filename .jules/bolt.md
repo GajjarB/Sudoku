@@ -13,3 +13,6 @@
 ## 2026-07-01 - Optimized GameViewModel lockedCellsFor string parsing
 **Learning:** In the `GameViewModel`, `lockedCellsFor` was unnecessarily parsing an 81-character puzzle string into an `int[9][9]` 2D array by delegating to `GridUtils.parseGrid`, only to iterate over the entire array again to recreate an 81-character '0'/'1' string. This resulted in O(N) intermediate heap allocations via `new int[9][9]` for a simple string transform.
 **Action:** Replaced the intermediate array logic with a direct 1-pass string iteration and `StringBuilder` conversion, eliminating the heavy allocations completely.
+## 2024-05-19 - [Optimize grid serialization in GameValidator]
+**Learning:** For high-frequency Sudoku grid serialization (like `GameValidator.gridToString`), intermediate heap allocations and garbage collection pressure can be eliminated by using pre-allocated `char[]` arrays and character arithmetic instead of `StringBuilder`. I also encountered duplicate manifest attributes that blocked compilation and had to fix `AndroidManifest.xml` and correctly handle test flags in `LevelRepository`.
+**Action:** Always favor primitive arrays and arithmetic operations over object allocations (like StringBuilder) for critical path loops. Ensure codebase changes are fully tested to catch unintended side effects from external files.
