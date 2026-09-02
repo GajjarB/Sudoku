@@ -16,7 +16,6 @@ public class LevelRepository {
 
     private final LevelProgressDao levelDao;
     private final ExecutorService executorService;
-    private volatile boolean isInitialized = false;
 
     private volatile boolean levelsInitialized = false;
 
@@ -115,6 +114,10 @@ public class LevelRepository {
         });
     }
     
+    public static void resetInitCacheForTesting() {
+        isInitialized = false;
+    }
+
     public interface DataCallback<T> {
         void onResult(T result);
     }
