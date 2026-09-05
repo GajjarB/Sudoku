@@ -8,6 +8,7 @@ import com.example.sudoku.utils.Constants;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.security.SecureRandom;
 
 /**
  * INTELLIGENT PUZZLE GENERATOR — Targets Weaknesses
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class IntelligentPuzzleGenerator {
     
     private static final String TAG = "IntelligentPuzzleGen";
+    private static final SecureRandom secureRandom = new SecureRandom();
     
     private GameDao dao;
     private BehavioralAnalyzer analyzer;
@@ -71,7 +73,7 @@ public class IntelligentPuzzleGenerator {
         
         if (readiness >= 80) {
             params.clueCount = Constants.CLUES_EXPERT_MIN +
-                    (int) (Math.random() * (Constants.CLUES_EXPERT_MAX - Constants.CLUES_EXPERT_MIN + 1));
+                    secureRandom.nextInt(Constants.CLUES_EXPERT_MAX - Constants.CLUES_EXPERT_MIN + 1);
             params.targetStrategies = Arrays.asList(
                 Constants.STRATEGY_HIDDEN_PAIR,
                 Constants.STRATEGY_NAKED_TRIPLE,
@@ -81,7 +83,7 @@ public class IntelligentPuzzleGenerator {
             
         } else if (readiness >= 60) {
             params.clueCount = Constants.CLUES_HARD_MIN +
-                    (int) (Math.random() * (Constants.CLUES_HARD_MAX - Constants.CLUES_HARD_MIN + 1));
+                    secureRandom.nextInt(Constants.CLUES_HARD_MAX - Constants.CLUES_HARD_MIN + 1);
             params.targetStrategies = Arrays.asList(
                 Constants.STRATEGY_HIDDEN_SINGLE,
                 Constants.STRATEGY_NAKED_PAIR,
@@ -91,7 +93,7 @@ public class IntelligentPuzzleGenerator {
             
         } else if (readiness >= 40) {
             params.clueCount = Constants.CLUES_MEDIUM_MIN +
-                    (int) (Math.random() * (Constants.CLUES_MEDIUM_MAX - Constants.CLUES_MEDIUM_MIN + 1));
+                    secureRandom.nextInt(Constants.CLUES_MEDIUM_MAX - Constants.CLUES_MEDIUM_MIN + 1);
             params.targetStrategies = Arrays.asList(
                 Constants.STRATEGY_NAKED_SINGLE,
                 Constants.STRATEGY_HIDDEN_SINGLE
@@ -100,7 +102,7 @@ public class IntelligentPuzzleGenerator {
             
         } else {
             params.clueCount = Constants.CLUES_EASY_MIN +
-                    (int) (Math.random() * (Constants.CLUES_EASY_MAX - Constants.CLUES_EASY_MIN + 1));
+                    secureRandom.nextInt(Constants.CLUES_EASY_MAX - Constants.CLUES_EASY_MIN + 1);
             params.targetStrategies = Arrays.asList(Constants.STRATEGY_NAKED_SINGLE);
             Log.d(TAG, "Low readiness (<40): Easy difficulty");
         }

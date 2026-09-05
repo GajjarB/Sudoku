@@ -6,6 +6,7 @@ import com.example.sudoku.data.local.entities.GameHistory;
 import com.example.sudoku.utils.Constants;
 
 import java.util.List;
+import java.security.SecureRandom;
 
 /**
  * DIFFICULTY ADAPTER
@@ -16,6 +17,7 @@ import java.util.List;
 public class DifficultyAdapter {
     
     private static final String TAG = "DifficultyAdapter";
+    private static final SecureRandom secureRandom = new SecureRandom();
     
     private GameDao dao;
     
@@ -87,16 +89,16 @@ public class DifficultyAdapter {
     private int mapSkillToClues(int skillScore) {
         if (skillScore >= 160) {
             return Constants.CLUES_EXPERT_MIN + 
-                   (int) (Math.random() * (Constants.CLUES_EXPERT_MAX - Constants.CLUES_EXPERT_MIN + 1));
+                   secureRandom.nextInt(Constants.CLUES_EXPERT_MAX - Constants.CLUES_EXPERT_MIN + 1);
         } else if (skillScore >= 120) {
             return Constants.CLUES_HARD_MIN +
-                   (int) (Math.random() * (Constants.CLUES_HARD_MAX - Constants.CLUES_HARD_MIN + 1));
+                   secureRandom.nextInt(Constants.CLUES_HARD_MAX - Constants.CLUES_HARD_MIN + 1);
         } else if (skillScore >= 80) {
             return Constants.CLUES_MEDIUM_MIN +
-                   (int) (Math.random() * (Constants.CLUES_MEDIUM_MAX - Constants.CLUES_MEDIUM_MIN + 1));
+                   secureRandom.nextInt(Constants.CLUES_MEDIUM_MAX - Constants.CLUES_MEDIUM_MIN + 1);
         } else {
             return Constants.CLUES_EASY_MIN +
-                   (int) (Math.random() * (Constants.CLUES_EASY_MAX - Constants.CLUES_EASY_MIN + 1));
+                   secureRandom.nextInt(Constants.CLUES_EASY_MAX - Constants.CLUES_EASY_MIN + 1);
         }
     }
 }
