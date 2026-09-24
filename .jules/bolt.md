@@ -17,3 +17,7 @@
 ## 2026-07-01 - Optimized LevelRepository Level Progress Initialization
 **Learning:** In `LevelRepository.ensureLevelsInitializedSync()`, the check for whether levels have been initialized would redundantly trigger multiple Room queries (`levelDao.getLevelCount()`) throughout the lifecycle (via `isLevelUnlockedSync` and `getHighestUnlockedLevelSync`), despite only changing once during the application's first launch. Since LevelRepository is not a singleton, new instances would repeatedly hit the DB on launch or navigation.
 **Action:** Changed the `volatile boolean` instance variable to a `static volatile boolean` memory cache to bypass the database check globally once initialization is confirmed across all usages. This eliminates unnecessary DB I/O scaling across view models and navigations.
+
+## 2026-07-01 - Optimized GameValidator.gridToString string generation
+**Learning:** In the `GameValidator`, `gridToString` was repeatedly instantiating `StringBuilder` and invoking `.append()` for an exact known size of 81 characters. The `StringBuilder` defaults to a capacity of 16 and requires multiple dynamic internal re-allocations to reach 81, leading to excessive short-lived heap allocations and GC pressure during high-frequency grid validations.
+**Action:** Replaced `StringBuilder` with a pre-allocated `char[81]` array and character math (`(char) ('0' + value)`), completely bypassing object allocations inside the loop and dramatically reducing GC overhead on the hot path.
