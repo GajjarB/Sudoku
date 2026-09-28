@@ -204,17 +204,21 @@ public class GameValidator {
      * Convert 2D grid to string.
      */
     public static String gridToString(int[][] grid) {
-        StringBuilder sb = new StringBuilder();
         if (!isValidGrid(grid)) {
             return "0".repeat(81);
         }
+
+        // OPTIMIZATION (Bolt): Use pre-allocated char array instead of StringBuilder
+        // Avoids intermediate heap allocations and dynamic resizing during high-frequency grid serialization
+        char[] chars = new char[81];
+        int i = 0;
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
                 int value = grid[r][c];
-                sb.append(value >= 0 && value <= 9 ? value : 0);
+                chars[i++] = (char) ('0' + (value >= 0 && value <= 9 ? value : 0));
             }
         }
-        return sb.toString();
+        return new String(chars);
     }
 
     private static void markUsed(boolean[] used, int value) {
