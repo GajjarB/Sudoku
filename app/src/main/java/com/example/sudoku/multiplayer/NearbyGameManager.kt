@@ -38,12 +38,17 @@ class NearbyGameManager(private val context: Context) {
         private const val TAG = "NearbyGameManager"
         private const val SERVICE_ID = "com.example.sudoku.multiplayer"
         private val STRATEGY = Strategy.P2P_POINT_TO_POINT
+        private const val MAX_PAYLOAD_SIZE = 32768 // 32KB Limit
     }
 
     private val payloadCallback = object : PayloadCallback() {
         override fun onPayloadReceived(endpointId: String, payload: Payload) {
             if (payload.type == Payload.Type.BYTES) {
                 payload.asBytes()?.let { bytes ->
+                    if (bytes.size > MAX_PAYLOAD_SIZE) {
+                        Log.e(TAG, "Payload exceeds maximum allowed size")
+                        return@let
+                    }
                     val gamePayload = GamePayload.fromByteArray(bytes)
                     if (gamePayload != null) {
                         _opponentPayload.value = gamePayload
@@ -57,9 +62,15 @@ class NearbyGameManager(private val context: Context) {
 
     private val connectionLifecycleCallback = object : ConnectionLifecycleCallback() {
         override fun onConnectionInitiated(endpointId: String, info: ConnectionInfo) {
-            Log.d(TAG, "Connection initiated with: \${info.endpointName}")
-            // Automatically accept connection for simplicity in a game
-            connectionsClient.acceptConnection(endpointId, payloadCallback)
+            Log.d(TAG, "Connection initiated with: ${info.endpointName}")
+            if (currentEndpointId != null) {
+                // Reject secondary connections to prevent session hijacking
+                Log.w(TAG, "Rejecting connection from ${info.endpointName} ($endpointId) as we are already connected")
+                connectionsClient.rejectConnection(endpointId)
+            } else {
+                // Automatically accept connection for simplicity in a game
+                connectionsClient.acceptConnection(endpointId, payloadCallback)
+            }
         }
 
         override fun onConnectionResult(endpointId: String, result: ConnectionResolution) {
