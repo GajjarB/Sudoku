@@ -17,3 +17,6 @@
 ## 2026-07-01 - Optimized LevelRepository Level Progress Initialization
 **Learning:** In `LevelRepository.ensureLevelsInitializedSync()`, the check for whether levels have been initialized would redundantly trigger multiple Room queries (`levelDao.getLevelCount()`) throughout the lifecycle (via `isLevelUnlockedSync` and `getHighestUnlockedLevelSync`), despite only changing once during the application's first launch. Since LevelRepository is not a singleton, new instances would repeatedly hit the DB on launch or navigation.
 **Action:** Changed the `volatile boolean` instance variable to a `static volatile boolean` memory cache to bypass the database check globally once initialization is confirmed across all usages. This eliminates unnecessary DB I/O scaling across view models and navigations.
+## 2026-09-30 - Replaced String.format with character lookup in tight loops
+**Learning:** In `GameStateManager.encodeNotes`, using `String.format` 81 times for every note serialization in the undo/redo stack creates immense CPU and GC pressure.
+**Action:** Replaced `String.format` with pre-allocated `char[]` arrays and direct `HEX_ARRAY` character lookups to eliminate intermediate object allocations during serialization.
