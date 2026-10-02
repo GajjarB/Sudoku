@@ -44,6 +44,11 @@ class NearbyGameManager(private val context: Context) {
         override fun onPayloadReceived(endpointId: String, payload: Payload) {
             if (payload.type == Payload.Type.BYTES) {
                 payload.asBytes()?.let { bytes ->
+                    // Limit payload size to 32KB to prevent DoS/OOM
+                    if (bytes.size > 32768) {
+                        Log.e(TAG, "Payload size exceeds limit. Dropping payload.")
+                        return@let
+                    }
                     val gamePayload = GamePayload.fromByteArray(bytes)
                     if (gamePayload != null) {
                         _opponentPayload.value = gamePayload
@@ -57,26 +62,31 @@ class NearbyGameManager(private val context: Context) {
 
     private val connectionLifecycleCallback = object : ConnectionLifecycleCallback() {
         override fun onConnectionInitiated(endpointId: String, info: ConnectionInfo) {
-            Log.d(TAG, "Connection initiated with: \${info.endpointName}")
-            // Automatically accept connection for simplicity in a game
-            connectionsClient.acceptConnection(endpointId, payloadCallback)
+            Log.d(TAG, "Connection initiated with: ${info.endpointName}")
+            if (currentEndpointId != null) {
+                Log.w(TAG, "Already connected. Rejecting connection from: $endpointId")
+                connectionsClient.rejectConnection(endpointId)
+            } else {
+                // Automatically accept connection for simplicity in a game
+                connectionsClient.acceptConnection(endpointId, payloadCallback)
+            }
         }
 
         override fun onConnectionResult(endpointId: String, result: ConnectionResolution) {
             if (result.status.isSuccess) {
-                Log.d(TAG, "Connection successful: \$endpointId")
+                Log.d(TAG, "Connection successful: $endpointId")
                 currentEndpointId = endpointId
                 _connectionState.update { ConnectionState.Connected(endpointId) }
                 stopDiscovery()
                 stopAdvertising()
             } else {
-                Log.e(TAG, "Connection failed: \${result.status.statusMessage}")
+                Log.e(TAG, "Connection failed: ${result.status.statusMessage}")
                 _connectionState.update { ConnectionState.Disconnected }
             }
         }
 
         override fun onDisconnected(endpointId: String) {
-            Log.d(TAG, "Disconnected from: \$endpointId")
+            Log.d(TAG, "Disconnected from: $endpointId")
             currentEndpointId = null
             _connectionState.update { ConnectionState.Disconnected }
         }
@@ -84,13 +94,13 @@ class NearbyGameManager(private val context: Context) {
 
     private val endpointDiscoveryCallback = object : EndpointDiscoveryCallback() {
         override fun onEndpointFound(endpointId: String, info: DiscoveredEndpointInfo) {
-            Log.d(TAG, "Endpoint found: \${info.endpointName} (\$endpointId)")
+            Log.d(TAG, "Endpoint found: ${info.endpointName} ($endpointId)")
             _connectionState.update { ConnectionState.Discovering(endpointId) }
             connectionsClient.requestConnection("SudokuPlayer", endpointId, connectionLifecycleCallback)
         }
 
         override fun onEndpointLost(endpointId: String) {
-            Log.d(TAG, "Endpoint lost: \$endpointId")
+            Log.d(TAG, "Endpoint lost: $endpointId")
         }
     }
 
