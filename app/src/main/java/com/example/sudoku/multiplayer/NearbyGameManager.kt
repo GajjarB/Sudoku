@@ -38,12 +38,17 @@ class NearbyGameManager(private val context: Context) {
         private const val TAG = "NearbyGameManager"
         private const val SERVICE_ID = "com.example.sudoku.multiplayer"
         private val STRATEGY = Strategy.P2P_POINT_TO_POINT
+        private const val MAX_PAYLOAD_SIZE = 32768
     }
 
     private val payloadCallback = object : PayloadCallback() {
         override fun onPayloadReceived(endpointId: String, payload: Payload) {
             if (payload.type == Payload.Type.BYTES) {
                 payload.asBytes()?.let { bytes ->
+                    if (bytes.size > MAX_PAYLOAD_SIZE) {
+                        Log.w(TAG, "Security warning: Rejected oversized payload (\${bytes.size} bytes) from \$endpointId")
+                        return
+                    }
                     val gamePayload = GamePayload.fromByteArray(bytes)
                     if (gamePayload != null) {
                         _opponentPayload.value = gamePayload
@@ -58,6 +63,11 @@ class NearbyGameManager(private val context: Context) {
     private val connectionLifecycleCallback = object : ConnectionLifecycleCallback() {
         override fun onConnectionInitiated(endpointId: String, info: ConnectionInfo) {
             Log.d(TAG, "Connection initiated with: \${info.endpointName}")
+            if (currentEndpointId != null && currentEndpointId != endpointId) {
+                Log.w(TAG, "Security warning: Rejecting secondary connection from \$endpointId to prevent session hijacking.")
+                connectionsClient.rejectConnection(endpointId)
+                return
+            }
             // Automatically accept connection for simplicity in a game
             connectionsClient.acceptConnection(endpointId, payloadCallback)
         }
