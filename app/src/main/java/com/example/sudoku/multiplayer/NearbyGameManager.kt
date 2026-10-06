@@ -44,6 +44,10 @@ class NearbyGameManager(private val context: Context) {
         override fun onPayloadReceived(endpointId: String, payload: Payload) {
             if (payload.type == Payload.Type.BYTES) {
                 payload.asBytes()?.let { bytes ->
+                    if (bytes.size > 32768) {
+                        Log.w(TAG, "Payload too large, rejecting to prevent OOM/DoS")
+                        return
+                    }
                     val gamePayload = GamePayload.fromByteArray(bytes)
                     if (gamePayload != null) {
                         _opponentPayload.value = gamePayload
@@ -58,6 +62,11 @@ class NearbyGameManager(private val context: Context) {
     private val connectionLifecycleCallback = object : ConnectionLifecycleCallback() {
         override fun onConnectionInitiated(endpointId: String, info: ConnectionInfo) {
             Log.d(TAG, "Connection initiated with: \${info.endpointName}")
+            if (currentEndpointId != null) {
+                Log.w(TAG, "Rejecting secondary connection to prevent session hijacking: \$endpointId")
+                connectionsClient.rejectConnection(endpointId)
+                return
+            }
             // Automatically accept connection for simplicity in a game
             connectionsClient.acceptConnection(endpointId, payloadCallback)
         }
