@@ -61,6 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:layout_marginTop="8dp"
+                android:contentDescription="@string/profile_xp_progress"
                 android:max="100"
                 android:progress="0"
                 android:progressDrawable="@drawable/neo_progress" />

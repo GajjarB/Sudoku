@@ -150,6 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:layout_marginTop="@dimen/space_8"
+            android:contentDescription="@string/game_progress"
             android:max="100"
             android:progress="0"
             android:progressDrawable="@drawable/neo_progress" />

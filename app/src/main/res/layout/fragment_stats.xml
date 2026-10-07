@@ -159,19 +159,19 @@
                 android:text="Difficulty breakdown" />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Easy" android:textColor="@color/text_secondary" />
-            <ProgressBar android:id="@+id/progress_easy" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="8dp" android:max="100" android:progressDrawable="@drawable/neo_progress" />
+            <ProgressBar android:id="@+id/progress_easy" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="8dp" android:max="100" android:progressDrawable="@drawable/neo_progress" android:contentDescription="@string/stats_progress_easy" />
             <TextView android:id="@+id/tv_easy_count" style="@style/TextAppearance.Neo.Muted" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 solved" />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Medium" android:textColor="@color/text_secondary" />
-            <ProgressBar android:id="@+id/progress_medium" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="8dp" android:max="100" android:progressDrawable="@drawable/neo_progress" />
+            <ProgressBar android:id="@+id/progress_medium" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="8dp" android:max="100" android:progressDrawable="@drawable/neo_progress" android:contentDescription="@string/stats_progress_medium" />
             <TextView android:id="@+id/tv_medium_count" style="@style/TextAppearance.Neo.Muted" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 solved" />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Hard" android:textColor="@color/text_secondary" />
-            <ProgressBar android:id="@+id/progress_hard" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="8dp" android:max="100" android:progressDrawable="@drawable/neo_progress" />
+            <ProgressBar android:id="@+id/progress_hard" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="8dp" android:max="100" android:progressDrawable="@drawable/neo_progress" android:contentDescription="@string/stats_progress_hard" />
             <TextView android:id="@+id/tv_hard_count" style="@style/TextAppearance.Neo.Muted" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 solved" />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Expert" android:textColor="@color/text_secondary" />
-            <ProgressBar android:id="@+id/progress_expert" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="8dp" android:max="100" android:progressDrawable="@drawable/neo_progress" />
+            <ProgressBar android:id="@+id/progress_expert" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="8dp" android:max="100" android:progressDrawable="@drawable/neo_progress" android:contentDescription="@string/stats_progress_expert" />
             <TextView android:id="@+id/tv_expert_count" style="@style/TextAppearance.Neo.Muted" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 solved" />
         </LinearLayout>
 

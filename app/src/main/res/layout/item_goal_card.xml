@@ -52,6 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:layout_marginTop="14dp"
+        android:contentDescription="@string/goal_progress"
         android:max="100"
         android:progressDrawable="@drawable/neo_progress" />
 
