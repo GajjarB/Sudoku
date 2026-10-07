@@ -202,19 +202,25 @@ public class GameValidator {
     
     /**
      * Convert 2D grid to string.
+     *
+     * ⚡ Bolt Optimization:
+     * - Replaced StringBuilder with a pre-allocated char[81] array to eliminate memory reallocation overhead during serialization.
+     * - Replaced `String.repeat(81)` with a hardcoded string of zeros to bypass Java 11 API dependency issues and execute faster.
+     * Impact: Reduces GC pressure and CPU overhead for this high-frequency serialization method.
      */
     public static String gridToString(int[][] grid) {
-        StringBuilder sb = new StringBuilder();
         if (!isValidGrid(grid)) {
-            return "0".repeat(81);
+            return "000000000000000000000000000000000000000000000000000000000000000000000000000000000";
         }
+        char[] chars = new char[81];
+        int index = 0;
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
                 int value = grid[r][c];
-                sb.append(value >= 0 && value <= 9 ? value : 0);
+                chars[index++] = (char) ((value >= 0 && value <= 9 ? value : 0) + '0');
             }
         }
-        return sb.toString();
+        return new String(chars);
     }
 
     private static void markUsed(boolean[] used, int value) {

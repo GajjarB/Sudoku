@@ -17,3 +17,6 @@
 ## 2026-07-01 - Optimized LevelRepository Level Progress Initialization
 **Learning:** In `LevelRepository.ensureLevelsInitializedSync()`, the check for whether levels have been initialized would redundantly trigger multiple Room queries (`levelDao.getLevelCount()`) throughout the lifecycle (via `isLevelUnlockedSync` and `getHighestUnlockedLevelSync`), despite only changing once during the application's first launch. Since LevelRepository is not a singleton, new instances would repeatedly hit the DB on launch or navigation.
 **Action:** Changed the `volatile boolean` instance variable to a `static volatile boolean` memory cache to bypass the database check globally once initialization is confirmed across all usages. This eliminates unnecessary DB I/O scaling across view models and navigations.
+## 2024-05-24 - Pre-allocated Array Serialization
+**Learning:** In high-frequency operations, pre-allocated fixed-size arrays combined with character arithmetic outperform `StringBuilder` due to reduced GC pressure, reduced allocations and synchronization overheads.
+**Action:** Always evaluate if pre-allocated char arrays can replace `StringBuilder` or regex operations on short string manipulation when dealing with critical rendering/gameplay loops.
