@@ -81,12 +81,24 @@ public class StatsViewModel extends AndroidViewModel {
             calendar.setTimeInMillis(now);
             calendar.add(Calendar.DAY_OF_YEAR, -6);
 
+            long windowStart = startOfDay(calendar.getTimeInMillis());
+            long windowEnd = windowStart + 7L * 24 * 60 * 60 * 1000;
+            List<Long> timestamps = database.gameDao().getGameTimestampsInRange(windowStart, windowEnd);
+
             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("EEE", Locale.US);
             for (int i = 0; i < 7; i++) {
                 long dayStart = startOfDay(calendar.getTimeInMillis());
                 long dayEnd = dayStart + 24L * 60 * 60 * 1000;
                 labels[i] = sdf.format(calendar.getTime());
-                values[i] = database.gameDao().getGameCountInRange(dayStart, dayEnd);
+
+                int count = 0;
+                for (Long timestamp : timestamps) {
+                    if (timestamp >= dayStart && timestamp < dayEnd) {
+                        count++;
+                    }
+                }
+                values[i] = count;
+
                 calendar.add(Calendar.DAY_OF_YEAR, 1);
             }
 

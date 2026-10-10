@@ -65,6 +65,9 @@ public interface GameDao {
     @Query("SELECT COUNT(*) as count FROM game_history WHERE playedAt >= :start AND playedAt < :end")
     int getGameCountInRange(long start, long end);
 
+    @Query("SELECT playedAt FROM game_history WHERE playedAt >= :start AND playedAt < :end")
+    List<Long> getGameTimestampsInRange(long start, long end);
+
     @Query("SELECT AVG(totalTimeMs) FROM game_history WHERE playedAt >= :start AND playedAt < :end AND totalTimeMs > 0")
     double getAverageTimeInRange(long start, long end);
 
