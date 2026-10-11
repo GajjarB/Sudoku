@@ -185,6 +185,7 @@
             <ProgressBar
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:contentDescription="@string/game_loading"
                 android:indeterminate="true"
                 android:indeterminateTint="@color/accent_primary_pressed" />
 
