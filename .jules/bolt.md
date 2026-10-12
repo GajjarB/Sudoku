@@ -17,3 +17,6 @@
 ## 2026-07-01 - Optimized LevelRepository Level Progress Initialization
 **Learning:** In `LevelRepository.ensureLevelsInitializedSync()`, the check for whether levels have been initialized would redundantly trigger multiple Room queries (`levelDao.getLevelCount()`) throughout the lifecycle (via `isLevelUnlockedSync` and `getHighestUnlockedLevelSync`), despite only changing once during the application's first launch. Since LevelRepository is not a singleton, new instances would repeatedly hit the DB on launch or navigation.
 **Action:** Changed the `volatile boolean` instance variable to a `static volatile boolean` memory cache to bypass the database check globally once initialization is confirmed across all usages. This eliminates unnecessary DB I/O scaling across view models and navigations.
+## 2026-10-12 - [Optimize High-Frequency Grid Serialization]
+**Learning:** High-frequency serialization methods like `gridToString` in Sudoku can cause significant intermediate heap allocations and GC overhead when using `StringBuilder`. Additionally, `String.repeat` requires API 34+ and can break compatibility.
+**Action:** Use pre-allocated `char[]` arrays with character arithmetic (e.g. `(char) ('0' + val)`) for grid serialization and use hardcoded 81-character strings for defaults to reduce GC pressure and ensure API 24 compatibility.
