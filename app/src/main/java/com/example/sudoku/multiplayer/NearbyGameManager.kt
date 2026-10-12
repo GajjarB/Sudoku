@@ -57,7 +57,12 @@ class NearbyGameManager(private val context: Context) {
 
     private val connectionLifecycleCallback = object : ConnectionLifecycleCallback() {
         override fun onConnectionInitiated(endpointId: String, info: ConnectionInfo) {
-            Log.d(TAG, "Connection initiated with: \${info.endpointName}")
+            Log.d(TAG, "Connection initiated with: ${info.endpointName}")
+            if (currentEndpointId != null) {
+                Log.w(TAG, "Rejecting connection from $endpointId, already connected to $currentEndpointId")
+                connectionsClient.rejectConnection(endpointId)
+                return
+            }
             // Automatically accept connection for simplicity in a game
             connectionsClient.acceptConnection(endpointId, payloadCallback)
         }
