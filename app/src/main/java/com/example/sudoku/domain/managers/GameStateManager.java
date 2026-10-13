@@ -597,22 +597,27 @@ public class GameStateManager {
                 fallbackHintRequests, fallbackHintPenaltyUnits);
     }
 
+    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+
     /**
      * Encode notes as 81 three-hex-digit masks, one 9-bit mask per cell.
      */
     private static String encodeNotes(boolean[][][] notes) {
         if (notes == null) return "";
-        StringBuilder sb = new StringBuilder(81 * 3);
+        char[] out = new char[81 * 3];
+        int idx = 0;
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
                 int mask = 0;
                 for (int v = 1; v <= 9; v++) {
                     if (notes[r][c][v]) mask |= (1 << v);
                 }
-                sb.append(String.format(Locale.US, "%03X", mask));
+                out[idx++] = HEX_ARRAY[(mask >>> 8) & 0x0F];
+                out[idx++] = HEX_ARRAY[(mask >>> 4) & 0x0F];
+                out[idx++] = HEX_ARRAY[mask & 0x0F];
             }
         }
-        return sb.toString();
+        return new String(out);
     }
 
     private static boolean[][][] decodeNotes(String encoded) {
