@@ -599,8 +599,12 @@ public class GameStateManager {
                 fallbackHintRequests, fallbackHintPenaltyUnits);
     }
 
+    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+
     /**
      * Encode notes as 81 three-hex-digit masks, one 9-bit mask per cell.
+     * Optimized string formatting to prevent excess garbage collection
+     * and performance bottlenecks in serialization tight loops.
      */
     private static String encodeNotes(boolean[][][] notes) {
         if (notes == null) return "";
