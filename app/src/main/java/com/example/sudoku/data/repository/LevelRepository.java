@@ -81,10 +81,6 @@ public class LevelRepository {
     }
 
 
-    public void resetInitCacheForTesting() {
-        isInitialized = false;
-    }
-
     public void ensureLevelsInitializedSync() {
         if (isInitialized) {
             return;
@@ -104,6 +100,10 @@ public class LevelRepository {
     public boolean isLevelUnlockedSync(int levelNumber) {
         ensureLevelsInitializedSync();
         return levelDao.isLevelUnlocked(levelNumber);
+    }
+
+    public void resetInitCacheForTesting() {
+        isInitialized = false;
     }
 
     public int getHighestUnlockedLevelSync() {

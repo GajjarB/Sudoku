@@ -26,6 +26,8 @@ import java.util.function.LongSupplier;
  */
 public class GameStateManager {
 
+    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+
     private final GameRepository gameRepository;
     private final ScoreCalculator scoreCalculator;
     private final HintEngine hintEngine;
@@ -613,9 +615,9 @@ public class GameStateManager {
                 for (int v = 1; v <= 9; v++) {
                     if (notes[r][c][v]) mask |= (1 << v);
                 }
-                sb.append(HEX_ARRAY[(mask >> 8) & 0x0F]);
-                sb.append(HEX_ARRAY[(mask >> 4) & 0x0F]);
-                sb.append(HEX_ARRAY[mask & 0x0F]);
+                sb.append(HEX_ARRAY[(mask >> 8) & 0xF]);
+                sb.append(HEX_ARRAY[(mask >> 4) & 0xF]);
+                sb.append(HEX_ARRAY[mask & 0xF]);
             }
         }
         return sb.toString();
